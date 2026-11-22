@@ -1,0 +1,10 @@
+{
+  "title": "Development",
+  "pages": [
+    "index",
+    "ui-install",
+    "custom-addon",
+    "cli-install",
+    "version-check"
+  ]
+}

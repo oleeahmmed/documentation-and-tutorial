@@ -53,4 +53,16 @@ my-odoo/
 | [Apps](/odoo/configuration/apps) | ইনস্টল, আনইনস্টল, আপডেট |
 | [Developer Mode](/odoo/configuration/developer-mode) | Technical Menu আর ডেভেলপার টুলস |
 
+## Development (অ্যাডঅন ইনস্টল)
+
+ডিফল্ট Odoo-তে নেই এমন মডিউল দরকার হলে — UI, `custom_addons` ফোল্ডার বা CLI — তিন পদ্ধতির গাইড:
+
+| পদ্ধতি | কখন | পেজ |
+| --- | --- | --- |
+| UI / Apps মেনু | Odoo-র নিজস্ব অ্যাপ | [UI থেকে ইনস্টল](/odoo/development/ui-install) |
+| custom_addons ফোল্ডার | Apps Store/GitHub থেকে ZIP | [custom_addons](/odoo/development/custom-addon) |
+| CLI / টার্মিনাল | ডেভেলপার, স্ক্রিপ্ট, রিস্টার্টসহ | [কমান্ড লাইন](/odoo/development/cli-install) |
+
+সেকশনের মূল পাতা: [Development](/odoo/development) — ভার্সন-সামঞ্জস্য আর ব্যাকআপ চেকলিস্টসহ।
+
 > **টিপস:** `master` ব্রাঞ্চ মানে Odoo-র একদম নতুন ডেভেলপমেন্ট ভার্সন — শেখার জন্য ঠিক আছে, কিন্তু প্রোডাকশনে `18.0`-এর মতো স্ট্যাবল ব্রাঞ্চ ব্যবহার করা ভালো (ধাপ ৪-এ দেখানো আছে)।
