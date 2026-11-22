@@ -11,6 +11,7 @@ icon: WandSparkles
 | টপিক | কী আছে |
 | --- | --- |
 | [Deploy Master Prompt](/prompt-master/deploy-master-prompt) | DEPLOY + DIAGNOSE — একটাই `deploy.py` বানানোর সম্পূর্ণ প্রম্পট, প্রজেক্ট বিশ্লেষণের ১৮ ধাপ, কোড কাঠামো আর বাস্তব আউটপুট |
+| [Deploy Master Prompt (Domain/IP)](/prompt-master/deploy-master-prompt-domain) | একই প্রম্পট, তবে `.env`-এর `DOMAIN` থেকে Nginx-এর `server_name` — ডোমেইন হলে SSL/Certbot, IP হলে SSL ছাড়া |
 
 ## কীভাবে ব্যবহার করবে
 
