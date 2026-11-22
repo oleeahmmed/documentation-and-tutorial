@@ -1,6 +1,6 @@
 import { createGetUrl } from 'fumadocs-core/source';
 
-export const appName = 'CrewAI Docs';
+export const appName = 'Python Developer Documentation';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 

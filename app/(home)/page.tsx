@@ -5,10 +5,11 @@ export default function HomePage() {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col justify-center px-6 py-16">
       <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-        CrewAI Docs
+        Python Developer Documentation
       </h1>
       <p className="mt-3 max-w-2xl text-fd-muted-foreground">
-        বাংলায় গল্পে গল্পে CrewAI শেখো — সাথে Python-এর ভিত্তিও গুছিয়ে নাও।
+        বাংলায় শেখো Python — ভিত্তি থেকে শুরু করে CrewAI দিয়ে AI Agent বানানো
+        পর্যন্ত।
       </p>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
