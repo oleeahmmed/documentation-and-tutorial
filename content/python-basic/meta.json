@@ -1,0 +1,21 @@
+{
+  "title": "Python Basic",
+  "pages": [
+    "index",
+    "variables-data-types",
+    "operators",
+    "strings",
+    "conditionals",
+    "lists",
+    "loops",
+    "tuples-sets",
+    "dictionaries",
+    "functions",
+    "error-handling",
+    "file-handling",
+    "classes-objects",
+    "modules-imports",
+    "practice-project",
+    "summary"
+  ]
+}

@@ -40,7 +40,7 @@ export default function HomePage() {
             ক্লাস, ফাইল।
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
-            শীঘ্রই আসছে
+            শুরু করো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>

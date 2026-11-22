@@ -4,11 +4,10 @@ export const appName = 'Python Developer Documentation';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 
-// fill this with your actual GitHub info, for example:
 export const gitConfig = {
-  user: 'fuma-nama',
-  repo: 'fumadocs',
-  branch: 'main',
+  user: 'oleeahmmed',
+  repo: 'documentation-and-tutorial',
+  branch: 'master',
 };
 
 const getImageUrl = createGetUrl(docsImageRoute);
