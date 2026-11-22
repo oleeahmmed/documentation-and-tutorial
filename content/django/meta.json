@@ -1,0 +1,15 @@
+{
+  "title": "Django Tutorial",
+  "pages": [
+    "index",
+    "installation",
+    "models",
+    "admin",
+    "views-urls",
+    "drf",
+    "cors",
+    "jwt",
+    "complete-project",
+    "summary"
+  ]
+}

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Code, Sparkles, WandSparkles } from 'lucide-react';
+import { ArrowRight, Boxes, Code, Sparkles, WandSparkles } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -41,6 +41,22 @@ export default function HomePage() {
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
             শুরু করো
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+
+        <Link
+          href="/django"
+          className="group rounded-xl border bg-fd-card p-6 transition-colors hover:bg-fd-accent"
+        >
+          <Boxes className="size-6 text-fd-primary" />
+          <h2 className="mt-4 text-lg font-semibold">Django Tutorial</h2>
+          <p className="mt-2 text-sm text-fd-muted-foreground">
+            রূপসী ফ্যাশনের গল্পে Django — Models, Admin, DRF, CORS আর JWT
+            পর্যন্ত সম্পূর্ণ API টিউটোরিয়াল।
+          </p>
+          <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
+            টিউটোরিয়াল দেখো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>

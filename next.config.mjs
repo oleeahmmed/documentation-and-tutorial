@@ -39,6 +39,18 @@ const config = {
         source: '/prompt-master/:path*.txt',
         destination: '/llms.mdx/prompt-master/:path*.txt',
       },
+      {
+        source: '/django.md',
+        destination: '/llms.mdx/django.md',
+      },
+      {
+        source: '/django/:path*.md',
+        destination: '/llms.mdx/django/:path*.md',
+      },
+      {
+        source: '/django/:path*.txt',
+        destination: '/llms.mdx/django/:path*.txt',
+      },
     ];
   },
 };

@@ -1,4 +1,4 @@
-import { docsLlms, promptMasterLlms, pythonBasicLlms } from '@/lib/source';
+import { djangoLlms, docsLlms, promptMasterLlms, pythonBasicLlms } from '@/lib/source';
 
 export const revalidate = false;
 // other paths are 404s, never cached responses
@@ -11,7 +11,9 @@ export async function GET(_req: Request, { params }: RouteContext<'/llms.mdx/[..
     ? pythonBasicLlms
     : url.startsWith('/prompt-master')
       ? promptMasterLlms
-      : docsLlms;
+      : url.startsWith('/django')
+        ? djangoLlms
+        : docsLlms;
 
   return (await llms.serve(url)) ?? new Response(null, { status: 404 });
 }
@@ -22,6 +24,7 @@ export async function generateStaticParams() {
     ...(await docsLlms.files()),
     ...(await pythonBasicLlms.files()),
     ...(await promptMasterLlms.files()),
+    ...(await djangoLlms.files()),
   ];
   for (const file of files) {
     // `/llms.txt` and `/llms-full.txt` have their own routes
