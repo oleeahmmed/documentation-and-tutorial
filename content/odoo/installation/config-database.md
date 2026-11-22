@@ -83,4 +83,4 @@ my-odoo/
 └── odoo/
 ```
 
-➡️ পরের ধাপ: [Odoo চালানো](/odoo/run-odoo) — অবশেষে সার্ভার চালু করি।
+➡️ পরের ধাপ: [Odoo চালানো](/odoo/installation/run-odoo) — অবশেষে সার্ভার চালু করি।

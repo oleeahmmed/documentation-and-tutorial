@@ -34,4 +34,4 @@ psql -l   # ডাটাবেসের তালিকা দেখাবে, �
 
 > `psql -l` চালাতে গিয়ে `Peer authentication failed` এলে বুঝবে ইউজার নাম/macOS-টাইপ mismatch হয়েছে। সাধারণত লিনাক্স ইউজারনেম আর PostgreSQL ইউজারনেম এক রাখলেই সমস্যা হয় না।
 
-➡️ পরের ধাপ: [সোর্স কোড আনা](/odoo/source-clone) — git কনফিগার করে Odoo-র কোড নামাই।
+➡️ পরের ধাপ: [সোর্স কোড আনা](/odoo/installation/source-clone) — git কনফিগার করে Odoo-র কোড নামাই।

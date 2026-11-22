@@ -48,4 +48,4 @@ my-odoo/
 └── odoo/           ← Odoo সোর্স কোড
 ```
 
-➡️ পরের ধাপ: [ডাটাবেস ও কনফিগ](/odoo/config-database) — ডাটাবেস বানিয়ে `odoo.conf` লিখি।
+➡️ পরের ধাপ: [ডাটাবেস ও কনফিগ](/odoo/installation/config-database) — ডাটাবেস বানিয়ে `odoo.conf` লিখি।

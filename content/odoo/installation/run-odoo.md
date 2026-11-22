@@ -50,7 +50,7 @@ http://your-server-ip:8069
 | --- | --- |
 | পোর্ট ব্যস্ত (`Address already in use`) | `sudo lsof -i :8069` দিয়ে প্রসেস দেখে বন্ধ করো |
 | ডাটাবেস কানেকশন এরর | `psql -l` কাজ করছে কিনা, `odoo.conf`-এর `db_user`/`db_name` মিলছে কিনা |
-| পেজ খুলছে না কিন্তু লগ ঠিক | ফায়ারওয়াল পোর্ট আটকে আছে কিনা — [পরের পেজ](/odoo/firewall-systemd) |
+| পেজ খুলছে না কিন্তু লগ ঠিক | ফায়ারওয়াল পোর্ট আটকে আছে কিনা — [পরের পেজ](/odoo/installation/firewall-systemd) |
 | `addons_path` এরর | `odoo.conf`-এ absolute path ঠিক আছে কিনা (`pwd` দিয়ে মিলাও) |
 
-➡️ পরের ধাপ: [ফায়ারওয়াল ও systemd](/odoo/firewall-systemd) — টার্মিনাল বন্ধ করলেও যেন Odoo চালু থাকে।
+➡️ পরের ধাপ: [ফায়ারওয়াল ও systemd](/odoo/installation/firewall-systemd) — টার্মিনাল বন্ধ করলেও যেন Odoo চালু থাকে।

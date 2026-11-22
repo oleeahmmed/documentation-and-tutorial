@@ -8,6 +8,11 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/odoo/:page(server-check|system-setup|postgres-setup|source-clone|venv-setup|config-database|run-odoo|firewall-systemd)',
+        destination: '/odoo/installation/:page',
+        permanent: true,
+      },
+      {
         source: '/odoo/configuration/general-settings/users-companies',
         destination: '/odoo/users-access',
         permanent: true,

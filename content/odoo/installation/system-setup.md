@@ -72,4 +72,4 @@ sudo npm install -g rtlcss less less-plugin-clean-css
 
 Odoo-র asset pipeline LESS/CSS কম্পাইল করতে Node.js ব্যবহার করে। `rtlcss` আরবি/হিব্রু-র মতো RTL ভাষার জন্য দরকার।
 
-➡️ পরের ধাপ: [PostgreSQL ইউজার](/odoo/postgres-setup) — Odoo ডাটাবেসে ঢোকার একটা ইউজার বানাই।
+➡️ পরের ধাপ: [PostgreSQL ইউজার](/odoo/installation/postgres-setup) — Odoo ডাটাবেসে ঢোকার একটা ইউজার বানাই।

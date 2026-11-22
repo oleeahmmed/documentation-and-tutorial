@@ -25,14 +25,14 @@ my-odoo/
 
 | ধাপ | কী করবে | পেজ |
 | --- | --- | --- |
-| ১ | RAM/ডিস্ক/CPU চেক, দরকারে swap | [সার্ভার চেক](/odoo/server-check) |
-| ২ | Python, PostgreSQL, wkhtmltopdf, Node.js ইনস্টল | [সিস্টেম সেটআপ](/odoo/system-setup) |
-| ৩ | PostgreSQL ইউজার বানানো | [PostgreSQL ইউজার](/odoo/postgres-setup) |
-| ৪ | git config আর Odoo সোর্স clone | [সোর্স কোড আনা](/odoo/source-clone) |
-| ৫ | venv বানিয়ে requirements ইনস্টল | [venv ও ডিপেন্ডেন্সি](/odoo/venv-setup) |
-| ৬ | ডাটাবেস আর `odoo.conf` | [ডাটাবেস ও কনফিগ](/odoo/config-database) |
-| ৭ | Odoo চালু করা | [Odoo চালানো](/odoo/run-odoo) |
-| ৮ | ফায়ারওয়াল আর systemd সার্ভিস | [ফায়ারওয়াল ও systemd](/odoo/firewall-systemd) |
+| ১ | RAM/ডিস্ক/CPU চেক, দরকারে swap | [সার্ভার চেক](/odoo/installation/server-check) |
+| ২ | Python, PostgreSQL, wkhtmltopdf, Node.js ইনস্টল | [সিস্টেম সেটআপ](/odoo/installation/system-setup) |
+| ৩ | PostgreSQL ইউজার বানানো | [PostgreSQL ইউজার](/odoo/installation/postgres-setup) |
+| ৪ | git config আর Odoo সোর্স clone | [সোর্স কোড আনা](/odoo/installation/source-clone) |
+| ৫ | venv বানিয়ে requirements ইনস্টল | [venv ও ডিপেন্ডেন্সি](/odoo/installation/venv-setup) |
+| ৬ | ডাটাবেস আর `odoo.conf` | [ডাটাবেস ও কনফিগ](/odoo/installation/config-database) |
+| ৭ | Odoo চালু করা | [Odoo চালানো](/odoo/installation/run-odoo) |
+| ৮ | ফায়ারওয়াল আর systemd সার্ভিস | [ফায়ারওয়াল ও systemd](/odoo/installation/firewall-systemd) |
 | ৯ | পুরো প্রক্রিয়া এক নজরে | [সারসংক্ষেপ](/odoo/summary) |
 
 ## Basic Configuration (Odoo চালু হওয়ার পর)

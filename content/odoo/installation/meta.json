@@ -1,0 +1,13 @@
+{
+  "title": "Installation",
+  "pages": [
+    "server-check",
+    "system-setup",
+    "postgres-setup",
+    "source-clone",
+    "venv-setup",
+    "config-database",
+    "run-odoo",
+    "firewall-systemd"
+  ]
+}
