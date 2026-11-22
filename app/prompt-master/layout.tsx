@@ -1,0 +1,11 @@
+import { promptMasterSource } from '@/lib/source';
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { baseOptions } from '@/lib/layout.shared';
+
+export default function Layout({ children }: LayoutProps<'/prompt-master'>) {
+  return (
+    <DocsLayout tree={promptMasterSource.getPageTree()} {...baseOptions()}>
+      {children}
+    </DocsLayout>
+  );
+}

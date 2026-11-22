@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Code, Sparkles } from 'lucide-react';
+import { ArrowRight, Code, Sparkles, WandSparkles } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -41,6 +41,22 @@ export default function HomePage() {
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
             শুরু করো
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+
+        <Link
+          href="/prompt-master"
+          className="group rounded-xl border bg-fd-card p-6 transition-colors hover:bg-fd-accent"
+        >
+          <WandSparkles className="size-6 text-fd-primary" />
+          <h2 className="mt-4 text-lg font-semibold">Prompt Master</h2>
+          <p className="mt-2 text-sm text-fd-muted-foreground">
+            ডিপ্লয় আর সমস্যা নির্ণয়ের মাস্টার প্রম্পট — কপি করে AI-কে দিলেই
+            কাজ শুরু।
+          </p>
+          <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
+            প্রম্পট দেখো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>

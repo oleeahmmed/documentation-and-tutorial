@@ -27,6 +27,18 @@ const config = {
         source: '/python-basic/:path*.txt',
         destination: '/llms.mdx/python-basic/:path*.txt',
       },
+      {
+        source: '/prompt-master.md',
+        destination: '/llms.mdx/prompt-master.md',
+      },
+      {
+        source: '/prompt-master/:path*.md',
+        destination: '/llms.mdx/prompt-master/:path*.md',
+      },
+      {
+        source: '/prompt-master/:path*.txt',
+        destination: '/llms.mdx/prompt-master/:path*.txt',
+      },
     ];
   },
 };

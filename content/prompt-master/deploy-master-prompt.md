@@ -1,0 +1,363 @@
+---
+title: Deploy Master Prompt
+description: DEPLOY আর DIAGNOSE — একটাই deploy.py বানানোর সম্পূর্ণ মাস্টার প্রম্পট।
+icon: Terminal
+---
+
+একটামাত্র স্ক্রিপ্ট (`deploy.py`), যেটা চালালেই হয় প্রজেক্ট ডিপ্লয় হয়ে যাবে, নাহলে কোনো সমস্যা থাকলে সেটা নিজে খুঁজে বের করে দেখাবে/ঠিক করবে — এইটাই পুরো প্রম্পটের মূল উদ্দেশ্য।
+
+## দুই মোড এক নজরে
+
+| মোড | কমান্ড | কাজ |
+| --- | --- | --- |
+| **DEPLOY** | `python3 deploy.py` | সার্ভার প্রস্তুত, কোড আনা, ডিপেন্ডেন্সি, সার্ভিস, Nginx, SSL — সব একসাথে |
+| **DIAGNOSE** | `python3 deploy.py --diagnose` | অ্যাপ, ডেটাবেস, Redis, WebSocket, Worker, Nginx, SSL, ডিস্ক/মেমরি একে একে পরীক্ষা |
+
+## মাস্টার প্রম্পট
+
+নিচের পুরো ব্লকটা কপি করে Claude-কে দাও। প্রম্পটে স্পষ্ট বলা আছে — প্রতিটা তথ্য আসল ফাইল পড়ে দিতে হবে, অনুমান নয়।
+
+```text
+=== মূল উদ্দেশ্য (এটাই সবচেয়ে গুরুত্বপূর্ণ, পুরো বিশ্লেষণ এই লক্ষ্য মাথায় রেখেই করবে) ===
+
+আমি একটামাত্র Python স্ক্রিপ্ট (deploy.py) বানাবো, যেটার দুটো কাজ থাকবে:
+
+১) DEPLOY মোড: আমি যদি প্রথমবার বা নতুন করে কোড পুশ করার পর এই স্ক্রিপ্ট 
+   চালাই, তাহলে এটা শূন্য থেকে শুরু করে প্রজেক্টটাকে সম্পূর্ণভাবে লাইভ 
+   করে দেবে — সার্ভার প্রস্তুত করা, কোড আনা, ডিপেন্ডেন্সি বসানো, সার্ভিস 
+   চালু করা, সব কিছু একাই করবে। আমি শুধু 'python3 deploy.py' চালাবো, 
+   আর কিছু করতে হবে না।
+
+২) DIAGNOSE মোড: সাইট যদি হঠাৎ ডাউন হয়ে যায়, বা কোনো ফিচার কাজ না করে, 
+   তাহলে আমি এই একই স্ক্রিপ্ট '--diagnose' ফ্ল্যাগ দিয়ে চালালে, এটা 
+   প্রতিটা উপাদান (অ্যাপ প্রসেস, ডেটাবেস, Redis, WebSocket, Worker, 
+   Nginx, SSL, ডিস্ক/মেমোরি) একে একে পরীক্ষা করে বলে দেবে ঠিক কোথায় 
+   সমস্যা, আর যেখানে সম্ভব (যেমন কোনো সার্ভিস বন্ধ হয়ে গেছে), নিজে থেকেই 
+   ঠিক করে দেবে। যেখানে স্বয়ংক্রিয়ভাবে ঠিক করা নিরাপদ না (যেমন কোড-লেভেল 
+   বাগ), সেখানে স্পষ্ট করে বলবে ঠিক কোন লগ-লাইনে সমস্যা, আমাকে কী করতে 
+   হবে।
+
+এই লক্ষ্য মাথায় রেখে, স্ক্রিপ্ট লেখার আগে আমার প্রজেক্ট ফোল্ডার(গুলো) 
+বিশ্লেষণ করে নিচের তথ্য দাও — যাতে deploy.py-তে DEPLOY আর DIAGNOSE দুটো 
+মোডের জন্যই সঠিক তথ্য বসানো যায়। প্রতিটা তথ্য আসল ফাইল পড়ে দেবে, অনুমান 
+করে না — অনিশ্চিত হলে স্পষ্ট করে বলবে "ফাইলে উল্লেখ নেই, ম্যানুয়ালি নিশ্চিত 
+হও"।
+
+=== ধাপ ১: প্রজেক্ট শনাক্তকরণ ===
+- ভাষা/ফ্রেমওয়ার্ক কী, কোন ফাইল দেখে বুঝলে
+- backend/frontend/fullstack, static নাকি চলমান প্রসেস
+- Dockerfile বা docker-compose.yml থাকলে পুরোটা বিশ্লেষণ করো — এতে প্রায় 
+  সব সার্ভিসের তথ্য একসাথে স্পষ্ট পাওয়া যায়
+
+=== ধাপ ২: রানটাইম ও ভার্সন ===
+- ভাষার ভার্সন (কোন ফাইলে উল্লেখ আছে)
+- সিস্টেম-লেভেল প্যাকেজ/এক্সটেনশন
+
+=== ধাপ ৩: ডিপেন্ডেন্সি ===
+- প্যাকেজ-ম্যানেজার, ইনস্টল কমান্ড
+- ইনফ্রাস্ট্রাকচার-প্রভাবক লাইব্রেরি (নিচের ধাপগুলোর সূত্র ধরে খুঁজে বের করবে)
+
+=== ধাপ ৪: বিল্ড প্রসেস ===
+- বিল্ড কমান্ড, আউটপুট ফোল্ডার
+
+=== ধাপ ৫: মূল অ্যাপ্লিকেশন সার্ভিস ===
+- চালানোর পদ্ধতি (app-server/process-manager/FPM), স্টার্ট-কমান্ড, পোর্ট
+- stdout/stderr-এ লগ লেখে নাকি নির্দিষ্ট ফাইলে — DIAGNOSE মোডে এখান 
+  থেকেই এরর পড়তে হবে
+
+=== ধাপ ৬: Redis / Caching / Session Store ===
+- redis/ioredis/predis/django-redis-এর মতো প্যাকেজ আছে কিনা
+- ব্যবহারের ধরন: caching, session, queue broker, pub/sub
+- কানেকশন env variable-এর নাম
+- DIAGNOSE মোডে Redis যাচাইয়ের কমান্ড কী হবে (যেমন redis-cli ping)
+
+=== ধাপ ৭: WebSocket / Real-time ===
+- socket.io, ws, Django Channels, Laravel Reverb, Pusher ইত্যাদি আছে কিনা
+- একই প্রসেসে চলে নাকি আলাদা পোর্ট/সার্ভারে
+- পাথ/পোর্ট কী
+- DIAGNOSE মোডে WebSocket সংযোগ পরীক্ষা করার উপায় (যেমন curl দিয়ে 
+  Upgrade header সহ রিকোয়েস্ট পাঠানো সম্ভব কিনা বলো)
+
+=== ধাপ ৮: Background Jobs / Queue Workers ===
+- Celery, BullMQ, Laravel Queue, Sidekiq ইত্যাদি আছে কিনা
+- worker চালানোর কমান্ড (মূল অ্যাপ থেকে আলাদা প্রসেস হিসেবে ধরে নেবে)
+- scheduler/beat প্রসেস লাগে কিনা
+- DIAGNOSE মোডে worker সঠিকভাবে job প্রসেস করছে কিনা কীভাবে বোঝা যাবে 
+  (যেমন queue length চেক করার কমান্ড)
+
+=== ধাপ ৯: Cron / Scheduled Tasks ===
+- কোনো সময়-নির্ধারিত কাজ আছে কিনা, exact কমান্ড ও সময়
+
+=== ধাপ ১০: ওয়েব সার্ভার কনফিগারেশন ===
+- reverse proxy/FastCGI টাইপ
+- static ফাইলের পাথ
+- WebSocket upgrade header লাগবে কিনা
+- client_max_body_size বাড়ানো লাগবে কিনা (আপলোড-লিমিট কোডে থাকলে বলো)
+
+=== ধাপ ১১: SSL/HTTPS ===
+- Let's Encrypt/Certbot লাগবে কিনা (ডোমেইন-ভিত্তিক হলে সবসময় রেকমেন্ড করবে)
+
+=== ধাপ ১২: এনভায়রনমেন্ট ভেরিয়েবল ===
+- সব .env.example-এর ভেরিয়েবল, কোনটা কোন সার্ভিসের তা চিহ্নিত করে
+
+=== ধাপ ১৩: ডেটাবেস ও মাইগ্রেশন ===
+- টাইপ, মাইগ্রেশন কমান্ড
+- DIAGNOSE মোডে ডেটাবেস কানেকশন টেস্ট করার কমান্ড কী হবে
+
+=== ধাপ ১৪: ফাইল স্টোরেজ ===
+- লোকাল আপলোড-ফোল্ডার (ডিপ্লয়মেন্টে মুছে না যাওয়া উচিত) নাকি ক্লাউড স্টোরেজ
+
+=== ধাপ ১৫: লগিং ===
+- প্রতিটা সার্ভিসের (app, worker, nginx, redis) লগ কোথায় পাওয়া যাবে — 
+  এটা DIAGNOSE মোডের সবচেয়ে গুরুত্বপূর্ণ তথ্য, কারণ সমস্যা খোঁজার সময় 
+  এখান থেকেই এরর পড়তে হবে
+
+=== ধাপ ১৬: পারমিশন ও নিরাপত্তা ===
+- বিশেষ write-permission লাগে এমন ফোল্ডার
+- Redis/DB যেন শুধু localhost-bound থাকে তা নিশ্চিত করার কথা বলো
+
+=== ধাপ ১৭: হেলথ-চেক ===
+- /health বা /status এন্ডপয়েন্ট আছে কিনা — DEPLOY মোডের শেষে আর DIAGNOSE 
+  মোডের শুরুতে এটাই প্রথম পরীক্ষা হবে
+
+=== ধাপ ১৮: সাধারণ ব্যর্থতার কারণ (DIAGNOSE মোডের মূল ভিত্তি) ===
+এই প্রজেক্টের স্ট্যাক অনুযায়ী, বাস্তবে সবচেয়ে বেশি যে কারণে এই ধরনের অ্যাপ 
+ডাউন হয় বা কাজ করে না, তার একটা তালিকা দাও — প্রতিটার জন্য:
+- উপসর্গ (যেমন "502 Bad Gateway" বা "WebSocket connection failed")
+- সম্ভাব্য কারণ
+- যাচাই করার সঠিক কমান্ড
+- যেখানে নিরাপদে স্বয়ংক্রিয় সমাধান সম্ভব (যেমন সার্ভিস বন্ধ থাকলে restart 
+  করা), সেই কমান্ড
+- যেখানে স্বয়ংক্রিয় সমাধান ঝুঁকিপূর্ণ (যেমন কোড এরর, ডেটা করাপশন), সেখানে 
+  শুধু "এই লগ-লাইন/এরর মেসেজ দেখলে এই কারণে হতে পারে, মানুষকে জানাও" লিখে 
+  দাও — কখনো অনুমানভিত্তিক "ফিক্স" কোড বানাবে না যেখানে ডেটা হারানোর 
+  ঝুঁকি আছে
+
+নিয়ম:
+- একাধিক ফোল্ডার থাকলে প্রতিটার জন্য আলাদা করে সম্পূর্ণ কাঠামোয় উত্তর দাও
+- সবশেষে তিনটা জিনিস দাও:
+
+  ১) "সিস্টেম-লেভেল সার্ভিস তালিকা" — ঠিক কোন কোন systemd সার্ভিস/প্যাকেজ 
+     লাগবে (app, redis-server, worker, beat, nginx ইত্যাদি), এবং তাদের 
+     নির্ভরতার ক্রম (কোনটা কোনটার পরে চালু হতে হবে)
+
+  ২) একটা সারাংশ টেবিল, কলাম: project_name, language_runtime, 
+     install_command, build_command, start_command, port, service_type, 
+     log_location, needs_redis, redis_purpose, redis_check_command, 
+     needs_websocket, websocket_port, needs_worker, worker_command, 
+     worker_check_command, needs_cron, cron_schedule, 
+     web_server_config_type, required_env_vars, database, 
+     db_check_command, file_storage_path, ssl_needed, 
+     health_check_endpoint
+
+  ৩) একটা "DIAGNOSE চেকলিস্ট" — ক্রম অনুযায়ী কোন কোন জিনিস একটার পর একটা 
+     চেক করা উচিত যখন সাইট ডাউন থাকে (যেমন: ১. app প্রসেস চলছে কিনা, 
+     ২. পোর্ট শোনা যাচ্ছে কিনা, ৩. ডেটাবেস কানেকশন, ৪. Redis কানেকশন, 
+     ৫. ডিস্ক/মেমোরি পূর্ণ কিনা, ৬. Nginx কনফিগ ভ্যালিড কিনা, ৭. SSL 
+     সার্টিফিকেট মেয়াদ আছে কিনা) — এই ক্রমটাই পরে deploy.py-র 
+     diagnose() ফাংশনের কাঠামো হবে
+```
+
+## এই প্রম্পটে নতুন কী যোগ হলো এবং কেন
+
+| সংযোজন | কারণ |
+| --- | --- |
+| শুরুতেই "মূল উদ্দেশ্য" স্পষ্ট করে বলা | Claude প্রতিটা প্রশ্নের উত্তর এই দুই-মোড লক্ষ্য মাথায় রেখে দেবে, শুধু তথ্য জড়ো করবে না |
+| প্রতিটা সার্ভিসের সাথে "...check command" চাওয়া | শুধু কী আছে তা না, **কীভাবে যাচাই করব** তাও লাগবে DIAGNOSE মোডের জন্য |
+| ধাপ ১৫ (লগিং) | সমস্যা খুঁজতে হলে প্রথমেই লাগে লগের সঠিক অবস্থান |
+| ধাপ ১৮ (সাধারণ ব্যর্থতার কারণ) | এটাই DIAGNOSE ফাংশনের "জ্ঞানভাণ্ডার" — Claude নিজে থেকেই common failure pattern বলে দেবে |
+| "নিরাপদ অটো-ফিক্স" বনাম "শুধু রিপোর্ট করা" স্পষ্ট আলাদা করা | যাতে স্ক্রিপ্ট কখনো ডেটা-ক্ষতিকর কিছু নিজে থেকে না করে ফেলে |
+| DIAGNOSE চেকলিস্ট আলাদা করে চাওয়া | এটাই সরাসরি কোডের `diagnose()` ফাংশনের কাঠামো হয়ে যাবে |
+
+## deploy.py-এর দুই-মোড কাঠামো
+
+প্রম্পটের উত্তর থেকে পাওয়া সারাংশ টেবিল দিয়ে `CONFIG` পূরণ করো। বাকি `check_*` ফাংশনগুলো একই প্যাটার্নে `ok / message / auto_fixed` রিটার্ন করবে।
+
+```python
+#!/usr/bin/env python3
+import sys
+
+CONFIG = {
+    # ... Claude-এর দেওয়া সারাংশ টেবিল থেকে পূরণ হবে
+}
+
+def deploy():
+    """প্রজেক্ট সম্পূর্ণভাবে লাইভ করে।"""
+    check_server_resources()
+    check_and_install_dependencies()
+    setup_project_folder()
+    install_project_dependencies()
+    run_build_if_needed()
+    setup_redis()
+    run_database_migrations()
+    setup_app_service()
+    setup_worker_service()
+    setup_cron_jobs()
+    generate_nginx_config()
+    setup_ssl()
+    health_check()
+    print("\n🎉 ডিপ্লয়মেন্ট সম্পন্ন!")
+
+
+def diagnose():
+    """ধাপে ধাপে সমস্যা খুঁজে বের করে, যেখানে সম্ভব নিজেই ঠিক করে।"""
+    print("🔍 সমস্যা নির্ণয় শুরু হচ্ছে...\n")
+
+    checks = [
+        ("অ্যাপ প্রসেস চলছে কিনা", check_app_process),
+        ("পোর্ট শোনা যাচ্ছে কিনা", check_port_listening),
+        ("ডেটাবেস কানেকশন", check_database_connection),
+        ("Redis কানেকশন", check_redis_connection),
+        ("Worker প্রসেস", check_worker_process),
+        ("ডিস্ক/মেমোরি", check_disk_memory),
+        ("Nginx কনফিগ", check_nginx_config),
+        ("SSL সার্টিফিকেট মেয়াদ", check_ssl_expiry),
+    ]
+
+    problems_found = []
+    for name, check_fn in checks:
+        print(f"➡️  চেক করা হচ্ছে: {name}")
+        ok, message, auto_fixed = check_fn()
+        if ok:
+            print(f"   ✅ ঠিক আছে — {message}")
+        else:
+            print(f"   ❌ সমস্যা পাওয়া গেছে — {message}")
+            if auto_fixed:
+                print(f"   🔧 স্বয়ংক্রিয়ভাবে ঠিক করা হয়েছে।")
+            else:
+                problems_found.append((name, message))
+
+    print("\n" + "=" * 50)
+    if not problems_found:
+        print("✅ সবকিছু ঠিক আছে, কোনো সমস্যা পাওয়া যায়নি।")
+    else:
+        print(f"⚠️  {len(problems_found)}টা সমস্যা মানুষের মনোযোগ দরকার:")
+        for name, msg in problems_found:
+            print(f"   - {name}: {msg}")
+
+
+def check_app_process():
+    import subprocess
+    status = subprocess.run(
+        f"systemctl is-active {CONFIG['systemd_service_name']}",
+        shell=True, capture_output=True, text=True
+    ).stdout.strip()
+
+    if status == "active":
+        return True, "অ্যাপ সার্ভিস চলছে", False
+
+    # নিরাপদ অটো-ফিক্স: বন্ধ থাকলে স্টার্ট করা
+    subprocess.run(f"sudo systemctl start {CONFIG['systemd_service_name']}", shell=True)
+    import time; time.sleep(2)
+    new_status = subprocess.run(
+        f"systemctl is-active {CONFIG['systemd_service_name']}",
+        shell=True, capture_output=True, text=True
+    ).stdout.strip()
+
+    if new_status == "active":
+        return False, "সার্ভিস বন্ধ ছিল, চালু করা হয়েছে", True
+    else:
+        # নিজে থেকে ঠিক না হলে, শেষ লগ দেখিয়ে মানুষকে জানানো
+        logs = subprocess.run(
+            f"sudo journalctl -u {CONFIG['systemd_service_name']} -n 20 --no-pager",
+            shell=True, capture_output=True, text=True
+        ).stdout
+        return False, f"সার্ভিস চালু করা যায়নি। শেষ লগ:\n{logs}", False
+
+
+def check_redis_connection():
+    if not CONFIG.get("needs_redis"):
+        return True, "Redis প্রযোজ্য নয়", False
+    import subprocess
+    result = subprocess.run("redis-cli ping", shell=True, capture_output=True, text=True)
+    if "PONG" in result.stdout:
+        return True, "Redis সাড়া দিচ্ছে", False
+
+    subprocess.run("sudo systemctl start redis-server", shell=True)
+    import time; time.sleep(1)
+    retry = subprocess.run("redis-cli ping", shell=True, capture_output=True, text=True)
+    if "PONG" in retry.stdout:
+        return False, "Redis বন্ধ ছিল, চালু করা হয়েছে", True
+    return False, "Redis চালু করা যায়নি, ম্যানুয়ালি চেক করো", False
+
+
+def check_disk_memory():
+    import subprocess
+    disk = subprocess.run("df -h / | tail -1 | awk '{print $5}'",
+                           shell=True, capture_output=True, text=True).stdout.strip()
+    usage_percent = int(disk.replace("%", ""))
+
+    if usage_percent > 90:
+        return False, f"ডিস্ক {usage_percent}% ভরা গেছে! জায়গা খালি করো।", False
+    return True, f"ডিস্ক ব্যবহার {usage_percent}%, স্বাভাবিক", False
+
+
+# ... বাকি check_* ফাংশনগুলো একই প্যাটার্নে — ok/message/auto_fixed রিটার্ন করবে
+
+
+if __name__ == "__main__":
+    if "--diagnose" in sys.argv:
+        diagnose()
+    else:
+        deploy()
+```
+
+## চালানোর নিয়ম
+
+```bash
+# প্রথমবার বা নতুন কোডের পর
+python3 deploy.py
+
+# সাইট কাজ না করলে
+python3 deploy.py --diagnose
+```
+
+## বাস্তবে `--diagnose` চালালে যা দেখবে
+
+```text
+🔍 সমস্যা নির্ণয় শুরু হচ্ছে...
+
+➡️  চেক করা হচ্ছে: অ্যাপ প্রসেস চলছে কিনা
+   ❌ সমস্যা পাওয়া গেছে — সার্ভিস বন্ধ ছিল, চালু করা হয়েছে
+   🔧 স্বয়ংক্রিয়ভাবে ঠিক করা হয়েছে।
+
+➡️  চেক করা হচ্ছে: পোর্ট শোনা যাচ্ছে কিনা
+   ✅ ঠিক আছে — পোর্ট 4000 সচল
+
+➡️  চেক করা হচ্ছে: ডেটাবেস কানেকশন
+   ✅ ঠিক আছে — সংযোগ সফল
+
+➡️  চেক করা হচ্ছে: Redis কানেকশন
+   ✅ ঠিক আছে — Redis সাড়া দিচ্ছে
+
+➡️  চেক করা হচ্ছে: Worker প্রসেস
+   ❌ সমস্যা পাওয়া গেছে — worker ক্র্যাশ হয়েছে, এরর: "Cannot connect to queue"
+
+➡️  চেক করা হচ্ছে: ডিস্ক/মেমোরি
+   ✅ ঠিক আছে — ডিস্ক ব্যবহার 45%
+
+==================================================
+⚠️  1টা সমস্যা মানুষের মনোযোগ দরকার:
+   - Worker প্রসেস: worker ক্র্যাশ হয়েছে, এরর: "Cannot connect to queue"
+```
+
+এখানে **অ্যাপ সার্ভিস** নিজে থেকেই ঠিক হয়ে গেছে (নিরাপদ অটো-ফিক্স), কিন্তু **Worker-এর সমস্যা** কোড-সম্পর্কিত মনে হওয়ায় স্ক্রিপ্ট নিজে কিছু না করে শুধু রিপোর্ট করেছে — এটাই প্রম্পটে চাওয়া "নিরাপদ অটো-ফিক্স বনাম শুধু রিপোর্ট" নীতির বাস্তব প্রয়োগ।
+
+## সারসংক্ষেপ
+
+```text
+মূল উদ্দেশ্য প্রম্পটের একদম শুরুতে স্পষ্ট করে বলা হলো: 
+DEPLOY মোড + DIAGNOSE মোড — একটাই স্ক্রিপ্টে
+    ↓
+প্রতিটা ধাপে শুধু "কী আছে" না, "কীভাবে যাচাই করব" তাও চাওয়া হলো
+    ↓
+লগের অবস্থান ও সাধারণ ব্যর্থতার কারণ আলাদা ধাপে বিস্তারিত চাওয়া হলো
+    ↓
+Claude-এর আউটপুট থেকে deploy.py-তে deploy() ও diagnose() — 
+দুটো আলাদা ফাংশন-সেট তৈরি হলো
+    ↓
+python3 deploy.py           → সম্পূর্ণ ডিপ্লয়
+python3 deploy.py --diagnose → সমস্যা খুঁজে বের করা ও নিরাপদ অংশ স্বয়ংক্রিয় ঠিক করা
+```
+
+এই প্রম্পটটাই আসল লক্ষ্য পূরণ করে — **একটা কমান্ড দিয়ে deploy, আরেকটা ফ্ল্যাগ দিয়ে problem-diagnosis**, দুটোই একই স্ক্রিপ্টে, যেকোনো ভাষার প্রজেক্টে কাজ করবে।

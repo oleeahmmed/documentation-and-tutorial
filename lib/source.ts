@@ -30,6 +30,19 @@ const pythonBasicDocs = defineDocs({
   },
 });
 
+const promptMasterDocs = defineDocs({
+  dir: 'content/prompt-master',
+  docs: {
+    schema: pageSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
@@ -43,6 +56,12 @@ export const pythonBasicSource = loader({
   plugins: [lucideIconsPlugin()],
 });
 
+export const promptMasterSource = loader({
+  baseUrl: '/prompt-master',
+  source: promptMasterDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
+
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
@@ -50,6 +69,12 @@ ${await page.data.getText('processed')}`,
 });
 
 export const pythonBasicLlms = llms(pythonBasicSource, {
+  renderPage: async (page) => `# ${page.data.title} (${page.url})
+
+${await page.data.getText('processed')}`,
+});
+
+export const promptMasterLlms = llms(promptMasterSource, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
 ${await page.data.getText('processed')}`,
