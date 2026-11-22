@@ -53,6 +53,10 @@ my-odoo/
 
 ব্রাউজারে `http://your-server-ip:8069` খুললেই Odoo ড্যাশবোর্ড।
 
+## চালু হওয়ার পর
+
+ড্যাশবোর্ডে ঢুকে **Basic Configuration** অংশটা একবার ঠিক করে নাও — [Database](/odoo/configuration/database) থেকে শুরু করে Company, Languages, Currency, Apps, Developer Mode পর্যন্ত। এই সেটিংসগুলো ঠিক থাকলে পরে ইনভয়েস, রিপোর্ট আর ভাষা নিয়ে ঝামেলা কম হবে।
+
 ## ভালো অভ্যাস
 
 - `master`-এর বদলে স্ট্যাবল ব্রাঞ্চ (`18.0`) দিয়ে প্রোডাকশন চালাও

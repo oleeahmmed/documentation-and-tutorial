@@ -1,0 +1,15 @@
+{
+  "title": "Basic Configuration",
+  "pages": [
+    "database",
+    "company",
+    "general-settings",
+    "languages",
+    "localization",
+    "currency",
+    "date-time",
+    "contacts",
+    "apps",
+    "developer-mode"
+  ]
+}

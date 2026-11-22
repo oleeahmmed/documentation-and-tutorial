@@ -75,4 +75,4 @@ pip install -r odoo/requirements.txt   # নতুন ডিপেন্ডে�
 sudo systemctl restart my-odoo
 ```
 
-➡️ শেষ ধাপ: [সারসংক্ষেপ](/odoo/summary) — পুরো প্রক্রিয়া এক নজরে।
+➡️ পরের অংশ: [Basic Configuration — Database](/odoo/configuration/database) — Odoo চালু হয়েছে, এবার ভেতরের সেটিংসগুলো ঠিক করি।

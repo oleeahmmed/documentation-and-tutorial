@@ -35,4 +35,21 @@ my-odoo/
 | ৮ | ফায়ারওয়াল আর systemd সার্ভিস | [ফায়ারওয়াল ও systemd](/odoo/firewall-systemd) |
 | ৯ | পুরো প্রক্রিয়া এক নজরে | [সারসংক্ষেপ](/odoo/summary) |
 
+## Basic Configuration (Odoo চালু হওয়ার পর)
+
+সার্ভারে Odoo চালু হয়ে গেলে ব্রাউজার থেকে এই সেটিংসগুলো একবার ঠিক করে নাও — প্রতিটা টপিক আলাদা সহজ পেজে:
+
+| টপিক | কী শিখবে |
+| --- | --- |
+| [Database](/odoo/configuration/database) | ডাটাবেস তৈরি, Master Password, Backup/Restore |
+| [Company](/odoo/configuration/company) | নাম, ঠিকানা, লোগো, Tax ID |
+| [General Settings](/odoo/configuration/general-settings) | Odoo-র সাধারণ সেটিংস |
+| [Languages](/odoo/configuration/languages) | বাংলা/ইংরেজি চালু, ইউজারের ভাষা |
+| [Localization](/odoo/configuration/localization) | দেশ, Accounting Localization, Fiscal |
+| [Currency](/odoo/configuration/currency) | BDT/USD, এক্সচেঞ্জ রেট, মাল্টি-কারেন্সি |
+| [Date & Time](/odoo/configuration/date-time) | টাইমজোন, তারিখ ও ভাষার ফরম্যাট |
+| [Contacts](/odoo/configuration/contacts) | কোম্পানি ও ব্যক্তির কন্টাক্ট |
+| [Apps](/odoo/configuration/apps) | ইনস্টল, আনইনস্টল, আপডেট |
+| [Developer Mode](/odoo/configuration/developer-mode) | Technical Menu আর ডেভেলপার টুলস |
+
 > **টিপস:** `master` ব্রাঞ্চ মানে Odoo-র একদম নতুন ডেভেলপমেন্ট ভার্সন — শেখার জন্য ঠিক আছে, কিন্তু প্রোডাকশনে `18.0`-এর মতো স্ট্যাবল ব্রাঞ্চ ব্যবহার করা ভালো (ধাপ ৪-এ দেখানো আছে)।
