@@ -2,6 +2,7 @@
   "title": "Python Basic",
   "pages": [
     "index",
+    "installation",
     "variables-data-types",
     "operators",
     "strings",
