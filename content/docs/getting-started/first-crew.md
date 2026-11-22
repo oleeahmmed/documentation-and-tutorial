@@ -50,7 +50,7 @@ result = crew.kickoff(inputs={"topic": "বাংলাদেশের ফ্য
 print(result.raw)
 ```
 
-venv অ্যাক্টিভেট করা টার্মিনালে চালাও:
+চালাও:
 
 ```bash
 pip install python-dotenv
