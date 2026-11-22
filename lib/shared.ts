@@ -7,7 +7,7 @@ export const docsImageRoute = '/og/docs';
 export const gitConfig = {
   user: 'oleeahmmed',
   repo: 'documentation-and-tutorial',
-  branch: 'master',
+  branch: 'main',
 };
 
 const getImageUrl = createGetUrl(docsImageRoute);
