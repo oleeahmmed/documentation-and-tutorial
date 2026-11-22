@@ -1,0 +1,15 @@
+{
+  "title": "Odoo Tutorial",
+  "pages": [
+    "index",
+    "server-check",
+    "system-setup",
+    "postgres-setup",
+    "source-clone",
+    "venv-setup",
+    "config-database",
+    "run-odoo",
+    "firewall-systemd",
+    "summary"
+  ]
+}

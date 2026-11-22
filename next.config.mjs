@@ -51,6 +51,18 @@ const config = {
         source: '/django/:path*.txt',
         destination: '/llms.mdx/django/:path*.txt',
       },
+      {
+        source: '/odoo.md',
+        destination: '/llms.mdx/odoo.md',
+      },
+      {
+        source: '/odoo/:path*.md',
+        destination: '/llms.mdx/odoo/:path*.md',
+      },
+      {
+        source: '/odoo/:path*.txt',
+        destination: '/llms.mdx/odoo/:path*.txt',
+      },
     ];
   },
 };

@@ -56,6 +56,19 @@ const djangoDocs = defineDocs({
   },
 });
 
+const odooDocs = defineDocs({
+  dir: 'content/odoo',
+  docs: {
+    schema: pageSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
@@ -81,6 +94,12 @@ export const djangoSource = loader({
   plugins: [lucideIconsPlugin()],
 });
 
+export const odooSource = loader({
+  baseUrl: '/odoo',
+  source: odooDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
+
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
@@ -100,6 +119,12 @@ ${await page.data.getText('processed')}`,
 });
 
 export const djangoLlms = llms(djangoSource, {
+  renderPage: async (page) => `# ${page.data.title} (${page.url})
+
+${await page.data.getText('processed')}`,
+});
+
+export const odooLlms = llms(odooSource, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
 ${await page.data.getText('processed')}`,
