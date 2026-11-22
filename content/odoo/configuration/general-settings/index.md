@@ -23,8 +23,9 @@ Odoo-র সব সেটিংস সব ভার্সনে বা শুর
 
 | সেটিংস | কোথায় পাবে | কখন দেখা যায় |
 | --- | --- | --- |
-| [Companies ও Users](/odoo/configuration/general-settings/users-companies) | Settings → Users & Companies | ডিফল্ট |
-| [Multi-Company](/odoo/configuration/general-settings/users-companies) | Settings → Users & Companies → Companies | ডিফল্ট |
+| [Users, Types, Groups ও Access Rights](/odoo/configuration/general-settings/users-companies) | Settings → Users & Companies | ডিফল্ট |
+| [Multi-Company](/odoo/configuration/general-settings/users-companies/multi-company) | Settings → Users & Companies → Companies | ডিফল্ট |
+| [Record Rules](/odoo/configuration/general-settings/users-companies/record-rules) | Settings → Technical → Security | ডিফল্ট (ডেভেলপার মোডে) |
 | [Languages ও Translations](/odoo/configuration/general-settings/languages-translations) | Settings → Translations | ডিফল্ট |
 | [Outgoing / Incoming Mail Server](/odoo/configuration/general-settings/email) | Settings → Technical → Mail Servers | ডিফল্ট (ডেভেলপার মোডে) |
 | [Document Management](/odoo/configuration/general-settings/documents) | Settings → Documents | **Documents** অ্যাপের পর |
@@ -69,7 +70,7 @@ Odoo-র সব সেটিংস সব ভার্সনে বা শুর
 
 | পেজ | রূপসী ফ্যাশনে কী কাজে লাগবে |
 | --- | --- |
-| [Users ও Companies](/odoo/configuration/general-settings/users-companies) | নাদিয়া, রফিক, সুমনের অ্যাকাউন্ট আর অধিকার |
+| [Users & Access Rights](/odoo/configuration/general-settings/users-companies) | নাদিয়া, রফিক, সুমনের অ্যাকাউন্ট, গ্রুপ, রেকর্ড রুল, মাল্টি-কোম্পানি |
 | [Languages ও Translations](/odoo/configuration/general-settings/languages-translations) | কর্মীদের বাংলা UI, বায়ারের ইংরেজি ইনভয়েস |
 | [Email Configuration](/odoo/configuration/general-settings/email) | কোটেশন পাঠানো, উত্তর গ্রহণ |
 | [Document Management](/odoo/configuration/general-settings/documents) | বায়ারের PO, LC কপি, ইন্সপেকশন রিপোর্ট |

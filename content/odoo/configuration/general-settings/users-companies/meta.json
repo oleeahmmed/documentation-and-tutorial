@@ -1,0 +1,13 @@
+{
+  "title": "Users & Access Rights",
+  "pages": [
+    "index",
+    "users",
+    "user-types",
+    "access-rights",
+    "groups",
+    "record-rules",
+    "multi-company",
+    "administrator"
+  ]
+}

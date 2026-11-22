@@ -1,0 +1,63 @@
+---
+title: Users & Access Rights
+description: রূপসী ফ্যাশনে কে কোন অ্যাপে ঢুকবে, কী দেখবে, কে অ্যাডমিন — সাতটা টপিকে হাতে-কলমে।
+icon: Users
+---
+
+**গল্প:** রূপসী ফ্যাশনের অফিসে এখন Odoo-তে লগইন করবে ৬ জন — করিম ভাই (মালিক), তানভীর (সেলস ম্যানেজার), নাদিয়া (সেলস), রফিক (স্টোর), সুমন (অ্যাকাউন্টস), শিপন (ঢাকা আউটলেট)। বাইরে থেকে শুধু UK-র বায়ার **Styles & Threads** ঢুকবে নিজের কোটেশন-ইনভয়েস দেখতে।
+
+সমস্যা: সবাইকে Administrator বানিয়ে দিলে নাদিয়া ভুল করে কাস্টমারের ইনভয়েস ডিলিট করতে পারে, রফিক ক্রয়মূল্য দেখে ফেলতে পারে। তাই কাজ ভাগ করে **কে কী পারবে** — সেটাই এই সেকশন।
+
+## কে কী পারবে — এক নজরে
+
+| কে | ভূমিকা | অ্যাপ | কী দেখবে |
+| --- | --- | --- | --- |
+| করিম | Owner / Administrator | সব | সব কোম্পানির সব ডেটা, সেটিংস |
+| তানভীর | Sales Manager | Sales | পুরো টিমের সব সেলস অর্ডার |
+| নাদিয়া | Salesperson | Sales (+ Invoicing) | শুধু **নিজের** কোটেশন/অর্ডার |
+| রফিক | Store Keeper | Inventory | স্টক, ওয়্যারহাউস — ইনভয়েস নয় |
+| সুমন | Accountant | Invoicing | ভ্যাট, ইনভয়েস, পেমেন্ট, রিপোর্ট |
+| শিপন | Outlet Manager | Sales + Inventory | শুধু **Retail কোম্পানি**র ডেটা |
+| Styles & Threads | Portal | Portal | শুধু নিজের কোটেশন/ইনভয়েস |
+
+এই তালিকা তৈরি হয় চারটা স্তর মিলিয়ে:
+
+```text
+User (কে ঢুকবে)
+  ↓
+User Type (Internal / Portal / Public)
+  ↓
+Groups (কোন অ্যাপে ঢুকবে)
+  ↓
+Access Rights + Record Rules (ভেতরে কী করতে/দেখতে পারবে)
+```
+
+## সাতটা টপিক
+
+প্রতিটা পেজে মেনু-পথ, হাতে-কলমে ধাপ আর ভুল ধরার উপায় আছে:
+
+| # | টপিক | রূপসী ফ্যাশনে কী কাজে লাগবে |
+| --- | --- | --- |
+| ১ | [Users](/odoo/configuration/general-settings/users-companies/users) | নাদিয়ার অ্যাকাউন্ট বানানো, পাসওয়ার্ড রিসেট, চাকরি ছাড়লে বন্ধ করা |
+| ২ | [User Types](/odoo/configuration/general-settings/users-companies/user-types) | স্টাফ (Internal) বনাম বায়ার (Portal) বনাম ওয়েবসাইট ভিজিটর (Public) |
+| ৩ | [Access Rights](/odoo/configuration/general-settings/users-companies/access-rights) | কে কোন মডেলে Read/Write/Create/Delete পারবে |
+| ৪ | [Groups](/odoo/configuration/general-settings/users-companies/groups) | নাদিয়া = Sales User, রফিক = Inventory User, সুমন = Accountant |
+| ৫ | [Record Rules](/odoo/configuration/general-settings/users-companies/record-rules) | সেলসম্যান শুধু নিজের অর্ডার, ম্যানেজার সবার অর্ডার |
+| ৬ | [Multi-Company](/odoo/configuration/general-settings/users-companies/multi-company) | শিপন শুধু Retail, সুমন দুটো কোম্পানিই দেখবে |
+| ৭ | [Administrator](/odoo/configuration/general-settings/users-companies/administrator) | করিমের অ্যাডমিন পাওয়ার, ব্যাকআপ অ্যাডমিন, চাকরি ছাড়া কর্মীর এক্সেস বাতিল |
+
+## সাজানোর সঠিক ক্রম
+
+```text
+১. Users বানাও (পাসওয়ার্ড/ইমেইল ঠিক করে)
+২. User Type ঠিক করো (স্টাফ না বায়ার?)
+৩. Groups দাও (কোন অ্যাপে ঢুকবে)
+৪. Access Rights যাচাই করো (CRUD ঠিক আছে?)
+৫. Record Rules (কোন রেকর্ড দেখবে)
+৬. Multi-Company (কোন কোম্পানির ডেটা)
+৭. সবশেষে Administrator (শুধু ১–২ জনকে)
+```
+
+> **নিয়ম:** সবসময় **সবচেয়ে কম পাওয়ার** দিয়ে শুরু করো। দরকার হলে পরে বাড়াও। আর যাচাই করার একমাত্র বিশ্বাসযোগ্য উপায় — ওই ইউজারের ইমেইল দিয়ে **আলাদা ব্রাউজার/ইনকগনিটো উইন্ডোতে লগইন করে** দেখো।
+
+➡️ শুরু: [Users](/odoo/configuration/general-settings/users-companies/users) — নাদিয়ার অ্যাকাউন্ট বানাই।
