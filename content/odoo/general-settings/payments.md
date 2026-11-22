@@ -41,4 +41,4 @@ icon: CreditCard
 | bKash | বিল্ট-ইন না — ম্যানুয়াল/থার্ড-পার্টি, দুটোর খরচ-ঝুঁকি নিজে দেখে নাও |
 | Webhook | লাইভ হওয়ার পর প্রোভাইডারের ড্যাশবোর্ডে webhook URL ঠিক করে দাও |
 
-➡️ পরের টপিক: [Developer Tools](/odoo/configuration/general-settings/developer-tools)
+➡️ পরের টপিক: [Developer Tools](/odoo/general-settings/developer-tools)

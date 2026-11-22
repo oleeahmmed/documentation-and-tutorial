@@ -5,6 +5,30 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/odoo/configuration/general-settings/users-companies',
+        destination: '/odoo/users-access',
+        permanent: true,
+      },
+      {
+        source: '/odoo/configuration/general-settings/users-companies/:path*',
+        destination: '/odoo/users-access/:path*',
+        permanent: true,
+      },
+      {
+        source: '/odoo/configuration/general-settings',
+        destination: '/odoo/general-settings',
+        permanent: true,
+      },
+      {
+        source: '/odoo/configuration/general-settings/:path*',
+        destination: '/odoo/general-settings/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

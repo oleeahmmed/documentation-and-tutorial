@@ -52,4 +52,4 @@ icon: Receipt
 - বায়ারের দেশ অনুযায়ী ট্যাক্স নিয়ম আলাদা হলে প্রোডাক্ট/কাস্টমার লেভেলে সেট করো
 - লোকালাইজেশন প্যাকেজ বদলালে চার্ট অফ অ্যাকাউন্টস বদলায় — লেনদেন শুরুর আগে ঠিক করো
 
-➡️ পরের টপিক: [Units ও Product Variants](/odoo/configuration/general-settings/units-product)
+➡️ পরের টপিক: [Units ও Product Variants](/odoo/general-settings/units-product)

@@ -18,7 +18,7 @@ icon: Users
 | Access Rights | Sales → **User** |
 
 1. উপরের ফিল্ডগুলো দাও
-2. **Access Rights** ট্যাবে গিয়ে অ্যাপ বেছে নাও (বিস্তারিত [Groups](/odoo/configuration/general-settings/users-companies/groups) পেজে)
+2. **Access Rights** ট্যাবে গিয়ে অ্যাপ বেছে নাও (বিস্তারিত [Groups](/odoo/users-access/groups) পেজে)
 3. **Save** — মেইল সার্ভার ঠিক থাকলে নাদিয়ার ইমেইলে অ্যাক্টিভেশন/পাসওয়ার্ড সেট করার লিংক যায়
 4. লিংক না গেলে: ওই ইউজারের **Action** মেনু → **Send Password Reset Instructions**
 
@@ -53,4 +53,4 @@ icon: Users
 | এক্স-employee-এর পাসওয়ার্ড | আর্কাইভের পাশাপাশি পাসওয়ার্ড বদলে দাও |
 | Portal এক্সেস | বায়ারের কন্টাক্ট থেকে আলাদাভাবে Revoke করতে হবে |
 
-➡️ পরের টপিক: [User Types](/odoo/configuration/general-settings/users-companies/user-types)
+➡️ পরের টপিক: [User Types](/odoo/users-access/user-types)

@@ -40,4 +40,4 @@ Users → ইউজার → **Access Rights** ট্যাব → **User Type:
 
 Users → ইউজার → Access Rights → **User Type** বদলে Save। Portal → Internal করলে সে backend-এ ঢুকতে পারবে (তখন Groups-ও ঠিক করতে হবে)। Internal → Portal করলে অ্যাপের এক্সেস সব চলে যাবে।
 
-➡️ পরের টপিক: [Access Rights](/odoo/configuration/general-settings/users-companies/access-rights)
+➡️ পরের টপিক: [Access Rights](/odoo/users-access/access-rights)

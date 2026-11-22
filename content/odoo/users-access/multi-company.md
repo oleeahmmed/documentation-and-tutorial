@@ -55,4 +55,4 @@ Users → ইউজার → **Access Rights** ট্যাব:
 | Product-এ ভুল কোম্পানি | শেয়ার করতে চাইলে Company ফাঁকা |
 | রিপোর্টে ভুল কোম্পানি | রিপোর্ট খোলার আগে টপবারে কোম্পানি/All দেখো |
 
-➡️ পরের টপিক: [Administrator](/odoo/configuration/general-settings/users-companies/administrator)
+➡️ পরের টপিক: [Administrator](/odoo/users-access/administrator)

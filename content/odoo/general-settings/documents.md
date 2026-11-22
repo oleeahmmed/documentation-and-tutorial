@@ -52,4 +52,4 @@ Odoo ভার্সন/এডিশনভেদে অপশনগুলো ক
 - বড় ফাইল অনেক জমলে ব্যাকআপের সাইজ বাড়ে — পুরোনো আর্কাইভ আলাদা রাখো
 - Documents অ্যাপের ডেটাও ডাটাবেস ব্যাকআপে থাকে (filestore সহ)
 
-➡️ পরের টপিক: [Invoices ও Sales Tax](/odoo/configuration/general-settings/invoicing-tax)
+➡️ পরের টপিক: [Invoices ও Sales Tax](/odoo/general-settings/invoicing-tax)

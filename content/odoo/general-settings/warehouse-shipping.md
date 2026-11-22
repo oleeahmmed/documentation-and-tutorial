@@ -57,4 +57,4 @@ icon: Warehouse
 | Steps | ২-ধাপ রিসিপ্ট/ডেলিভারি শুধু দরকার হলে চালু করো |
 | Shipping cost | ইনভয়েসে শিপিং খরচ যোগ করতে চাইলে ডেলিভারি প্রোডাক্ট হিসেবে বিল করো |
 
-➡️ পরের টপিক: [Payment Providers](/odoo/configuration/general-settings/payments)
+➡️ পরের টপিক: [Payment Providers](/odoo/general-settings/payments)

@@ -35,4 +35,4 @@ icon: Building2
 - লোগো দিলে রিপোর্ট আর লগইন পেজে সুন্দর দেখায়
 - একাধিক কোম্পানির ডেটা আলাদা থাকে, কিন্তু সেটিংস কিছু শেয়ার হয়
 
-➡️ পরের টপিক: [General Settings](/odoo/configuration/general-settings)
+➡️ পরের টপিক: [General Settings](/odoo/general-settings)

@@ -62,4 +62,4 @@ Odoo-র বিল্ট-ইন ACL আগে থেকেই ঠিক কর�
 | সবাইকে Administrator | কাজের Group-ই যথেষ্ট |
 | Delete দিয়ে দাও | দরকার না হলে Delete বন্ধ রাখাই ভালো |
 
-➡️ পরের টপিক: [Groups](/odoo/configuration/general-settings/users-companies/groups)
+➡️ পরের টপিক: [Groups](/odoo/users-access/groups)

@@ -11,6 +11,8 @@
     "run-odoo",
     "firewall-systemd",
     "configuration",
+    "general-settings",
+    "users-access",
     "summary"
   ]
 }

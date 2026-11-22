@@ -75,4 +75,4 @@ ACL (মডেলের অনুমতি)  AND  Record Rules (সারির 
 | global rule দিয়ে access দেওয়া | global rule শুধু **বন্ধ** করতে পারে |
 | নতুন rule টেস্ট না করা | দুইটা আলাদা ইউজার দিয়ে যাচাই করো |
 
-➡️ পরের টপিক: [Multi-Company](/odoo/configuration/general-settings/users-companies/multi-company)
+➡️ পরের টপিক: [Multi-Company](/odoo/users-access/multi-company)

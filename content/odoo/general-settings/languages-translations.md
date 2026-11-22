@@ -38,4 +38,4 @@ icon: Languages
 - কিছু কমিউনিটি মডিউলের বাংলা অনুবাদ অসম্পূর্ণ থাকতে পারে — আংশিক ইংরেজি দেখা স্বাভাবিক
 - ভাষা বদলানোর পর পেজ রিফ্রেশ করো
 
-➡️ পরের টপিক: [Email Configuration](/odoo/configuration/general-settings/email)
+➡️ পরের টপিক: [Email Configuration](/odoo/general-settings/email)

@@ -58,4 +58,4 @@ icon: Ruler
 | UoM | একই জিনিস দুই ইউনিটে (কেজি/মিটার) মিশিয়ে ফেলো না |
 | দাম | ভ্যারিয়েন্টভেদে দাম আলাদা হতে পারে — প্রোডাক্ট ফর্মে সেট করো |
 
-➡️ পরের টপিক: [Warehouse ও Shipping](/odoo/configuration/general-settings/warehouse-shipping)
+➡️ পরের টপিক: [Warehouse ও Shipping](/odoo/general-settings/warehouse-shipping)

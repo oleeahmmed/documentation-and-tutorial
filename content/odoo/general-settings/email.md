@@ -46,4 +46,4 @@ Gmail-এ সাধারণ পাসওয়ার্ড কাজ করব�
 | স্প্যাম | প্রথম কয়েকটা টেস্ট মেইল স্প্যামে যেতে পারে |
 | বায়ারের ইমেইল | ইনভয়েস PDF অ্যাটাচমেন্টসহ যায় — রিপোর্টে কোম্পানির তথ্য ঠিক রাখো |
 
-➡️ পরের টপিক: [Document Management](/odoo/configuration/general-settings/documents)
+➡️ পরের টপিক: [Document Management](/odoo/general-settings/documents)

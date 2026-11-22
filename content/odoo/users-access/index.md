@@ -38,13 +38,13 @@ Access Rights + Record Rules (ভেতরে কী করতে/দেখত�
 
 | # | টপিক | রূপসী ফ্যাশনে কী কাজে লাগবে |
 | --- | --- | --- |
-| ১ | [Users](/odoo/configuration/general-settings/users-companies/users) | নাদিয়ার অ্যাকাউন্ট বানানো, পাসওয়ার্ড রিসেট, চাকরি ছাড়লে বন্ধ করা |
-| ২ | [User Types](/odoo/configuration/general-settings/users-companies/user-types) | স্টাফ (Internal) বনাম বায়ার (Portal) বনাম ওয়েবসাইট ভিজিটর (Public) |
-| ৩ | [Access Rights](/odoo/configuration/general-settings/users-companies/access-rights) | কে কোন মডেলে Read/Write/Create/Delete পারবে |
-| ৪ | [Groups](/odoo/configuration/general-settings/users-companies/groups) | নাদিয়া = Sales User, রফিক = Inventory User, সুমন = Accountant |
-| ৫ | [Record Rules](/odoo/configuration/general-settings/users-companies/record-rules) | সেলসম্যান শুধু নিজের অর্ডার, ম্যানেজার সবার অর্ডার |
-| ৬ | [Multi-Company](/odoo/configuration/general-settings/users-companies/multi-company) | শিপন শুধু Retail, সুমন দুটো কোম্পানিই দেখবে |
-| ৭ | [Administrator](/odoo/configuration/general-settings/users-companies/administrator) | করিমের অ্যাডমিন পাওয়ার, ব্যাকআপ অ্যাডমিন, চাকরি ছাড়া কর্মীর এক্সেস বাতিল |
+| ১ | [Users](/odoo/users-access/users) | নাদিয়ার অ্যাকাউন্ট বানানো, পাসওয়ার্ড রিসেট, চাকরি ছাড়লে বন্ধ করা |
+| ২ | [User Types](/odoo/users-access/user-types) | স্টাফ (Internal) বনাম বায়ার (Portal) বনাম ওয়েবসাইট ভিজিটর (Public) |
+| ৩ | [Access Rights](/odoo/users-access/access-rights) | কে কোন মডেলে Read/Write/Create/Delete পারবে |
+| ৪ | [Groups](/odoo/users-access/groups) | নাদিয়া = Sales User, রফিক = Inventory User, সুমন = Accountant |
+| ৫ | [Record Rules](/odoo/users-access/record-rules) | সেলসম্যান শুধু নিজের অর্ডার, ম্যানেজার সবার অর্ডার |
+| ৬ | [Multi-Company](/odoo/users-access/multi-company) | শিপন শুধু Retail, সুমন দুটো কোম্পানিই দেখবে |
+| ৭ | [Administrator](/odoo/users-access/administrator) | করিমের অ্যাডমিন পাওয়ার, ব্যাকআপ অ্যাডমিন, চাকরি ছাড়া কর্মীর এক্সেস বাতিল |
 
 ## সাজানোর সঠিক ক্রম
 
@@ -60,4 +60,4 @@ Access Rights + Record Rules (ভেতরে কী করতে/দেখত�
 
 > **নিয়ম:** সবসময় **সবচেয়ে কম পাওয়ার** দিয়ে শুরু করো। দরকার হলে পরে বাড়াও। আর যাচাই করার একমাত্র বিশ্বাসযোগ্য উপায় — ওই ইউজারের ইমেইল দিয়ে **আলাদা ব্রাউজার/ইনকগনিটো উইন্ডোতে লগইন করে** দেখো।
 
-➡️ শুরু: [Users](/odoo/configuration/general-settings/users-companies/users) — নাদিয়ার অ্যাকাউন্ট বানাই।
+➡️ শুরু: [Users](/odoo/users-access/users) — নাদিয়ার অ্যাকাউন্ট বানাই।

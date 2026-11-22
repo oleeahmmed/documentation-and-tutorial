@@ -68,4 +68,4 @@ env.cr.commit()
 | একটাই অ্যাডমিন | ব্যাকআপ অ্যাডমিন রাখো |
 | অ্যাডমিন দিয়ে রোজের কাজ | সাধারণ ইউজার + দরকারে অ্যাডমিন |
 
-➡️ পরের টপিক: [Languages ও Translations](/odoo/configuration/general-settings/languages-translations)
+➡️ পরের টপিক: [Languages ও Translations](/odoo/general-settings/languages-translations)

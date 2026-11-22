@@ -60,4 +60,4 @@ Groups তালিকা → গ্রুপ খোলো → **Add a line** / 
 | Administrator টিক | শুধু সত্যিই যার দরকার |
 | গ্রুপ বদলানোর পর | ওই ইউজার দিয়ে লগইন করে যাচাই করো |
 
-➡️ পরের টপিক: [Record Rules](/odoo/configuration/general-settings/users-companies/record-rules)
+➡️ পরের টপিক: [Record Rules](/odoo/users-access/record-rules)
