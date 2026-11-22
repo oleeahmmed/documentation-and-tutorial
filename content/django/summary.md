@@ -1,45 +1,77 @@
 ---
 title: সারসংক্ষেপ
-description: কোন ফাইলে কী হয়, আর পুরো গল্প এক নজরে।
+description: সম্পূর্ণ ফোল্ডার কাঠামো, কোন ফিচার কোথায়, আর পুরো গল্প এক নজরে।
 icon: BookOpen
 ---
 
-## সারসংক্ষেপ টেবিল — কোথায় কী হয়
+## সম্পূর্ণ ফোল্ডার কাঠামো
 
-| ফাইল | কাজ |
-| --- | --- |
-| `models.py` | ডেটার কাঠামো (ডেটাবেস টেবিলের নকশা) |
-| `admin.py` | অ্যাডমিন প্যানেলে কী দেখাবে |
-| `serializers.py` | Model ↔ JSON রূপান্তর ও ভ্যালিডেশন |
-| `views.py` | API-র আসল লজিক (CRUD) |
-| `urls.py` | কোন ঠিকানায় কোন View চলবে |
-| `settings.py` | পুরো প্রজেক্টের কনফিগারেশন (App, Middleware, CORS, JWT) |
+```text
+school_system/
+├── manage.py
+├── media/
+│   └── student_photos/
+├── templates/
+│   └── website/
+│       ├── base.html
+│       ├── home.html
+│       └── contact.html
+├── school_system/
+│   ├── settings.py
+│   └── urls.py
+├── website/
+│   ├── models.py
+│   ├── forms.py
+│   ├── views.py
+│   └── urls.py
+└── students/
+    ├── models.py
+    ├── serializers.py
+    ├── views.py
+    ├── admin.py
+    ├── signals.py
+    ├── apps.py
+    └── urls.py
+```
+
+## কোন ফিচার কোথায়
+
+| ফিচার | লাইব্রেরি | কোথায় কনফিগার |
+| --- | --- | --- |
+| Classic Views/HTML/Forms | Django নিজেই | `website/` app |
+| REST API | `djangorestframework` | `students/views.py`, `serializers.py` |
+| CORS | `django-cors-headers` | `settings.py`-এ `CORS_ALLOWED_ORIGINS` |
+| JWT Auth | `djangorestframework-simplejwt` | `urls.py`-এ `TokenObtainPairView` |
+| Swagger/Redoc | `drf-spectacular` | `urls.py`-এ `SpectacularSwaggerView`/`RedocView` |
+| ছবি আপলোড | `Pillow` | `models.py`-এ `ImageField` |
+| রিচ-টেক্সট এডিটর | `django-ckeditor` | `models.py`-এ `RichTextUploadingField` |
+| ইমেইল (SMTP) | Django বিল্ট-ইন | `settings.py`-এ `EMAIL_BACKEND` + `signals.py` |
 
 ## সম্পূর্ণ গল্পের সারসংক্ষেপ
 
 ```text
-করিম ভাই Django প্রজেক্ট শুরু করলেন (startproject + startapp)
+প্রজেক্ট শুরু হলো (startproject + দুটো app: website, students)
     ↓
-রফিক পণ্যের কাঠামো বানালো (Models) ও migrate করলো
+Classic Django দিয়ে ওয়েবসাইট বানানো হলো (Model → Form → View → Template)
     ↓
-করিম ভাই Admin Panel দিয়ে কোড ছাড়াই পণ্য ম্যানেজ করতে লাগলেন
+DRF দিয়ে Student API বানানো হলো (Model with Pillow+CKEditor → Serializer → ViewSet)
     ↓
-Views ও URLs দিয়ে সাধারণ API বানানো হলো
+CORS যোগ করে ফ্রন্টএন্ডের অনুমতি দেওয়া হলো
     ↓
-DRF দিয়ে পেশাদার, পূর্ণাঙ্গ API বানানো হলো (Serializer + ViewSet + Router)
+JWT দিয়ে নিরাপদ লগইন ব্যবস্থা বানানো হলো
     ↓
-CORS যোগ করে নাদিয়ার ফ্রন্টএন্ডকে API কল করার অনুমতি দেওয়া হলো
+drf-spectacular দিয়ে Swagger ও Redoc ডকুমেন্টেশন স্বয়ংক্রিয় হলো
     ↓
-JWT দিয়ে নিরাপদ লগইন ব্যবস্থা বানানো হলো — টোকেন দিয়ে সুরক্ষিত এন্ডপয়েন্ট
+Signal দিয়ে SMTP ইমেইল স্বয়ংক্রিয় করা হলো (নতুন ছাত্র ভর্তি হলে)
 ```
 
 ## এরপর কী
 
-এটাই একটা সম্পূর্ণ, প্রোডাকশন-রেডি Django + DRF প্রজেক্টের ভিত্তি। এখান থেকেই তুমি যেকোনো বাস্তব API প্রজেক্ট (অর্ডার সিস্টেম, ইউজার ম্যানেজমেন্ট, পেমেন্ট) বানিয়ে ফেলতে পারবে।
+এটাই একটা সম্পূর্ণ, বাস্তব প্রোডাকশন-রেডি Django প্রজেক্টের কাঠামো — একই কোডবেসে Classic ওয়েবসাইট আর আধুনিক REST API দুটোই একসাথে চলছে।
 
 - পুরো টিউটোরিয়াল আবার দেখতে: [Django Tutorial](/django)
-- মডেল আর মাইগ্রেশনে আটকে গেলে: [Models](/django/models)
-- লগইন/টোকেন নিয়ে সমস্যা হলে: [JWT Authentication](/django/jwt)
+- ফর্ম/টেমপ্লেটে আটকে গেলে: [Classic Forms](/django/classic-forms) · [Templates](/django/classic-templates)
+- API/ডকুমেন্টেশন নিয়ে সমস্যা হলে: [API Views ও URLs](/django/api-views-urls) · [চালিয়ে টেস্ট](/django/run-and-test)
 - Python ভিত্তি দুর্বল মনে হলে: [Python Basic](/python-basic)
 
-> API তৈরি হয়ে গেলে সেটা ডিপ্লয় করতে [Deploy Master Prompt](/prompt-master/deploy-master-prompt) ব্যবহার করতে পারো, আর ডেটার উপর AI দিয়ে কাজ করাতে চাইলে [CrewAI ডকুমেন্টেশন](/docs) দেখো।
+> প্রোডাকশনে যাওয়ার আগে `DEBUG=False` করো, `SECRET_KEY` আর `EMAIL_HOST_PASSWORD` `.env`-এ রাখো (গিটে কমিট না), আর আপলোড করা `media/` ফোল্ডার যেন ডিপ্লয়ের সময় মুছে না যায় সেটা নিশ্চিত করো। ডিপ্লয়ের জন্য [Deploy Master Prompt](/prompt-master/deploy-master-prompt) ব্যবহার করতে পারো।

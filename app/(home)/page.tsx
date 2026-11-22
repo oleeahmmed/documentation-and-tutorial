@@ -52,8 +52,8 @@ export default function HomePage() {
           <Boxes className="size-6 text-fd-primary" />
           <h2 className="mt-4 text-lg font-semibold">Django Tutorial</h2>
           <p className="mt-2 text-sm text-fd-muted-foreground">
-            রূপসী ফ্যাশনের গল্পে Django — Models, Admin, DRF, CORS আর JWT
-            পর্যন্ত সম্পূর্ণ API টিউটোরিয়াল।
+            একই প্রজেক্টে Classic Django ওয়েবসাইট আর DRF Student API — CORS,
+            JWT, Swagger, ছবি আপলোড, SMTP সহ।
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
             টিউটোরিয়াল দেখো

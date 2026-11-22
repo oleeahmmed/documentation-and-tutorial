@@ -2,14 +2,16 @@
   "title": "Django Tutorial",
   "pages": [
     "index",
-    "installation",
-    "models",
-    "admin",
-    "views-urls",
-    "drf",
-    "cors",
-    "jwt",
-    "complete-project",
+    "project-setup",
+    "classic-model",
+    "classic-forms",
+    "classic-views-urls",
+    "classic-templates",
+    "api-setup",
+    "student-model",
+    "serializers-signals",
+    "api-views-urls",
+    "run-and-test",
     "summary"
   ]
 }

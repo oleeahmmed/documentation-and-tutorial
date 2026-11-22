@@ -1,38 +1,36 @@
 ---
 title: Django Tutorial
-description: করিম ভাইয়ের রূপসী ফ্যাশনের গল্পে Django — Models থেকে DRF, JWT, Admin Panel পর্যন্ত ৮টা পর্ব।
+description: একই প্রজেক্টে Classic Django ওয়েবসাইট আর DRF Student Management API — CORS, JWT, Swagger, ছবি আপলোড, রিচ-টেক্সট, SMTP সব সহ।
 icon: Boxes
 ---
 
-করিম ভাই ঠিক করলেন রূপসী ফ্যাশনের জন্য একটা ওয়েবসাইট/API বানাবেন। রফিক পণ্যের ডেটা সামলাবে, সুমন ডিজাইন দেখাবে, নাদিয়া API দিয়ে ফ্রন্টএন্ডে তথ্য পাঠাবে। এর জন্য লাগবে **Django**।
+এবার একই প্রজেক্টে দুটো আলাদা জিনিস বানাবো — একটা **Classic Django ওয়েবসাইট** (Views + HTML + Forms), আর একটা পূর্ণাঙ্গ **DRF Student Management API**। দুইটাই `school_system` প্রজেক্টে পাশাপাশি চলবে, আর প্রতিটা কমন ফিচার — CORS, JWT, Swagger/Redoc, SMTP ইমেইল, ছবি আপলোড, রিচ-এডিটর — থাকবে।
 
-**শুরু করার আগে:** [Python Basic](/python-basic) শেষ করে এসো — বিশেষ করে ক্লাস ও অবজেক্ট অধ্যায়টা, কারণ Django Model আসলে একটা Python ক্লাসই, শুধু Django নিজে সেটাকে ডেটাবেস টেবিলে রূপান্তর করে দেয়।
+**শুরু করার আগে:** [Python Basic](/python-basic) শেষ করে এসো — বিশেষ করে ক্লাস ও মডিউল অধ্যায়, কারণ Django Model আর View আসলে Python ক্লাস আর ফাংশনই।
 
-## পর্বগুলো
+## পর্ব A: Classic Django ওয়েবসাইট
 
-প্রতিটা পর্ব আলাদা পেজ — গল্প, কোড, আর হুবহু আউটপুট সহ।
+স্কুলের জন্য একটা সাধারণ ওয়েবসাইট — হোম পেজ আর একটা যোগাযোগ ফর্ম, যেটা ভিজিটরের বার্তা ডেটাবেসে সেভ করে।
 
-| পর্ব | কী শিখবে |
+| অধ্যায় | কী শিখবে |
 | --- | --- |
-| [Installation](/django/installation) | venv, Django ইনস্টল, project ও app বানানো |
-| [Models](/django/models) | ডেটাবেস টেবিলের নকশা আর migration |
-| [Admin Panel](/django/admin) | কোড ছাড়া পণ্য ম্যানেজ করার ড্যাশবোর্ড |
-| [Views ও URLs](/django/views-urls) | অনুরোধের উত্তর দেওয়া |
-| [DRF](/django/drf) | Serializer, ViewSet, Router দিয়ে পেশাদার API |
-| [CORS](/django/cors) | ফ্রন্টএন্ড থেকে API কল করার অনুমতি |
-| [JWT Authentication](/django/jwt) | টোকেন দিয়ে নিরাপদ লগইন |
-| [সম্পূর্ণ প্রজেক্ট](/django/complete-project) | সব ফাইল একসাথে |
-| [সারসংক্ষেপ](/django/summary) | এক নজরে পুরো ম্যাপ |
+| [প্রজেক্ট সেটআপ](/django/project-setup) | venv, Django + Pillow, project ও `website` app |
+| [Classic Model](/django/classic-model) | `ContactMessage` Model আর migration |
+| [Classic Forms](/django/classic-forms) | ModelForm দিয়ে ভ্যালিডেটেড ফর্ম |
+| [Views ও URLs](/django/classic-views-urls) | Function-Based View, POST-Redirect-GET |
+| [Templates](/django/classic-templates) | base/home/contact HTML আর টেমপ্লেট ট্যাগ |
 
-## কী বানাবে
+## পর্ব B: DRF Student Management API
 
-একটা ছোট কিন্তু প্রোডাকশন-রেডি **Rupashi Fashion API** — যেখানে থাকবে:
+প্রোডাকশন-গ্রেড API — ছবি আপলোড (Pillow), রিচ-টেক্সট বায়ো (CKEditor), CORS, JWT, Swagger/Redoc ডকুমেন্টেশন, আর নতুন ছাত্র ভর্তি হলে স্বয়ংক্রিয় SMTP ইমেইল।
 
-- `Product` মডেল ও ডেটাবেস টেবিল
-- Admin প্যানেল থেকে পণ্য যোগ/এডিট/ডিলিট
-- `/api/products/`-এ পূর্ণ CRUD API (DRF)
-- ব্রাউজার থেকে সরাসরি টেস্ট করার সুবিধা
-- CORS দিয়ে React/Next.js ফ্রন্টএন্ডের সাথে সংযোগ
-- JWT টোকেন দিয়ে লগইন-সুরক্ষিত এডিট
+| অধ্যায় | কী শিখবে |
+| --- | --- |
+| [API সেটআপ](/django/api-setup) | সব প্যাকেজ আর সম্পূর্ণ `settings.py` |
+| [Student Model ও Admin](/django/student-model) | ImageField, RichTextUploadingField, ছবি প্রিভিউ |
+| [Serializer ও Signal](/django/serializers-signals) | Model ↔ JSON, post_save ইমেইল |
+| [API Views ও URLs](/django/api-views-urls) | ViewSet, Router, JWT, Swagger/Redoc URL |
+| [চালিয়ে টেস্ট](/django/run-and-test) | Swagger-এ Try it out, JWT + multipart curl |
+| [সারসংক্ষেপ](/django/summary) | ফোল্ডার কাঠামো, ফিচার-ম্যাপ, গল্পের সারসংক্ষেপ |
 
-> Django শেষ হলে [CrewAI ডকুমেন্টেশন](/docs)-এ গিয়ে AI Agent বানানো শুরু করো — এই API-ই পরে তোমার Agent-এর ডেটা সোর্স হতে পারে।
+> একই কোডবেসে Classic ওয়েবসাইট আর আধুনিক REST API — এই দুটো একসাথে চালানোর অভ্যাসই পরে বড় প্রজেক্টে সবচেয়ে কাজে লাগে।
