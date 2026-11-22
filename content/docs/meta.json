@@ -30,7 +30,16 @@
     "core-concepts/cli",
     "core-concepts/production-architecture",
     "---Built In Tools---",
-    "built-in-tools",
+    "built-in-tools/index",
+    "built-in-tools/file-document",
+    "built-in-tools/web-scraping",
+    "built-in-tools/search-research",
+    "built-in-tools/database-data",
+    "built-in-tools/ai-ml",
+    "built-in-tools/cloud-storage",
+    "built-in-tools/integrations",
+    "built-in-tools/automation",
+    "built-in-tools/quick-access",
     "mcp-integration"
   ]
 }

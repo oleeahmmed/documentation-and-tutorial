@@ -1,208 +1,159 @@
 ---
 title: MCP Integration
-description: Connect agents to external systems through MCP servers.
+description: MCP সার্ভারের সাথে Agent সংযুক্ত করার সহজ বাংলা গাইড।
 icon: Plug
 ---
 
-> এই পেজটা [Built In Tools](/docs/built-in-tools) পেজের ধারাবাহিকতা — রেডিমেড টুলের পর এবার বাইরের সিস্টেমের সাথে সত্যিকারের সংযোগ।
+MCP (Model Context Protocol) হলো CrewAI-এর Agent-কে **বাইরের, স্বাধীন সিস্টেমের সাথে সংযুক্ত করার** উপায় — এটা [Built In Tools](/docs/built-in-tools) থেকে আলাদা, কারণ এখানে Tool-টা CrewAI নিজে বানায়নি, বরং একটা সম্পূর্ণ আলাদা সার্ভার (তোমার নিজের বানানো বা বাইরের কোম্পানির) থেকে এসেছে।
 
-## MCP Integration
+## MCP Integration Overview
 
-### বাস্তব গল্প (রূপসী ফ্যাশন)
+**ইনস্টলেশন:**
 
-রফিকের হাতে এখন নিজের বানানো দাম-চেকার, আর কিছু রেডিমেড টুল। কিন্তু করিম ভাই চান আরও বেশি — তিনি চান রফিক সরাসরি **পাইকারি বাজারের তথ্য-কেন্দ্রের** সাথে যুক্ত হোক, যেখানে লাইভ স্টক, পাইকারি দাম আর সাপ্লায়ারের তথ্য আছে।
+```bash
+pip install mcp
+pip install 'crewai-tools[mcp]'
+```
 
-সমস্যা হলো, ওই তথ্য-কেন্দ্র করিম ভাইয়ের নিজের বানানো একটা আলাদা সিস্টেম — CrewAI-র সাথে এর কোনো সম্পর্ক নেই। তাহলে রফিক কীভাবে এটা ব্যবহার করবে?
+**যেকোনো MCP সংযোগের নিয়ম সবসময় একই, ৩ ধাপ:**
 
-সমাধান — তথ্য-কেন্দ্রটাকে একটা **স্ট্যান্ডার্ড দরজা** দিয়ে বানানো হবে, যেটা যেকোনো AI এজেন্ট চিনে নিতে পারে। সেই স্ট্যান্ডার্ডের নাম **MCP (Model Context Protocol)**।
+```python
+# ধাপ ১: কোন সার্ভারের সাথে সংযোগ, তা বলো (mcps বা MCPServerAdapter দিয়ে)
+# ধাপ ২: Agent-কে সেই সংযোগ থেকে পাওয়া tools দাও
+# ধাপ ৩: দরকার হলে authentication/headers কনফিগার করো
+```
 
-### CrewAI-তে এই একই জিনিস
+## পদ্ধতি ১: Simple DSL (সহজ, রেকমেন্ডেড)
 
-MCP হলো একটা খোলা স্ট্যান্ডার্ড, যার মাধ্যমে যেকোনো বাইরের সার্ভিসকে (ডেটাবেস, স্টক-সিস্টেম, GitHub, Slack) “টুলের ভাণ্ডার” বানিয়ে Agent-এর হাতে দেওয়া যায়। CrewAI-তে এই সংযোগের দুইটা উপায়:
+সরাসরি Agent-এর `mcps` প্যারামিটারে সার্ভারের ঠিকানা বসিয়ে দাও।
 
-| উপায় | কখন ব্যবহার করবে |
+| ব্যবহার | কোড |
 | --- | --- |
-| `mcps=[...]` (সহজ DSL, রেকমেন্ডেড) | সাধারণ ক্ষেত্রে — Agent-এর গায়েই সংযোগ বসিয়ে দাও |
-| `MCPServerAdapter` (অ্যাডভান্সড) | একাধিক Agent একই সংযোগ শেয়ার করবে, বা নিজে খোলা-বন্ধ সামলাবে |
+| দূরবর্তী সার্ভার (URL দিয়ে) | `mcps=["https://example.com/mcp"]` |
+| নির্দিষ্ট একটা টুল শুধু | `mcps=["https://example.com/mcp#check_stock"]` |
+| লোকাল প্রোগ্রাম (stdio) | `mcps=[MCPServerStdio(command="python", args=["server.py"])]` |
+| দূরবর্তী সার্ভার (অথেনটিকেশন সহ) | `mcps=[MCPServerHTTP(url="...", headers={...})]` |
 
-> ⚠️ শুধু **বিশ্বাসযোগ্য** MCP সার্ভারে সংযোগ দাও — অচেনা সার্ভার তোমার Agent-এর মাধ্যমে ক্ষতিকর কাজ করাতে পারে।
-
-### ইনস্টলেশন
-
-```bash
-pip install "mcp[cli]"              # নিজের MCP সার্ভার বানানোর জন্য (FastMCP)
-pip install 'crewai-tools[mcp]'     # MCPServerAdapter-এর জন্য
-```
-
-সহজ DSL (`mcps=[...]`) ব্যবহার করলে শুধু `mcp` প্যাকেজটাই যথেষ্ট।
-
-### ধাপ ১: নিজের MCP সার্ভার বানাও (`mcp_server.py`)
-
-এটাই রূপসী ফ্যাশনের “পাইকারি বাজারের তথ্য-কেন্দ্র”। খেয়াল করো — এই ফাইলটা CrewAI-র সাথে সম্পূর্ণ আলাদা, নিজে থেকেই চলতে পারে:
+**উদাহরণ:**
 
 ```python
-# mcp_server.py
-from mcp.server.fastmcp import FastMCP
-
-mcp = FastMCP("Wholesale Market Info Desk")
-
-STOCK_DB = {
-    "উলের ওভারকোট": {"stock": 450, "price": "১৭০০ টাকা", "supplier": "ঢাকা উল হাউস"},
-    "চাদর": {"stock": 1200, "price": "৯০০ টাকা", "supplier": "রংপুর তাঁত ঘর"},
-    "মাফলার": {"stock": 80, "price": "৩৫০ টাকা", "supplier": "বগুড়া নিট কারখানা"},
-}
-
-@mcp.tool()
-def check_stock(item: str) -> str:
-    """একটা নির্দিষ্ট ফ্যাশন আইটেমের বর্তমান স্টক পরিমাণ জানায়।"""
-    data = STOCK_DB.get(item)
-    if not data:
-        return f"'{item}' নামে কোনো পণ্য পাওয়া যায়নি।"
-    return f"{item}-এর বর্তমান স্টক: {data['stock']} পিস।"
-
-@mcp.tool()
-def check_price(item: str) -> str:
-    """একটা নির্দিষ্ট ফ্যাশন আইটেমের পাইকারি দাম জানায়।"""
-    data = STOCK_DB.get(item)
-    if not data:
-        return f"'{item}' নামে কোনো পণ্যের দাম তথ্য নেই।"
-    return f"{item}-এর পাইকারি দাম: {data['price']}।"
-
-@mcp.tool()
-def get_supplier(item: str) -> str:
-    """একটা নির্দিষ্ট ফ্যাশন আইটেমের সাপ্লায়ারের নাম জানায়।"""
-    data = STOCK_DB.get(item)
-    if not data:
-        return f"'{item}'-এর কোনো সাপ্লায়ার তথ্য নেই।"
-    return f"{item}-এর সাপ্লায়ার: {data['supplier']}।"
-
-if __name__ == "__main__":
-    mcp.run()   # ডিফল্টভাবে stdio দিয়ে চলে
-```
-
-- `@mcp.tool()` — যে ফাংশনে এই ডেকোরেটর আছে, সেটাই MCP-এর একটা “টুল”
-- ফাংশনের **ডকস্ট্রিং** খুব জরুরি — Agent এটাই পড়ে বোঝে টুলটা কী কাজে লাগে
-- `mcp.run()` — সার্ভার চালু হয়, stdin/stdout দিয়ে কথা বলার জন্য তৈরি থাকে
-
-CrewAI-র সাথে জোড়ার আগে সার্ভারটা আলাদা করে টেস্ট করতে পারো:
-
-```bash
-npx @modelcontextprotocol/inspector python mcp_server.py
-```
-
-ব্রাউজারে খোলা Inspector-এ `check_stock`, `check_price`, `get_supplier` সরাসরি চালিয়ে দেখো।
-
-### ধাপ ২: Agent-এর সাথে জোড়া — সহজ DSL (রেকমেন্ডেড)
-
-```python
-from crewai import Agent, Task, Crew, Process
+from crewai import Agent
 from crewai.mcp import MCPServerStdio
 
 researcher = Agent(
     role="বাজার গবেষক",
-    goal="ফ্যাশন ট্রেন্ড ও পাইকারি বাজারের সঠিক তথ্য খুঁজে বের করা",
-    backstory="তুমি রফিক। পাইকারি বাজারের তথ্য-কেন্দ্রের সাথে তোমার সরাসরি সংযোগ আছে।",
+    goal="পাইকারি বাজারের সঠিক তথ্য আনা",
+    backstory="তুমি বাইরের ডেটা-সোর্সের সাথে সংযুক্ত।",
     mcps=[
-        MCPServerStdio(
-            command="python",
-            args=["mcp_server.py"],
-            env={"UV_PYTHON": "3.12"}   # শুধু দরকারি variable, পুরো os.environ নয়
-        )
-    ]
+        MCPServerStdio(command="python", args=["mcp_server.py"])
+    ],
 )
-
-research_task = Task(
-    description=(
-        "'{item}'-এর জন্য বর্তমান স্টক, দাম এবং সাপ্লায়ারের তথ্য "
-        "পাইকারি বাজারের তথ্য-কেন্দ্র থেকে যাচাই করে একটা সংক্ষিপ্ত রিপোর্ট বানাও।"
-    ),
-    expected_output="স্টক, দাম ও সাপ্লায়ারের তথ্যসহ একটা ছোট রিপোর্ট।",
-    agent=researcher
-)
-
-crew = Crew(agents=[researcher], tasks=[research_task], process=Process.sequential)
-result = crew.kickoff(inputs={"item": "উলের ওভারকোট"})
-print(result.raw)
 ```
 
-`with` ব্লক বা `try/finally`-এর দরকার নেই — CrewAI নিজেই Agent-এর জীবনচক্র অনুযায়ী সংযোগ খোলে আর বন্ধ করে।
+**বড় সুবিধা:** `with` ব্লক বা `try/finally` লাগে না — CrewAI নিজেই সংযোগ খোলা-বন্ধ করে।
 
-### ধাপ ৩: `MCPServerAdapter` (অ্যাডভান্সড)
+## পদ্ধতি ২: MCPServerAdapter (অ্যাডভান্সড, বেশি নিয়ন্ত্রণ)
 
-যখন একই সংযোগ একাধিক Agent-এর মধ্যে শেয়ার করতে হবে, বা নিজে খোলা-বন্ধ নিয়ন্ত্রণ করতে হবে:
+| ব্যবহার | কোড |
+| --- | --- |
+| লোকাল সার্ভার (stdio) | `StdioServerParameters(command="python", args=[...])` |
+| দূরবর্তী সার্ভার (SSE) | `{"url": "http://localhost:8000/sse", "transport": "sse"}` |
+| সংযোগ খোলা (with ব্লক) | `with MCPServerAdapter(params) as tools:` |
+| নির্দিষ্ট টুল শুধু | `MCPServerAdapter(params, "check_stock", "check_price")` |
+| সংযোগ ম্যানুয়াল বন্ধ | `adapter.stop()` |
+
+**উদাহরণ:**
 
 ```python
-from mcp import StdioServerParameters
+import os
+
+from crewai import Agent
 from crewai_tools import MCPServerAdapter
-from crewai import Agent, Task, Crew, Process
+from mcp import StdioServerParameters
 
 server_params = StdioServerParameters(
     command="python",
-    args=["mcp_server.py"]
+    args=["mcp_server.py"],
+    env={"UV_PYTHON": "3.12"},
 )
 
 with MCPServerAdapter(server_params) as mcp_tools:
-    print("সংযুক্ত টুল:", [tool.name for tool in mcp_tools])
-
     researcher = Agent(
         role="বাজার গবেষক",
-        goal="পাইকারি বাজারের সঠিক তথ্য খুঁজে বের করা",
-        backstory="তুমি রফিক, পাইকারি বাজারের তথ্য-কেন্দ্রের সাথে যুক্ত।",
-        tools=mcp_tools
+        goal="...",
+        backstory="...",
+        tools=mcp_tools,  # সব MCP টুল একসাথে
     )
-
-    research_task = Task(
-        description="'{item}'-এর স্টক, দাম আর সাপ্লায়ার যাচাই করে রিপোর্ট বানাও।",
-        expected_output="স্টক, দাম ও সাপ্লায়ারের তথ্যসহ রিপোর্ট।",
-        agent=researcher
-    )
-
-    crew = Crew(agents=[researcher], tasks=[research_task], process=Process.sequential)
-    result = crew.kickoff(inputs={"item": "উলের ওভারকোট"})
+    # ... Task, Crew, kickoff এই ব্লকের ভেতরেই থাকবে
 ```
 
-`with` ব্লক ব্যবহার না করলে নিজে বন্ধ করতে হবে, নাহলে সার্ভার ব্যাকগ্রাউন্ডে চালু থেকে যাবে:
+`with` ছাড়া ম্যানুয়ালি চালাতে চাইলে:
 
 ```python
 adapter = MCPServerAdapter(server_params)
 try:
     tools = adapter.tools
-    # ... Agent, Task, Crew, kickoff ...
+    # ... Agent / Task / Crew ...
 finally:
-    adapter.stop()   # 👈 বাধ্যতামূলক
+    adapter.stop()
 ```
 
-### দূরবর্তী (Remote) সার্ভার — HTTP/SSE
+**কখন কোনটা ব্যবহার করবে:**
 
-সার্ভারটা যদি তোমার কম্পিউটারে না থেকে কোনো ওয়েব সার্ভারে থাকে:
+| | `mcps=[...]` (সহজ) | `MCPServerAdapter` (অ্যাডভান্সড) |
+| --- | --- | --- |
+| কোড পরিমাণ | কম | বেশি |
+| নিয়ন্ত্রণ | সাধারণ কাজে যথেষ্ট | একাধিক Agent-এ connection শেয়ার, টাইমআউট কনফিগ |
+| সংযোগ ব্যবস্থাপনা | স্বয়ংক্রিয় | ম্যানুয়াল (`with` বা `.stop()`) |
+
+## নিজের MCP সার্ভার বানানো (FastMCP)
 
 ```python
-from crewai.mcp import MCPServerHTTP, MCPServerSSE
+# mcp_server.py
+from mcp.server.fastmcp import FastMCP
 
-mcps=[
-    MCPServerHTTP(
-        url="https://wholesale-market-mcp.example.com/mcp",
-        headers={"Authorization": "Bearer my-secret-token"}
-    ),
-    MCPServerSSE(url="https://stream.example.com/mcp/sse"),
+mcp = FastMCP("আমার সার্ভার")
 
-    # সবচেয়ে সহজ — শুধু URL স্ট্রিং
-    "https://weather-mcp.example.com/mcp"
-]
+@mcp.tool()
+def check_stock(item: str) -> str:
+    """একটা পণ্যের স্টক জানায়।"""
+    return f"{item}-এর স্টক: ৪৫০ পিস।"
+
+if __name__ == "__main__":
+    mcp.run()  # stdio ট্রান্সপোর্ট
 ```
 
-`MCPServerAdapter` দিয়েও দূরবর্তী সার্ভার চলে:
+**টেস্ট করো (CrewAI ছাড়াই):**
+
+```bash
+npx @modelcontextprotocol/inspector python mcp_server.py
+```
+
+## ট্রান্সপোর্ট টাইপ (সার্ভার কীভাবে সংযুক্ত)
+
+| ট্রান্সপোর্ট | কখন ব্যবহার করবে | ক্লাস |
+| --- | --- | --- |
+| **Stdio** | লোকাল প্রোগ্রাম, একই কম্পিউটারে চলে | `MCPServerStdio` |
+| **HTTP** | দূরবর্তী, ওয়েবে হোস্ট করা সার্ভার | `MCPServerHTTP` |
+| **SSE** | দূরবর্তী, স্ট্রিমিং-ভিত্তিক সার্ভার | `MCPServerSSE` / `{"url": ".../sse", "transport": "sse"}` |
+
+**HTTP সার্ভার + অথেনটিকেশন:**
 
 ```python
-server_params = {"url": "http://localhost:8000/sse", "transport": "sse"}
+from crewai.mcp import MCPServerHTTP
 
-with MCPServerAdapter(server_params) as mcp_tools:
-    ...
+MCPServerHTTP(
+    url="https://example.com/mcp",
+    headers={"Authorization": "Bearer my-token"},
+)
 ```
 
-### নির্দিষ্ট টুল-ই চাও — Tool Filtering
+## Tool Filtering — নির্দিষ্ট কিছু টুলই চাও
 
-ধরো সাপ্লায়ারের তথ্য গোপনীয়, তাই রফিক শুধু `check_stock` আর `check_price` ব্যবহার করবে:
+| পদ্ধতি | কোড |
+| --- | --- |
+| DSL-এ (`mcps`) | `tool_filter=create_static_tool_filter(allowed_tool_names=["check_stock"])` |
+| `MCPServerAdapter`-এ | `MCPServerAdapter(params, "check_stock")` |
 
 ```python
 from crewai.mcp import MCPServerStdio
@@ -213,94 +164,46 @@ MCPServerStdio(
     args=["mcp_server.py"],
     tool_filter=create_static_tool_filter(
         allowed_tool_names=["check_stock", "check_price"],
-        blocked_tool_names=["get_supplier"]
-    )
+        blocked_tool_names=["delete_all"],
+    ),
 )
 ```
 
-`MCPServerAdapter`-এ টুলের নাম পাস করে দিলেই হয়:
+## একাধিক MCP সার্ভার একসাথে
 
 ```python
-with MCPServerAdapter(server_params, "check_stock", "check_price") as mcp_tools:
-    ...
-```
+from crewai import Agent
+from crewai.mcp import MCPServerStdio
 
-অথবা নাম ধরে একটা টুল বেছে নেওয়া যায়: `mcp_tools["check_stock"]`।
-
-`blocked_tool_names` দিয়ে নিষিদ্ধও করা যায়, আর `create_dynamic_tool_filter` দিয়ে Agent-এর role অনুযায়ী কোন টুল দেখা যাবে তা ঠিক করা যায় — রফিক এখন `get_supplier`-এর কথা জানেই না।
-
-### একাধিক MCP সার্ভার একসাথে
-
-শীতকালীন পণ্যের চাহিদা আবহাওয়ার উপরও নির্ভর করে — তাই পাইকারি বাজার আর আবহাওয়ার তথ্য, দুটোই একসাথে:
-
-```python
 researcher = Agent(
-    role="বাজার গবেষক",
+    role="...",
     goal="...",
     backstory="...",
     mcps=[
-        MCPServerStdio(command="python", args=["mcp_server.py"]),   # নিজের সার্ভার
-        "https://weather-mcp.example.com/mcp"                        # বাইরের সার্ভার
-    ]
+        MCPServerStdio(command="python", args=["mcp_server.py"]),  # লোকাল
+        "https://weather-mcp.example.com/mcp",  # দূরবর্তী
+    ],
 )
 ```
 
-CrewAI দুটো সার্ভার থেকেই সব টুল একত্র করে Agent-এর হাতে দেয়।
+CrewAI স্বয়ংক্রিয়ভাবে দুটো সার্ভার থেকেই সব টুল একত্র করে দেয়।
 
-### বাস্তবে কী ঘটে — টার্মিনালে যা দেখবে
+## নিরাপত্তা — মাথায় রাখতে হবে
 
-```text
-সংযুক্ত MCP টুল: ['check_stock', 'check_price', 'get_supplier']
-
-Thought: "উলের ওভারকোট"-এর স্টক, দাম আর সাপ্লায়ার জানতে হবে।
-
-Action: check_stock
-Action Input: {"item": "উলের ওভারকোট"}
-Observation: উলের ওভারকোট-এর বর্তমান স্টক: ৪৫০ পিস।
-
-Action: check_price
-Action Input: {"item": "উলের ওভারকোট"}
-Observation: উলের ওভারকোট-এর পাইকারি দাম: ১৭০০ টাকা।
-
-Action: get_supplier
-Action Input: {"item": "উলের ওভারকোট"}
-Observation: উলের ওভারকোট-এর সাপ্লায়ার: ঢাকা উল হাউস।
-
-===== চূড়ান্ত ফলাফল =====
-- স্টক: ৪৫০ পিস
-- পাইকারি দাম: ১৭০০ টাকা
-- সাপ্লায়ার: ঢাকা উল হাউস
-```
-
-রফিক তিনটা আলাদা টুল আলাদা করে কল করেছে, সত্যিকারের ডেটা এনেছে, তারপর সব মিলিয়ে রিপোর্ট বানিয়েছে — কোনো আন্দাজ নয়।
-
-### নিরাপত্তা — ভুলে গেলে চলবে না
-
-1. **শুধু বিশ্বাসযোগ্য সার্ভারে সংযোগ দাও** — অচেনা URL-এর সার্ভার Agent-এর মাধ্যমে ক্ষতিকর কাজ করাতে পারে।
-2. **DNS Rebinding থেকে সতর্ক থাকো** — SSE সার্ভার ব্যবহার করলে Origin হেডার যাচাই করো, আর সার্ভারকে `0.0.0.0`-তে খুলো না; শুধু `127.0.0.1`-এ বাঁধো।
-3. **পুরো environment পাঠিও না** — `env={**os.environ}` দিলে তোমার API key-ও সার্ভারের কাছে চলে যাবে। শুধু দরকারি variable দাও।
-4. **MCP-এর সবকিছু এখনো আসে না** — `MCPServerAdapter` মূলত MCP-এর `tools` সাপোর্ট করে; `prompts` আর `resources` সরাসরি CrewAI কম্পোনেন্ট হিসেবে পাওয়া যায় না।
-
-### সাধারণ সমস্যা ও সমাধান
-
-| সমস্যা | কারণ ও সমাধান |
+| নিয়ম | কারণ |
 | --- | --- |
-| `tools` লিস্ট খালি | `mcp_server.py`-তে `@mcp.tool()` ঠিক আছে কিনা, `mcp.run()` কল হচ্ছে কিনা দেখো |
-| `Connection failed` | `args=["mcp_server.py"]`-এর পাথ ঠিক আছে কিনা, `python` PATH-এ আছে কিনা চেক করো |
-| Agent টুল কল করছে না | ফাংশনের ডকস্ট্রিং স্পষ্ট কিনা দেখো — Agent এটাই পড়ে বোঝে |
-| স্ক্রিপ্ট hang করছে | ম্যানুয়াল Adapter ব্যবহার করলে `.stop()` কল করেছ কিনা দেখো |
+| শুধু বিশ্বাসযোগ্য সার্ভারে সংযোগ দাও | অচেনা সার্ভার ক্ষতিকর কাজ করাতে পারে |
+| DNS Rebinding থেকে সতর্ক থাকো | HTTP/SSE সার্ভারে এই আক্রমণের ঝুঁকি থাকে |
+| `env`-এ শুধু দরকারি ভেরিয়েবল দাও | পুরো `os.environ` দিলে অনেক secret ফাঁস হতে পারে |
+| মনে রাখো, শুধু "tools" সাপোর্ট করে | MCP-এর prompts/resources আলাদাভাবে আসে না |
 
-### দুই উপায়ের তুলনা
+## সারসংক্ষেপ — Built-in Tools বনাম MCP
 
-| | `mcps=[...]` DSL | `MCPServerAdapter` |
+| | Built-in Tools | MCP |
 | --- | --- | --- |
-| কোড | কম — সরাসরি Agent-এ | বেশি — `with` বা try/finally লাগে |
-| সংযোগের জীবনচক্র | CrewAI নিজে সামলায় | তুমি নিজে সামলাও |
-| নিয়ন্ত্রণ | কম, কিন্তু সাধারণ কাজে যথেষ্ট | বেশি — একাধিক Agent সংযোগ শেয়ার, `connect_timeout` |
-| কখন | সাধারণ, দ্রুত সেটআপ | বড়, জটিল প্রজেক্ট |
+| উৎস | CrewAI/crewai-tools প্যাকেজে আগে থেকেই আছে | বাইরের/নিজের বানানো স্বাধীন সার্ভার |
+| ইনস্টল | `pip install 'crewai[tools]'` | `pip install mcp 'crewai-tools[mcp]'` |
+| ব্যবহার | `from crewai_tools import X; tools=[X()]` | `mcps=[...]` অথবা `MCPServerAdapter` |
+| উদাহরণ | `FileReadTool`, `SerperDevTool` | নিজের `mcp_server.py`, বা বাইরের MCP সার্ভার |
 
-### পরের ধাপ
-
-- [Built In Tools](/docs/built-in-tools) — রেডিমেড টুলের ভাণ্ডারে ফিরে যেতে চাইলে
-- [Tools](/docs/core-concepts/tools) — নিজের টুল বানানো শিখতে
-- [Agent Capabilities](/docs/core-concepts/agent-capabilities) — পাঁচটা সক্ষমতার তালিকা
+এই টেবিলগুলোই তোমার MCP ইন্টিগ্রেশনের দ্রুত রেফারেন্স — যেকোনো প্রজেক্টে এখান থেকে সরাসরি কপি করে বসিয়ে নিতে পারো।
