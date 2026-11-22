@@ -1,0 +1,15 @@
+{
+  "title": "General Settings",
+  "pages": [
+    "index",
+    "users-companies",
+    "languages-translations",
+    "email",
+    "documents",
+    "invoicing-tax",
+    "units-product",
+    "warehouse-shipping",
+    "payments",
+    "developer-tools"
+  ]
+}

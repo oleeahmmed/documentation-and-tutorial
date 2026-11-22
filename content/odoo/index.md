@@ -43,7 +43,7 @@ my-odoo/
 | --- | --- |
 | [Database](/odoo/configuration/database) | ডাটাবেস তৈরি, Master Password, Backup/Restore |
 | [Company](/odoo/configuration/company) | নাম, ঠিকানা, লোগো, Tax ID |
-| [General Settings](/odoo/configuration/general-settings) | Odoo-র সাধারণ সেটিংস |
+| [General Settings](/odoo/configuration/general-settings) | ডিফল্ট বনাম অ্যাপ-নির্ভর সেটিংস — গার্মেন্টসের গল্পে ধাপে ধাপে |
 | [Languages](/odoo/configuration/languages) | বাংলা/ইংরেজি চালু, ইউজারের ভাষা |
 | [Localization](/odoo/configuration/localization) | দেশ, Accounting Localization, Fiscal |
 | [Currency](/odoo/configuration/currency) | BDT/USD, এক্সচেঞ্জ রেট, মাল্টি-কারেন্সি |
