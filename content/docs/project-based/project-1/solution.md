@@ -87,7 +87,7 @@ your parcel right after the payment is received.
 ## ফোল্ডার স্ট্রাকচার (প্রস্তাবিত)
 
 ```text
-fraud-shield/
+fraud_shield_pro/
 ├── backend/
 │   ├── orders/          # webhook, models
 │   ├── risk/            # rules, courier adapters
@@ -108,6 +108,6 @@ fraud-shield/
 
 ## পরের ধাপ
 
-এই পেজগুলোতে আমরা সিস্টেমটা **ধাপে ধাপে বানাবো** — অর্ডার মডেল, webhook, courier adapter, CrewAI crew, WhatsApp, dashboard। কোড শুরু হলে প্রতিটা ধাপের আলাদা পেজ যোগ হবে।
+কোডিং শুরু হয়েছে — **[পর্ব ১ — Django Backend ও Webhook](/docs/project-based/project-1/backend-webhook)**-এ শূন্য থেকে DRF আর WooCommerce webhook। এরপর React ড্যাশবোর্ড, তারপর CrewAI এজেন্ট।
 
 ➡️ পোস্টটা আরেকবার দেখতে: [Project 1 — ক্লায়েন্ট পোস্ট](/docs/project-based/project-1)

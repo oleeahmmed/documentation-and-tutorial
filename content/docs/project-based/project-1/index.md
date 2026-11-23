@@ -80,7 +80,15 @@ CrewAI Crew
 React Dashboard + PostgreSQL
 ```
 
-বিস্তারিত এজেন্ট ডিজাইন, রিস্ক রুল আর মাইলস্টোন: **[System Design](/docs/project-based/project-1/solution)**।
+এই সিরিজে সিস্টেমটা ধাপে ধাপে বানাবো — আগে ডেটা পাইপলাইন, তারপর এজেন্ট:
+
+| পর্ব | কী বানাবে | পেজ |
+| --- | --- | --- |
+| ১ | Django + DRF + WooCommerce webhook — লাইভ অর্ডার রিসিভ | [পর্ব ১ — Django Backend](/docs/project-based/project-1/backend-webhook) |
+| ২ | React ড্যাশবোর্ড | (আসছে) |
+| ৩ | CrewAI এজেন্ট — রিস্ক স্কোর + WhatsApp | (আসছে) |
+
+এজেন্ট ডিজাইন, রিস্ক রুল আর মাইলস্টোন: **[System Design](/docs/project-based/project-1/solution)**।
 
 | যা শিখবে | কোথায় কাজে লাগবে |
 | --- | --- |
@@ -89,4 +97,4 @@ React Dashboard + PostgreSQL
 | WhatsApp Business API | HR (#৮), সাপোর্ট (#১৩) |
 | Risk scoring + dashboard | SaaS প্রোডাক্ট হিসেবে বিক্রি |
 
-➡️ পরের পেজ: [System Design](/docs/project-based/project-1/solution) — কে কী করবে, স্কোর কীভাবে হবে।
+➡️ শুরু: [পর্ব ১ — Django Backend ও Webhook](/docs/project-based/project-1/backend-webhook) — আজ শূন্য থেকে API আর লাইভ অর্ডার।
