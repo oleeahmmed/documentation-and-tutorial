@@ -1,0 +1,31 @@
+{
+  "title": "FastAPI Tutorial",
+  "pages": [
+    "index",
+    "---শুরু---",
+    "installation",
+    "first-app",
+    "---রিকোয়েস্ট ও রেসপন্স---",
+    "path-parameters",
+    "query-parameters",
+    "request-body",
+    "response-model",
+    "status-errors",
+    "validation",
+    "---কোড গোছানো---",
+    "routers",
+    "dependencies",
+    "authentication",
+    "lifespan",
+    "cors",
+    "---ডেটাবেস ও প্রোডাকশন---",
+    "database",
+    "background-tasks",
+    "file-upload",
+    "async",
+    "testing",
+    "---শেষ---",
+    "full-project",
+    "summary"
+  ]
+}

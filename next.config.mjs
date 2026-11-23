@@ -92,6 +92,18 @@ const config = {
         source: '/odoo/:path*.txt',
         destination: '/llms.mdx/odoo/:path*.txt',
       },
+      {
+        source: '/fastapi.md',
+        destination: '/llms.mdx/fastapi.md',
+      },
+      {
+        source: '/fastapi/:path*.md',
+        destination: '/llms.mdx/fastapi/:path*.md',
+      },
+      {
+        source: '/fastapi/:path*.txt',
+        destination: '/llms.mdx/fastapi/:path*.txt',
+      },
     ];
   },
 };
