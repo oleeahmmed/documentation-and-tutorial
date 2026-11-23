@@ -110,4 +110,4 @@ fraud_shield_pro/
 
 কোডিং শুরু হয়েছে — **[পর্ব ১ — Django Backend ও Webhook](/docs/project-based/project-1/backend-webhook)**-এ শূন্য থেকে DRF আর WooCommerce webhook। এরপর React ড্যাশবোর্ড, তারপর CrewAI এজেন্ট।
 
-➡️ পোস্টটা আরেকবার দেখতে: [Project 1 — ক্লায়েন্ট পোস্ট](/docs/project-based/project-1)
+➡️ পোস্টটা আরেকবার দেখতে: [Project 1 — ক্লায়েন্ট পোস্ট](/docs/project-based/project-1/overview)

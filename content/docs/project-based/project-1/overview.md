@@ -1,5 +1,5 @@
 ---
-title: Project 1 — Fraud Detection
+title: Project 1 — Overview
 description: তানভীরের WooCommerce স্টোরের ফেক অর্ডার ধরার সিস্টেম — আসল ক্লায়েন্ট পোস্ট আর গল্পসহ।
 icon: Target
 ---
@@ -85,7 +85,7 @@ React Dashboard + PostgreSQL
 | পর্ব | কী বানাবে | পেজ |
 | --- | --- | --- |
 | ১ | Django + DRF + WooCommerce webhook — লাইভ অর্ডার রিসিভ | [পর্ব ১ — Django Backend](/docs/project-based/project-1/backend-webhook) |
-| ২ | React ড্যাশবোর্ড | (আসছে) |
+| ২ | React + Vite + Shadcn UI ড্যাশবোর্ড — অর্ডার, সামারি ও স্ট্যাটাস | [পর্ব ২ — React ড্যাশবোর্ড](/docs/project-based/project-1/react-dashboard) |
 | ৩ | CrewAI এজেন্ট — রিস্ক স্কোর + WhatsApp | (আসছে) |
 
 এজেন্ট ডিজাইন, রিস্ক রুল আর মাইলস্টোন: **[System Design](/docs/project-based/project-1/solution)**।

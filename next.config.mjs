@@ -8,6 +8,16 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/docs/project-based/project-1',
+        destination: '/docs/project-based/project-1/overview',
+        permanent: true,
+      },
+      {
+        source: '/docs/project-based/project-1.md',
+        destination: '/docs/project-based/project-1/overview.md',
+        permanent: true,
+      },
+      {
         source: '/docs/project-based/decision-matrix',
         destination: '/docs/project-based/project-1/decision-matrix',
         permanent: true,

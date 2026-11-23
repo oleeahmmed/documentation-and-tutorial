@@ -33,4 +33,4 @@ icon: GitBranch
 
 আর একই সিস্টেম পরে অন্য ক্লথিং ব্র্যান্ড, গ্যাজেট শপ বা F-commerce পেজে **SaaS হিসেবে বিক্রি** করা যায়।
 
-➡️ শুরু: [Project 1 — Fraud Detection](/docs/project-based/project-1) — আসল Upwork পোস্ট আর ক্লায়েন্টের গল্প।
+➡️ শুরু: [Project 1 — Fraud Detection](/docs/project-based/project-1/overview) — আসল Upwork পোস্ট আর ক্লায়েন্টের গল্প।

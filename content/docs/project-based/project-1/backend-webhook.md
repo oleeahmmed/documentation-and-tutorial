@@ -287,6 +287,7 @@ New Order Received: #1234 | Tanvir Ahmed | 017XXXXXXXX
 
 ## পরের পর্ব
 
-ডেটা রিসিভ হচ্ছে নিশ্চিত হলে পরের ধাপে **React ড্যাশবোর্ড** অথবা সরাসরি **CrewAI এজেন্ট** যুক্ত করব — রিস্ক স্কোর আর WhatsApp ফ্লো।
+ডেটা রিসিভ হচ্ছে নিশ্চিত হলে পরের ধাপে **React + Shadcn UI ড্যাশবোর্ড** বানাব — Django API থেকে অর্ডার এনে টেবিলে দেখা যাবে। তারপর পর্ব ৩-এ **CrewAI এজেন্ট** যুক্ত হবে — রিস্ক স্কোর আর WhatsApp ফ্লো।
 
+➡️ পরের পর্ব: [পর্ব ২ — React ড্যাশবোর্ড (Shadcn UI)](/docs/project-based/project-1/react-dashboard)
 ➡️ এর মধ্যে সিস্টেমের পুরো ছবি: [System Design](/docs/project-based/project-1/solution)

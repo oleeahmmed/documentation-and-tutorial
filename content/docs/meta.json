@@ -42,11 +42,6 @@
     "built-in-tools/quick-access",
     "mcp-integration",
     "---Project Based---",
-    "project-based/index",
-    "project-based/job-posts",
-    "project-based/project-1/index",
-    "project-based/project-1/decision-matrix",
-    "project-based/project-1/backend-webhook",
-    "project-based/project-1/solution"
+    "project-based"
   ]
 }

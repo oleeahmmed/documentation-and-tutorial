@@ -1,9 +1,10 @@
 {
   "title": "Project 1 — Fraud Detection",
   "pages": [
-    "index",
+    "overview",
     "decision-matrix",
     "backend-webhook",
+    "react-dashboard",
     "solution"
   ]
 }
