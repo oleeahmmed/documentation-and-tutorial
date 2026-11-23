@@ -2,6 +2,7 @@
   "title": "Project 1 — Fraud Detection",
   "pages": [
     "index",
+    "decision-matrix",
     "backend-webhook",
     "solution"
   ]

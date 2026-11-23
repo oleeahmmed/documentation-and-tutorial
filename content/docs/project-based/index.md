@@ -35,7 +35,7 @@ icon: Briefcase
 নিজের ফার্ম/এজেন্সির টুল?            → সফটওয়্যার (Option C)
 ```
 
-তিন অপশনের তুলনা আর সিদ্ধান্তের ফ্রেমওয়ার্ক: **[Decision Matrix](/docs/project-based/decision-matrix)**।
+তিন অপশনের তুলনা আর সিদ্ধান্তের ফ্রেমওয়ার্ক: **[Decision Matrix](/docs/project-based/project-1/decision-matrix)**।
 
 ## প্রথম হাতে-কলমে প্রজেক্ট
 

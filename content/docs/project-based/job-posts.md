@@ -4,7 +4,7 @@ description: Upwork + বাংলাদেশি ইন্ডাস্ট্র
 icon: ListChecks
 ---
 
-**Olee-এর সামনে থাকা ২০টা বাস্তবসম্মত জব পোস্ট** — Upwork আর বাংলাদেশি WordPress/Custom ই-কমার্স, HR ও সফটওয়্যার কোম্পানির মিক্স। প্রতিটার ক্লায়েন্ট, বাজেট আর সমস্যা দেওয়া আছে; নম্বর দিয়েই [Decision Matrix](/docs/project-based/decision-matrix)-এ রেফার করা হয়েছে।
+**Olee-এর সামনে থাকা ২০টা বাস্তবসম্মত জব পোস্ট** — Upwork আর বাংলাদেশি WordPress/Custom ই-কমার্স, HR ও সফটওয়্যার কোম্পানির মিক্স। প্রতিটার ক্লায়েন্ট, বাজেট আর সমস্যা দেওয়া আছে; নম্বর দিয়েই [Decision Matrix](/docs/project-based/project-1/decision-matrix)-এ রেফার করা হয়েছে।
 
 > বাজেটের টাকার অঙ্ক ক্লায়েন্টের দেওয়া approximate — ডলার রেট বদলালে বদলাতে পারে।
 
@@ -136,4 +136,4 @@ icon: ListChecks
 
 **সমস্যা:** মিটিংয়ের আলোচনা থেকে কে কী কাজ করবে এবং ডেডলাইন কবে তা বের করে টিম মেম্বারদের ইমেইল পাঠানো।
 
-➡️ পরের ধাপ: [Decision Matrix](/docs/project-based/decision-matrix) — ২০টা থেকে কোনটা বেছে নেবেন?
+➡️ পরের ধাপ: [Decision Matrix](/docs/project-based/project-1/decision-matrix) — ২০টা থেকে কোনটা বেছে নেবেন?

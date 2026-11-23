@@ -8,6 +8,11 @@ const config = {
   async redirects() {
     return [
       {
+        source: '/docs/project-based/decision-matrix',
+        destination: '/docs/project-based/project-1/decision-matrix',
+        permanent: true,
+      },
+      {
         source: '/odoo/:page(server-check|system-setup|postgres-setup|source-clone|venv-setup|config-database|run-odoo|firewall-systemd)',
         destination: '/odoo/installation/:page',
         permanent: true,
