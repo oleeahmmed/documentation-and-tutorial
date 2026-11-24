@@ -1,6 +1,6 @@
 ---
 title: কাস্টমার পেমেন্ট গ্রহণ
-description: পর্ব ৪.৫ — অনিকার ১৩,৫৭০ টাকা Register Payment দিয়ে রিসিভ, ইনভয়েস Paid, আর Payments তালিকা।
+description: পর্ব ৪.৫ — অনিকার ১৩,৫৭০ টাকা Odoo 19-এ Pay দিয়ে রিসিভ, Create Payment, ইনভয়েস In Payment → Paid।
 icon: Wallet
 ---
 
@@ -10,34 +10,39 @@ icon: Wallet
 
 ## হাতে-কলমে
 
-1. ইনভয়েস `INV/2026/00001` খুলো — স্ট্যাটাসে **Not Paid** দেখাবে
-2. উপরে **Register Payment** ক্লিক করো
-3. পপ-আপে পূরণ করো:
+1. ইনভয়েস `INV/2026/00001` খুলো — Payment State-এ **Not Paid** দেখাবে
+2. উপরে **Pay** বাটনে ক্লিক করো
+3. যে উইন্ডোটা আসবে (**Pay**) তাতে পূরণ করো:
 
 | ফিল্ড | মান |
 | --- | --- |
 | Journal | Bank — Dutch-Bangla Bank |
 | Payment Method | Manual |
 | Amount | 13,570 (বকেয়া থেকেই বসে যাবে) |
-| Memo / Reference | চাইলে `অনিকা — ফাইনাল পেমেন্ট` |
+| Payment Date | টাকা পাওয়ার দিন |
+| Memo | চাইলে `অনিকা — ফাইনাল পেমেন্ট` |
 
 4. **Create Payment** ক্লিক করো
 
+> Odoo 19-এ পুরোনো **Register Payment** বাটনের নাম এখন **Pay**; কনফার্মের বাটন **Create Payment**।
+
 ## বাস্তবে কী ঘটে
 
-- ইনভয়েসের স্ট্যাটাস এখন **Paid** — সবুজ ব্যাজ
-- বকেয়া (Residual) **০** হয়ে যায়
-- Journal Entry-তে ব্যাংক অ্যাকাউন্ট ডেবিট, Receivable ক্রেডিট — হিসাব নিজে থেকেই হয়
+- ইনভয়েসের Payment State **In Payment** হয় — বকেয়া (Residual) **০**
+- Journal Entry-তে Outstanding Receipts ডেবিট, Receivable ক্রেডিট — হিসাব নিজে থেকেই হয়
 - Invoicing → **Customers → Payments**-এ লেনদেনটার রেকর্ড দেখা যায়
 - কাস্টমারের প্রোফাইলে গেলে পুরো লেনদেনের ইতিহাস (ইনভয়েস, ক্রেডিট, পেমেন্ট) পাওয়া যায়
+- ব্যাংক স্টেটমেন্টের সাথে মিললেই Payment State **Paid** হবে
+
+> **Paid দেখাচ্ছে না কেন?** Odoo 19-এ পেমেন্ট তৈরি হলে টাকা প্রথমে "Outstanding Receipts" অ্যাকাউন্টে জমা থাকে; ব্যাংক স্টেটমেন্টে মিলিয়ে reconcile করলেই **Paid** হয়। Journal-এর Incoming Payments সেটিংয়ে Outstanding অ্যাকাউন্ট ব্যাংক অ্যাকাউন্টই হলে Paid-টা সাথে সাথে দেখাবে। রিকনসিলিয়েশনের পূর্ণ ফিচার **Accounting** অ্যাপে।
 
 ## আংশিক পেমেন্ট
 
 কাস্টমার পুরো টাকা না দিয়ে কিছু দিলে:
 
-1. Register Payment-এ **Amount** কমিয়ে দাও (যেমন ১০,০০০)
+1. Pay ডায়ালগে **Amount** কমিয়ে দাও (যেমন ১০,০০০)
 2. Create Payment
-3. ইনভয়েস **In Payment** অবস্থায় থাকবে, বাকি ৩,৫৭০ পরিশোধ হলে Paid হবে
+3. ইনভয়েস **In Payment** অবস্থায় থাকবে, বাকি ৩,৫৭০ পরিশোধ হলে বকেয়া ০ হবে
 
 ## টিপস
 
@@ -50,11 +55,11 @@ icon: Wallet
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| Register Payment বাটন নেই | ইনভয়েস Posted কিনা, বকেয়া ০ কিনা দেখো |
-| Bank Journal খালি | Configuration → Journals-এ Bank টাইপের জার্নাল বানাও (৩.৩) |
-| Amount বদলানো যাচ্ছে না | Payment Method/Journal সেট করো, তারপর Amount এডিট হয় |
-| পেমেন্ট তৈরি হচ্ছে না | তারিখ/রেফারেন্স ফরম্যাট, অনুমতি দেখো |
-| Paid দেখাচ্ছে না | Credit Note-সহ মোট বকেয়া মিলছে কিনা; Payments তালিকায় টাকা বসেছে কিনা দেখো |
+| Pay বাটন নেই | ইনভয়েস Posted কিনা, বকেয়া ০ কিনা দেখো |
+| Bank Journal খালি | Configuration → Accounting → Journals-এ Bank টাইপের জার্নাল বানাও (৩.৩) |
+| Amount বদলানো যাচ্ছে না | Journal আর Payment Method সেট করো, তারপর Amount এডিট হয় |
+| পেমেন্ট তৈরি হচ্ছে না | Payment Date/রেফারেন্স ফরম্যাট, অনুমতি দেখো |
+| Paid দেখাচ্ছে না | ব্যাংক স্টেটমেন্ট reconcile করো, অথবা Outstanding Receipts অ্যাকাউন্ট সেটিং দেখো |
 | ভুল কাস্টমারকে পেমেন্ট | Payment বাতিল (Reset to Draft → Delete) করে সঠিক ইনভয়েসে আবার |
 
 পরের ধাপে [ভেন্ডর ও ক্রয়ের পণ্য](/odoo/invoice-module/vendors) — এবার কেনাকাটার দিক।

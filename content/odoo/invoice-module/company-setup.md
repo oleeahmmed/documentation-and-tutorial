@@ -1,36 +1,45 @@
 ---
 title: কোম্পানি সেটআপ ও প্রথম লগইন
-description: পর্ব ১ — নতুন ডাটাবেস rupashi_fashion, কোম্পানির তথ্য, BDT কারেন্সি আর Asia/Dhaka টাইমজোন।
+description: পর্ব ১ — Odoo 19-এ নতুন ডাটাবেস rupashi_fashion, কোম্পানির তথ্য, BDT কারেন্সি আর Asia/Dhaka টাইমজোন।
 icon: Building2
 ---
 
 ## গল্প
 
-Odoo ইনস্টল হয়ে গেছে, কিন্তু ভেতরে ঢুকলে শুধু ডাটাবেস-ম্যানেজার। করিম ভাইয়ের জন্য একটা পরিষ্কার, খালি ডাটাবেস বানাতে হবে — যেখানে কোনো ডেমো ডেটা নেই, শুধু রূপসী ফ্যাশনের নিজস্ব তথ্য থাকবে।
+Odoo ইনস্টল হয়ে গেছে, কিন্তু ভেতরে ঢুকলে শুধু লগইন স্ক্রিন। করিম ভাইয়ের জন্য একটা পরিষ্কার, খালি ডাটাবেস বানাতে হবে — যেখানে কোনো ডেমো ডেটা নেই, শুধু রূপসী ফ্যাশনের নিজস্ব তথ্য থাকবে।
 
 ## ১.১ — প্রথম ডাটাবেস তৈরি
 
-ব্রাউজারে `http://your-server:8069` খুললে Odoo-র ডাটাবেস-ম্যানেজার পেজ আসবে।
+ব্রাউজারে `http://your-server:8069` খুললে Odoo 19-এর লগইন স্ক্রিন আসবে। নিচে **Manage Databases** লিংক থাকে, চাইলে সরাসরি `http://your-server:8069/web/database/manager`-ও খোলা যায়।
 
-1. **Master Password** বসাও — `odoo.conf`-এর `admin_passwd`-এ যেটা দিয়েছিলে
-2. **Database Name**: `rupashi_fashion`
-3. **Email**: `korim@rupashifashion.com`
-4. **Password**: তোমার লগইন পাসওয়ার্ড (নিরাপদ একটা দাও)
-5. **Language**: English (পরে বাংলাও চালু করা যাবে)
-6. **Country**: Bangladesh
-7. **Demo data** চেকবক্স — **আনচেক রাখো**
-8. **Create database** ক্লিক করো
+1. **Create Database** ক্লিক করো — একটা পপ-আপ ফর্ম আসবে
+2. পূরণ করো:
 
-Odoo কিছুক্ষণ সময় নেবে, তারপর সরাসরি একটা খালি ড্যাশবোর্ডে নিয়ে যাবে।
+| ফিল্ড | মান |
+| --- | --- |
+| Master Password | `odoo.conf`-এর `admin_passwd`-এ যেটা দিয়েছিলে |
+| Database Name | `rupashi_fashion` |
+| Email | `korim@rupashifashion.com` |
+| Password | তোমার লগইন পাসওয়ার্ড (নিরাপদ একটা দাও) |
+| Phone Number | করিম ভাইয়ের নম্বর |
+| Language | English (পরে বাংলাও চালু করা যাবে) |
+| Country | Bangladesh |
+| Demo Data | **আনচেক** |
+
+3. **Continue** ক্লিক করো
+
+Odoo কিছুক্ষণ সময় নেবে, তারপর ডাটাবেস তৈরি হবে। লগইন স্ক্রিনে (`/web/database/selector`) ডাটাবেসটা দেখা যাবে — **rupashi_fashion** বেছে **Select** করো, তারপর ইমেইল-পাসওয়ার্ড দিয়ে লগইন।
 
 > **ডেমো ডেটা কেন বন্ধ?** ডেমো ডেটা থাকলে ভুয়া কাস্টমার, পণ্য আর ইনভয়েস ঢুকে যায় — আসল হিসাবের সাথে মিশে যায়। আমরা একদম পরিষ্কার সিস্টেমে কাজ করব।
 
-> **পেজ না এলে:** কখনো `http://your-server:8069/web/database/manager` সরাসরি খুলে দেখো। না হলেও `odoo.conf`-এ `list_db = True` আছে কিনা দেখো, তারপর সার্ভিস রিস্টার্ট করো।
+> **দেশ Bangladesh দেওয়ার লাভ:** Odoo 19 কোম্পানির দেশ দেখে বাংলাদেশের ফিসকাল লোকালাইজেশন (`l10n_bd`) ইনস্টল করে দেয়। ফলে চার্ট অফ অ্যাকাউন্টস আর ১৫% ভ্যাট ট্যাক্স পরের ধাপেই হাতে হাতে পাওয়া যাবে।
+
+> **পেজ না এলে:** `http://your-server:8069/web/database/manager` সরাসরি খুলে দেখো। না হলেও `odoo.conf`-এ `list_db = True` আছে কিনা দেখো, তারপর সার্ভিস রিস্টার্ট করো।
 
 ## ১.২ — কোম্পানির তথ্য পূরণ
 
 1. উপরের-ডান কোণে **Settings (⚙️)** → **General Settings**
-2. **Companies** সেকশনে কোম্পানির নামে ক্লিক করো (অথবা Settings → Users & Companies → Companies)
+2. **Companies** সেকশনে কোম্পানির নামে ক্লিক করো (অথবা Settings → **Users & Companies → Companies**)
 3. ফর্মে পূরণ করো:
 
 | ফিল্ড | মান |
@@ -47,14 +56,13 @@ Odoo কিছুক্ষণ সময় নেবে, তারপর সর�
 
 ## ১.৩ — Currency (মুদ্রা): BDT
 
-করিম ভাই চান সব হিসাব **টাকায় (BDT)**, ডলারে না।
+দেশ **Bangladesh** দিয়ে ডাটাবেস বানালে Odoo 19 সাধারণত কোম্পানির কারেন্সি **BDT** নিজেই বসিয়ে দেয়। মিলিয়ে নাও:
 
-1. Settings → **General Settings** → Currencies সেকশন খোঁজো (Invoicing/Accounting অ্যাপের পর সহজে দেখা যায়)
-2. অথবা Developer Mode চালু থাকলে Settings → **Technical → Currencies**
-3. **BDT (Bangladeshi Taka)** খুঁজে **Active** করো
-4. Settings → Companies → কোম্পানি ফর্মে **Currency** ফিল্ডে **BDT** বসিয়ে Save
+1. Settings → Companies → রূপসী ফ্যাশন
+2. **Currency** ফিল্ডে **BDT (৳)** আছে কিনা দেখো
+3. না থাকলে BDT বেছে নিয়ে **Save**
 
-> Odoo-তে অনেক সময় BDT আগে থেকেই active থাকে। না থাকলে উপরের ধাপে চালু করতেই হবে, নইলে ইনভয়েসে অন্য মুদ্রা বসে যাবে।
+> BDT তালিকায় না দেখা গেলে Invoicing অ্যাপ ইনস্টলের পরে **Configuration → Accounting → Currencies**-এ গিয়ে BDT-র **Active** টগল চালু করো (৩.৪-এ বিস্তারিত)।
 
 ## ১.৪ — Timezone ও Language
 
@@ -71,6 +79,7 @@ Odoo কিছুক্ষণ সময় নেবে, তারপর সর�
 - কোম্পানির নাম, ঠিকানা আর লোগো স্বয়ংক্রিয়ভাবে ইনভয়েস, বিল আর PDF-এর হেডারে বসে যায়
 - Currency BDT হলে সব নতুন ডকুমেন্টে ৳ চিহ্নে হিসাব হয়; পরে USD-ও চালু করা যাবে (মাল্টি-কারেন্সি)
 - টাইমজোন Asia/Dhaka হলে "আজকের তারিখ" ঢাকার সময় অনুযায়ী বসে
+- দেশ Bangladesh থাকায় পরের ধাপে Invoicing ইনস্টল করলে বাংলাদেশি চার্ট অফ অ্যাকাউন্টস আর ১৫% ভ্যাট ট্যাক্স তৈরি হয়ে যেতে পারে — এটা Odoo 19-এর স্বাভাবিক আচরণ
 - ডেমো ডেটা বন্ধ রাখায় Customers, Products, Invoices — সব তালিকা খালি থাকবে; এটাই স্বাভাবিক
 
 ## সমস্যা হলে
@@ -78,9 +87,11 @@ Odoo কিছুক্ষণ সময় নেবে, তারপর সর�
 | সমস্যা | সমাধান |
 | --- | --- |
 | Create Database পেজ আসছে না | `/web/database/manager` খুলো; `list_db = True` কিনা দেখো |
+| ফর্মে **Continue** বাটন নেই | ডাটাবেস-ম্যানেজার পুরোনো ভার্সনের — পেজ রিফ্রেশ করো, অথবা Odoo 19-এর লগইন স্ক্রিন থেকে **Manage Databases** খোলো |
 | Master Password ভুল | `odoo.conf`-এর `admin_passwd` দেখো, বদলালে সার্ভিস রিস্টার্ট |
+| ডাটাবেস তৈরি হয়েছে কিন্তু লগইন স্ক্রিনে নেই | `/web/database/selector` খুলে **Select** করো |
 | Company ফর্ম সেভ হচ্ছে না | ফোন/ইমেইল ফরম্যাট, অথবা বাধ্যতামূলক ফিল্ড খালি কিনা দেখো |
-| BDT তালিকায় নেই | Developer Mode চালু করে Currencies থেকে খোঁজো |
+| BDT দেখা যাচ্ছে না | Country Bangladesh কিনা, Invoicing ইনস্টলের পরে Currencies-এ BDT active কিনা দেখো |
 | তারিখ একদিন সরে যাচ্ছে | My Profile → Preferences → Timezone = Asia/Dhaka |
 
 পরের ধাপে [Invoicing অ্যাপ ইনস্টল](/odoo/invoice-module/app-install) করব।

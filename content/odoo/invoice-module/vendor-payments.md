@@ -1,6 +1,6 @@
 ---
 title: ভেন্ডরকে পেমেন্ট
-description: পর্ব ৫.৫ — রিফান্ড বাদ দেওয়ার পর ৬২,১০০ টাকা Register Payment দিয়ে পরিশোধ, বিল Paid।
+description: পর্ব ৫.৫ — রিফান্ড বাদ দেওয়ার পর ৬২,১০০ টাকা Odoo 19-এ Pay → Create Payment দিয়ে পরিশোধ, বিল Paid।
 icon: Banknote
 ---
 
@@ -11,29 +11,34 @@ icon: Banknote
 ## হাতে-কলমে
 
 1. Bill `BILL/2026/00001` খুলো
-2. উপরে **Register Payment** ক্লিক করো
-3. পপ-আপে:
+2. উপরে **Pay** ক্লিক করো
+3. যে উইন্ডোটা আসবে (**Pay**) তাতে পূরণ করো:
 
 | ফিল্ড | মান |
 | --- | --- |
 | Journal | Bank — Dutch-Bangla Bank |
 | Payment Method | Manual |
 | Amount | 62,100 (বকেয়া থেকে বসে যাবে) |
+| Payment Date | টাকা দেওয়ার দিন |
 | Memo | চাইলে ব্যাংক রেফারেন্স |
 
 4. **Create Payment** ক্লিক করো
 
+> Odoo 19-এ পুরোনো **Register Payment** বাটনের নাম এখন **Pay**; কনফার্মের বাটন **Create Payment**।
+
 ## বাস্তবে কী ঘটে
 
-- বিলের স্ট্যাটাস **Paid** হয়ে যায়
-- পরিশোধযোগ্য (Payable) **০** হয়
-- Journal Entry-তে Payable ডেবিট, ব্যাংক অ্যাকাউন্ট ক্রেডিট
+- বিলের Payment State **In Payment** হয়; পরিশোধযোগ্য (Payable) **০**
+- Journal Entry-তে Payable ডেবিট, Outstanding Payments ক্রেডিট
 - Invoicing → **Vendors → Payments**-এ লেনদেনটা দেখা যায়
+- ব্যাংক স্টেটমেন্টে মিলিয়ে reconcile হলে বিল **Paid** হয়
 - ভেন্ডরের প্রোফাইলে বিল, রিফান্ড আর পেমেন্টের পূর্ণ ইতিহাস থাকে
+
+> **Paid দেখাচ্ছে না কেন?** পেমেন্ট তৈরি হলে টাকা প্রথমে "Outstanding Payments" অ্যাকাউন্টে থাকে; ব্যাংকে টাকা যাওয়ার পর reconcile করলেই **Paid**। Outstanding অ্যাকাউন্ট ব্যাংক অ্যাকাউন্টই হলে Paid-টা সাথে সাথে দেখাবে।
 
 ## আংশিক পেমেন্ট
 
-কিছু টাকা এখন, বাকিটা পরে — চাইলে Amount কমিয়ে দাও। বিল **In Payment** অবস্থায় থাকবে; বাকিটা দিলে Paid হবে।
+কিছু টাকা এখন, বাকিটা পরে — চাইলে Amount কমিয়ে দাও। বিল **In Payment** অবস্থায় থাকবে; বাকিটা দিলে বকেয়া ০ হবে।
 
 ## টিপস
 
@@ -46,10 +51,10 @@ icon: Banknote
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| Register Payment নেই | বিল Posted কিনা, বকেয়া ০ কিনা দেখো |
+| Pay বাটন নেই | বিল Posted কিনা, বকেয়া ০ কিনা দেখো |
 | Amount ৬২,১০০-এর বদলে ৬৯,০০০ | Refund Confirm হয়েছে কিনা দেখো |
-| Bank Journal খালি | Configuration → Journals-এ Bank টাইপ জার্নাল বানাও |
-| Paid দেখাচ্ছে না | Payments তালিকায় পেমেন্টটা বিলের সাথে মিলেছে কিনা দেখো |
+| Bank Journal খালি | Configuration → Accounting → Journals-এ Bank টাইপ জার্নাল বানাও |
+| Paid দেখাচ্ছে না | ব্যাংক স্টেটমেন্ট reconcile করো, অথবা Outstanding Payments সেটিং দেখো |
 | ভুল পরিমাণে পেমেন্ট | Payment বাতিল করে আবার সঠিক অঙ্কে |
 
 সব ধাপ শেষ — এবার [সারসংক্ষেপ ও ড্যাশবোর্ড](/odoo/invoice-module/summary) দেখো।
