@@ -1,0 +1,18 @@
+{
+  "title": "Invoice Module",
+  "pages": [
+    "index",
+    "company-setup",
+    "app-install",
+    "configuration",
+    "customers",
+    "invoices",
+    "credit-notes",
+    "customer-payments",
+    "vendors",
+    "vendor-bills",
+    "vendor-refunds",
+    "vendor-payments",
+    "summary"
+  ]
+}

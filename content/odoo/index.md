@@ -53,6 +53,27 @@ my-odoo/
 | [Apps](/odoo/configuration/apps) | ইনস্টল, আনইনস্টল, আপডেট |
 | [Developer Mode](/odoo/configuration/developer-mode) | Technical Menu আর ডেভেলপার টুলস |
 
+## Invoice Module (হাতে-কলমে ইনভয়েসিং)
+
+খালি Odoo থেকে করিম ভাইয়ের পুরো হিসাব — কাস্টমার ইনভয়েস, ক্রেডিট নোট, পেমেন্ট, ভেন্ডর বিল আর রিফান্ড। প্রতিটা ধাপ আলাদা পেজে:
+
+| ধাপ | পেজ | কী শিখবে |
+| --- | --- | --- |
+| ১ | [কোম্পানি সেটআপ](/odoo/invoice-module/company-setup) | নতুন ডাটাবেস, কোম্পানি, BDT, টাইমজোন |
+| ২ | [Invoicing অ্যাপ ইনস্টল](/odoo/invoice-module/app-install) | Invoicing বনাম Accounting |
+| ৩ | [Configuration](/odoo/invoice-module/configuration) | ভ্যাট, Journal, USD, Fiscal Position, Terms |
+| ৪ | [কাস্টমার ও পণ্য](/odoo/invoice-module/customers) | অনিকা ফ্যাশন হাউজ, উলের ওভারকোট |
+| ৫ | [ইনভয়েস তৈরি](/odoo/invoice-module/invoices) | ১২,৫০০ + ভ্যাট = ১৪,৩৭৫ |
+| ৬ | [Credit Note](/odoo/invoice-module/credit-notes) | পণ্য ফেরত, ৮০৫ টাকা সমন্বয় |
+| ৭ | [কাস্টমার পেমেন্ট](/odoo/invoice-module/customer-payments) | Register Payment, Paid স্ট্যাটাস |
+| ৮ | [ভেন্ডর ও পণ্য](/odoo/invoice-module/vendors) | ঢাকা উল হাউস, কাঁচা উল |
+| ৯ | [Vendor Bill](/odoo/invoice-module/vendor-bills) | ৬৯,০০০ টাকার বিল |
+| ১০ | [ভেন্ডর রিফান্ড](/odoo/invoice-module/vendor-refunds) | ৬,৯০০ টাকা ক্রেডিট |
+| ১১ | [ভেন্ডর পেমেন্ট](/odoo/invoice-module/vendor-payments) | ৬২,১০০ টাকা পরিশোধ |
+| ১২ | [সারসংক্ষেপ](/odoo/invoice-module/summary) | ড্যাশবোর্ড ও পুরো ম্যাপ |
+
+সেকশনের মূল পাতা: [Invoice Module](/odoo/invoice-module)।
+
 ## Development (অ্যাডঅন ইনস্টল)
 
 ডিফল্ট Odoo-তে নেই এমন মডিউল দরকার হলে — UI, `custom_addons` ফোল্ডার বা CLI — তিন পদ্ধতির গাইড:
