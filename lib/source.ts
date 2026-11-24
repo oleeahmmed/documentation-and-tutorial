@@ -82,6 +82,19 @@ const fastapiDocs = defineDocs({
   },
 });
 
+const powerBiDocs = defineDocs({
+  dir: 'content/power-bi',
+  docs: {
+    schema: pageSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
@@ -119,6 +132,12 @@ export const fastapiSource = loader({
   plugins: [lucideIconsPlugin()],
 });
 
+export const powerBiSource = loader({
+  baseUrl: '/power-bi',
+  source: powerBiDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
+
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
@@ -150,6 +169,12 @@ ${await page.data.getText('processed')}`,
 });
 
 export const fastapiLlms = llms(fastapiSource, {
+  renderPage: async (page) => `# ${page.data.title} (${page.url})
+
+${await page.data.getText('processed')}`,
+});
+
+export const powerBiLlms = llms(powerBiSource, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
 ${await page.data.getText('processed')}`,

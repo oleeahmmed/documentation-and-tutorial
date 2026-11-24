@@ -1,4 +1,4 @@
-import { djangoLlms, docsLlms, fastapiLlms, odooLlms, promptMasterLlms, pythonBasicLlms } from '@/lib/source';
+import { djangoLlms, docsLlms, fastapiLlms, odooLlms, powerBiLlms, promptMasterLlms, pythonBasicLlms } from '@/lib/source';
 
 export const revalidate = false;
 // other paths are 404s, never cached responses
@@ -17,7 +17,9 @@ export async function GET(_req: Request, { params }: RouteContext<'/llms.mdx/[..
           ? odooLlms
           : url.startsWith('/fastapi')
             ? fastapiLlms
-            : docsLlms;
+            : url.startsWith('/power-bi')
+              ? powerBiLlms
+              : docsLlms;
 
   return (await llms.serve(url)) ?? new Response(null, { status: 404 });
 }
@@ -31,6 +33,7 @@ export async function generateStaticParams() {
     ...(await djangoLlms.files()),
     ...(await odooLlms.files()),
     ...(await fastapiLlms.files()),
+    ...(await powerBiLlms.files()),
   ];
   for (const file of files) {
     // `/llms.txt` and `/llms-full.txt` have their own routes

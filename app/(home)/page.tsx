@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Blocks, Boxes, Code, Sparkles, WandSparkles, Zap } from 'lucide-react';
+import { ArrowRight, Blocks, Boxes, ChartColumn, Code, Sparkles, WandSparkles, Zap } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -73,6 +73,22 @@ export default function HomePage() {
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
             API শিখো
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+
+        <Link
+          href="/power-bi"
+          className="group rounded-xl border bg-fd-card p-6 transition-colors hover:bg-fd-accent"
+        >
+          <ChartColumn className="size-6 text-fd-primary" />
+          <h2 className="mt-4 text-lg font-semibold">Power BI Tutorial</h2>
+          <p className="mt-2 text-sm text-fd-muted-foreground">
+            Excel ফাইল থেকে ইন্টারঅ্যাকটিভ বিজনেস ড্যাশবোর্ড — Power Query, DAX,
+            পাবলিশ আর RLS।
+          </p>
+          <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
+            ড্যাশবোর্ড শিখো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>

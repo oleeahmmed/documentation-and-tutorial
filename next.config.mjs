@@ -119,6 +119,18 @@ const config = {
         source: '/fastapi/:path*.txt',
         destination: '/llms.mdx/fastapi/:path*.txt',
       },
+      {
+        source: '/power-bi.md',
+        destination: '/llms.mdx/power-bi.md',
+      },
+      {
+        source: '/power-bi/:path*.md',
+        destination: '/llms.mdx/power-bi/:path*.md',
+      },
+      {
+        source: '/power-bi/:path*.txt',
+        destination: '/llms.mdx/power-bi/:path*.txt',
+      },
     ];
   },
 };

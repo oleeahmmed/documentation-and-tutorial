@@ -1,0 +1,24 @@
+{
+  "title": "Power BI Tutorial",
+  "pages": [
+    "index",
+    "---শুরু---",
+    "installation",
+    "sample-data",
+    "get-data",
+    "---ডেটা প্রস্তুত---",
+    "power-query",
+    "data-modeling",
+    "---হিসাব ও ভিজ্যুয়াল---",
+    "dax",
+    "visualizations",
+    "conditional-formatting",
+    "dashboard",
+    "interactivity",
+    "---শেয়ার ও নিরাপত্তা---",
+    "publish-refresh",
+    "row-level-security",
+    "---শেষ---",
+    "summary"
+  ]
+}
