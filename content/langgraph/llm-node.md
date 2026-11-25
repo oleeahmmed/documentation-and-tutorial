@@ -1,107 +1,127 @@
 ---
-title: LLM Node
-description: ধাপ ৭ — খাতায় এবার সত্যিকারের AI লেখে; MessagesState আর llm.py-এর মডেল দিয়ে নাদিয়ার লেখার ধাপ।
+title: "ধাপ ৯: LLM গেটম্যান"
+description: শব্দ খোঁজার বদলে সত্যিকারের AI — OpenRouter বসিয়ে structured output দিয়ে intent চেনা। শুধু একটা node বদলায়, বাকি দোকান অপরিবর্তিত।
 icon: Sparkles
 ---
 
 ## গল্প
 
-এতদিন খাতায় যা লেখা হয়েছে, সব হাতে লেখা — রফিক, সুমন, নাদিয়া, সবাই মানুষ।
+এতক্ষণ গেটম্যান শুধু কিছু নির্দিষ্ট শব্দ খুঁজছিল। গ্রাহক লিখলেন "আমি একটা লাল পাঞ্জাবি নিতে চাই" — "নিতে" শব্দটা তালিকায় নেই, তাই বট বুঝল না, fallback-এ চলে গেল।
 
-কিন্তু নাদিয়া একা প্রতিদিন দশটা ক্যাপশন লেখেন না। করিম ভাই ঠিক করলেন, "ডিজাইন ব্রিফটা তো প্রস্তুত, এই ব্রিফ থেকে তিনটা ক্যাপশনের খসড়া AI লিখে দিক। নাদিয়া শুধু বেছে নেবেন।"
+এখন গেটম্যানের জায়গায় বসাব একজন সত্যিকারের AI। সে যেভাবেই লেখা হোক, উদ্দেশ্য বুঝে নেবে — আর উত্তর দেবে নির্দিষ্ট ছাঁচে।
 
-এখন খাতায় একটা নতুন ধরনের পাতা যোগ হলো — **কথোপকথন**: মানুষ যা বলল, AI যা উত্তর দিল, সব ক্রমানুসারে।
+> এই ধাপটুকুতে API key লাগে। আগের আটটা ধাপ key ছাড়াই চলত।
 
-## LangGraph-এ এই একই জিনিস
+## ধাপ ১ — প্যাকেজ আর key
 
-কথোপকথনের জন্য রেডিমেড state আছে: **`MessagesState`**।
-
-```python
-class MessagesState(TypedDict):
-    messages: Annotated[list[AnyMessage], add_messages]
+```bash
+pip install langchain-openrouter python-dotenv
 ```
 
-`add_messages` reducer দুটো কাজ করে — নতুন মেসেজ যোগ করে, আর একই `id`-র পুরোনো মেসেজ থাকলে সেটা আপডেট করে। তোমার নিজের key দরকার হলে `MessagesState`-কে subclass করো:
+[openrouter.ai/settings/keys](https://openrouter.ai/settings/keys) থেকে key নিয়ে প্রজেক্টের গোড়ায় `.env` বানাও:
 
-```python
-class FashionState(MessagesState):
-    topic: str
+```bash
+OPENROUTER_API_KEY=sk-or-v1-xxxxxxxxxxxxxxxxxxxxx
+OPENROUTER_MODEL=openrouter/openai/gpt-4.1-mini
 ```
 
-## কোড (`llm_project.py`)
+> মডেলের নাম [openrouter.ai/models](https://openrouter.ai/models)-এ দেখানো নামের মতো। OpenRouter এক key-তেই GPT, Claude, Gemini — যেকোনোটা চলবে।
+
+## ধাপ ২ — `llm.py`
 
 ```python
-from langchain.messages import HumanMessage, SystemMessage
-from langgraph.graph import StateGraph, START, END, MessagesState
+# llm.py
+import os
+from dotenv import load_dotenv
+from langchain.chat_models import init_chat_model
+
+load_dotenv()
+
+model_id = os.getenv("OPENROUTER_MODEL", "openrouter/openai/gpt-4.1-mini")
+if "/" in model_id:
+    # openrouter/anthropic/...  →  openrouter:anthropic/...  (LangChain-এর নিয়ম)
+    provider, name = model_id.split("/", 1)
+    model_id = f"{provider}:{name}"
+
+model = init_chat_model(model_id)
+```
+
+মডেল এক জায়গায় থাকায় পরে প্রোভাইডার বদলাতে শুধু `.env` বদলাবে — কোড নয়।
+
+## ধাপ ৩ — গেটম্যান বদলাও
+
+`ruposhi.py`-তে পুরোনো `classify_intent` ফাংশনটা মুছে এটা বসাও (বাকি সব যেমন আছে তেমনই থাকবে):
+
+```python
+from typing import Literal, Optional
+from pydantic import BaseModel
 
 from llm import model
 
 
-def marketing(state: MessagesState):
-    system = SystemMessage(
-        "তুমি রূপসী ফ্যাশনের মার্কেটিং লেখক নাদিয়া। "
-        "ছোট, উষ্ণ, বাংলাদেশি পাঠকের জন্য বাংলা ক্যাপশন লেখো। ইমোজি দিও না।"
+# ---- LLM-কে বলে দিচ্ছি উত্তর ঠিক কোন ছাঁচে দিতে হবে ----
+class Intent(BaseModel):
+    # Literal মানে এই চারটার বাইরে অন্য কিছু দিতে পারবে না
+    intent: Literal["price", "order", "complaint", "other"]
+    product: Optional[str] = None      # পাঞ্জাবি / শাড়ি / শার্ট, না বুঝলে None
+
+
+# ---- LLM তৈরি। with_structured_output মানে উত্তর ওপরের ছাঁচেই আসবে ----
+llm = model.with_structured_output(Intent)
+
+
+# ---- আগের classify_intent-এর জায়গায় নতুন গেটম্যান ----
+def classify_intent(state: ShopState) -> dict:
+    # LLM-কে প্রশ্ন পাঠালাম
+    r = llm.invoke(
+        f"রূপসী ফ্যাশনে গ্রাহক লিখলেন: {state['message']}\n"
+        "পণ্যের তালিকা: পাঞ্জাবি, শাড়ি, শার্ট। উদ্দেশ্য আর পণ্য বলো।"
     )
-    response = model.invoke([system, *state["messages"]])
-    return {"messages": [response]}
-
-
-builder = StateGraph(MessagesState)
-builder.add_node("marketing", marketing)
-builder.add_edge(START, "marketing")
-builder.add_edge("marketing", END)
-
-graph = builder.compile()
-
-result = graph.invoke(
-    {
-        "messages": [
-            HumanMessage(
-                "ডিজাইন ব্রিফ: মাটি-রঙা উলের লম্বা ওভারকোট, শীতে পরার জন্য। "
-                "তিনটা ক্যাপশন লেখো।"
-            )
-        ]
-    }
-)
-
-print(result["messages"][-1].content)
+    # ফেরত আসা উত্তর স্লিপে লিখলাম। আগের মতোই intent আর product
+    return {"intent": r.intent, "product": r.product}
 ```
 
 ## বাস্তবে কী ঘটে
 
-```text
-১. শীতে ঘরের উষ্ণতা গায়ে জড়াতে চাইলে — মাটি-রঙা উলের ওভারকোট এখন রূপসী ফ্যাশনে।
-২. শহরের ব্যস্ত দিনে একটু আরাম, একটু উষ্ণতা — নতুন মাটি-রঙা কালেকশন এসেছে।
-৩. শীতের সকালে গরম চায়ে চুমুক, আর কাঁধে মাটি-রঙা ওভারকোট — এই তো পূর্ণতা।
+```python
+print(graph.invoke({"message": "লাল পাঞ্জাবিটা নিয়ে যাব"})["reply"])
 ```
 
-(মডেলের উত্তর একেকবার একেকরকম আসে — লেখাটা হুবহু নাও মিলতে পারে।)
-
-`result["messages"][-1]` একটা `AIMessage` — তার ভেতরে `content`-এ লেখা, আর `usage_metadata`-তে টোকেনের হিসাব।
-
-## কাঠামোটা খেয়াল করো
-
 ```text
-START → marketing (LLM) → END
+আপনার পাঞ্জাবি অর্ডার নিশ্চিত! দাম 1800 টাকা।
 ```
 
-এই এক node-ই এখন "AI-এর ধাপ"। পরের page-এ এর হাতে **tool** ধরিয়ে দেব — তখন AI নিজেই ভাববে কখন কোন টুল দরকার।
+আগের শব্দ-খোঁজা গেটম্যান "নিয়ে যাব" বুঝত না — এখন AI বুঝল, `intent="order"`, `product="পাঞ্জাবি"`। রাস্তা বাছা, স্টক দেখা, ক্যাশিয়ার — সব আগের মতোই চলল।
 
-## নতুন কী শিখলে
+## কী বদলাল, কী বদলাল না
 
-- `MessagesState` = মেসেজের জন্য প্রস্তুত state, reducer ছাড়া হাতে লেখার দরকার নেই
-- `model` আসে `llm.py` থেকে — এখানে OpenRouter, কিন্তু `.env` বদলালে OpenAI/Claude/Gemini-ও একই কোডে চলবে
-- system message দিয়ে চরিত্র ঠিক হয় — এখানে নাদিয়ার ব্যক্তিত্ব
+| জিনিস | বদলেছে? |
+| --- | --- |
+| `classify_intent`-এর ভেতর | হ্যাঁ — শব্দ খোঁজার বদলে LLM |
+| State, রাউটার, ম্যাপিং | না |
+| বাকি সব node আর edge | না |
+
+একটা node-এর ভেতরটা বদলে দিলে বাকি দোকান আগের মতোই চলে। এটাই LangGraph-এর সৌন্দর্য।
+
+## যেকোনো প্রোভাইডারে
+
+শুধু `.env` আর প্যাকেজ বদলাও; `llm.py` আর বাকি কোড একই:
+
+| প্রোভাইডার | `OPENROUTER_MODEL`-এ লেখো | প্যাকেজ | key |
+| --- | --- | --- | --- |
+| OpenRouter | `openrouter/openai/gpt-4.1-mini` | `langchain-openrouter` | `OPENROUTER_API_KEY` |
+| OpenAI | `openai:gpt-4.1-mini` | `langchain-openai` | `OPENAI_API_KEY` |
+| Anthropic | `anthropic:claude-sonnet-4-5` | `langchain-anthropic` | `ANTHROPIC_API_KEY` |
+| Google | `google_genai:gemini-2.5-flash` | `langchain-google-genai` | `GOOGLE_API_KEY` |
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| `AuthenticationError` / `401` | `.env`-এ `OPENROUTER_API_KEY` ঠিক আছে, আর `llm.py`-তে `load_dotenv()` চলছে কি না দেখো |
-| `402 ... requires more credits` | OpenRouter-এ ব্যালেন্স নেই — টাকা যোগ করো বা সস্তা মডেল নাও |
-| `NotFoundError` | `OPENROUTER_MODEL`-এর নাম ভুল; OpenRouter-এর মডেল-তালিকা থেকে হুবহু নাও |
-| উত্তর ইংরেজিতে আসছে | system message-এ স্পষ্ট করে "বাংলায় লেখো" দাও |
+| `401 Unauthorized` | key ভুল বা `.env` লোড হচ্ছে না — `llm.py`-তে `load_dotenv()` আছে তো? |
+| `402 ... requires more credits` | OpenRouter ব্যালেন্স শেষ — টাকা যোগ করো বা সস্তা মডেল নাও |
+| `404 ... model not found` | `OPENROUTER_MODEL`-এর নাম হুবহু OpenRouter-এর তালিকা থেকে নাও |
+| `ModuleNotFoundError: langchain_openrouter` | `pip install -U langchain-openrouter` |
+| answer এলোমেলো আসছে | `with_structured_output(Intent)` দিয়ে উত্তর ছাঁচে বাঁধা আছে তো? |
 
-> শেখার সময় সস্তা মডেল (যেমন `openai/gpt-4.1-mini`) ব্যবহার করো — `.env`-এ `OPENROUTER_MODEL=openrouter/openai/gpt-4.1-mini` লিখলেই হবে, কোডে হাত দিতে হবে না।
-
-পরের ধাপে [Tools](/langgraph/tools) — AI নিজে হাতে কাজ করবে।
+পরের ধাপে [সারসংক্ষেপ ও অভ্যাস](/langgraph/summary) — পুরো গল্পটা এক নজরে।

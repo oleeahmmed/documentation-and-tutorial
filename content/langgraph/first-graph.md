@@ -1,94 +1,86 @@
 ---
-title: প্রথম Graph
-description: একদম প্রথম LangGraph — একটা node, একটা edge, compile আর invoke। শুরুতে LLM ছাড়াই, শুধু ধাপটা বোঝার জন্য।
+title: "ধাপ ২: একদম ছোট গ্রাফ"
+description: একজন কর্মচারী, একটা স্লিপ — State, Node, START/END আর compile() দিয়ে প্রথম গ্রাফ।
 icon: Play
 ---
 
 ## গল্প
 
-করিম ভাই CrewAI-তে পুরো টিম বানিয়ে ফেলেছেন। কিন্তু এবার তিনি একটা ছোট্ট জিনিস বুঝতে চান — "একটা কাজ ঠিক কোন ধাপে, তারপর কোন ধাপে চলবে" — সেটা নিজের হাতে সাজানো যায় কীভাবে। তাই শুরুতে একজনই: রফিক। একটাই কাজ: নতুন সিজনের ট্রেন্ড নিয়ে নোট লেখা।
+বড় বট বানানোর আগে সবচেয়ে ছোটটা দেখি। করিম নামের এক গ্রাহক দোকানে ঢুকে বললেন "হাই"। গেটম্যান ছাড়া এখন শুধু একজন কর্মী — সে স্লিপে লিখে দিল "রূপসী ফ্যাশনে স্বাগতম!"
 
-## LangGraph-এ এই একই জিনিস
-
-LangGraph-এ পুরো ব্যবস্থাটা তিনটা জিনিস দিয়ে হয়:
-
-| জিনিস | মানে |
-| --- | --- |
-| **State** | কাজের খাতা — সব ধাপে একই খাতা ঘুরে বেড়ায় |
-| **Node** | খাতা হাতে নিয়ে এক ধাপ কাজ করে, নতুন তথ্য লিখে রাখে |
-| **Edge** | এরপর কোন ধাপ চলবে |
-
-## কোড (`first_graph.py`)
+## কোড (`step2.py`)
 
 ```python
-from typing_extensions import TypedDict
+# ---- ১) দরকারি জিনিসগুলো আনি ----
+# TypedDict: স্লিপের ছক বানাতে লাগে (কোন ঘরে কী ধরনের তথ্য থাকবে)
+from typing import TypedDict
+
+# StateGraph: গ্রাফ বানানোর যন্ত্র
+# START, END: দোকানের শুরু আর শেষ (এগুলো LangGraph নিজেই দেয়)
 from langgraph.graph import StateGraph, START, END
 
 
-# ১. State: কাজের খাতার কী কী কলাম থাকবে
-class FashionState(TypedDict):
-    topic: str
-    note: str
+# ---- ২) অর্ডার স্লিপের ছক (State) ----
+# এই স্লিপে দুটো ঘর থাকবে: গ্রাহকের বার্তা আর আমাদের উত্তর
+class Slip(TypedDict):
+    message: str    # গ্রাহক কী লিখলেন
+    reply: str      # আমরা কী উত্তর দেব
 
 
-# ২. Node: খাতা নিয়ে কাজ করে আংশিক update ফেরত দেয়
-def write_note(state: FashionState):
-    return {"note": f"'{state['topic']}' নিয়ে রফিক বাজারে খোঁজ নেবে।"}
+# ---- ৩) একজন কর্মচারী (Node) ----
+# নিয়ম: node একটা সাধারণ ফাংশন। সে স্লিপটা (state) হাতে পায়।
+# আর যে ঘর বদলাতে চায়, শুধু সেটুকুই dict আকারে ফেরত দেয়।
+def welcome(state: Slip) -> dict:
+    return {"reply": "রূপসী ফ্যাশনে স্বাগতম!"}   # শুধু reply ঘর বদলাচ্ছি
 
 
-# ৩. Graph বানাও, ধাপ আর ক্রম বসাও
-builder = StateGraph(FashionState)
-builder.add_node("write_note", write_note)
-builder.add_edge(START, "write_note")
-builder.add_edge("write_note", END)
+# ---- ৪) দোকান সাজাই (Graph বানাই) ----
+builder = StateGraph(Slip)               # কোন ছকের স্লিপ চলবে সেটা বলে দিলাম
 
-graph = builder.compile()
+builder.add_node("welcome", welcome)     # কর্মচারীকে দোকানে বসালাম। "welcome" তার নাম
+
+builder.add_edge(START, "welcome")       # গ্রাহক ঢুকলে প্রথমে welcome-এর কাছে যাবে
+builder.add_edge("welcome", END)         # welcome-এর কাজ শেষ হলে দোকান থেকে বের হবে
+
+graph = builder.compile()                # দোকানের দরজা খুললাম (এটা না করলে চলবে না)
 
 
-# ৪. চালাও
-result = graph.invoke({"topic": "ঈদ ফ্যাশন কালেকশন ২০২৭"})
-print(result)
+# ---- ৫) একজন গ্রাহককে ঢোকাই ----
+# invoke মানে গ্রাফ চালানো। শুরুতে স্লিপে শুধু message ঘর ভরে দিলাম
+print(graph.invoke({"message": "হাই"}))
 ```
 
 চালাও:
 
 ```bash
-python first_graph.py
+python step2.py
 ```
 
 ## বাস্তবে কী ঘটে
 
 ```text
-{'topic': 'ঈদ ফ্যাশন কালেকশন ২০২৭', 'note': "'ঈদ ফ্যাশন কালেকশন ২০২৭' নিয়ে রফিক বাজারে খোঁজ নেবে।"}
+{'message': 'হাই', 'reply': 'রূপসী ফ্যাশনে স্বাগতম!'}
 ```
 
-ধাপগুলো ভেঙে দেখো:
+> **সোনালি নিয়ম ১:** node পুরো স্লিপ ফেরত দেয় না। যে ঘর বদলাবে শুধু সেটা ফেরত দেয়। বাকি ঘর LangGraph নিজেই রেখে দেয় — দেখো, আউটপুটে `message` ঘরটা আগের মতোই আছে।
 
-```text
-START → write_note → END
+## কোন অংশ কী করে
 
-invoke({"topic": ...}) দিলে:
-  state = {"topic": "ঈদ ফ্যাশন কালেকশন ২০২৭"}
-  write_note(state) → return {"note": "..."}   ← শুধু note বদলাল
-  শেষ state = {topic, note}                     ← দুটোই একসাথে
-```
-
-## নতুন কী শিখলে
-
-- `TypedDict` দিয়ে state-এর আকৃতি ঠিক করেছ — ভুল কলাম লিখলে পরে ধরা পড়বে
-- `add_node("নাম", ফাংশন)` — ধাপের নাম তুমিই দাও; edge-এ এই নামই ব্যবহার হয়
-- `START`/`END` হলো বিশেষ দুই প্রান্তবিন্দু — কোথা থেকে শুরু, কোথায় থামা
-- `compile()` না করলে graph চালানো যায় না
-- node শুধু **যা বদলেছে** তা ফেরত দেয়; বাকি state যেমন ছিল তেমনই থাকে
-
-> এখনো কোনো LLM কল হয়নি — এটা ইচ্ছাকৃত। ধাপ, খাতা আর ক্রম পরিষ্কার হলে পরের পেজগুলোতে মডেল আর টুল যোগ হবে।
+| অংশ | কাজ |
+| --- | --- |
+| `class Slip(TypedDict)` | স্লিপের ছক — কোন ঘরে কোন তথ্য |
+| `def welcome(state)` | কর্মচারী — স্লিপ পড়ে আংশিক উত্তর লেখে |
+| `add_node("welcome", welcome)` | নাম দিয়ে কর্মচারীকে গ্রাফে বসানো |
+| `add_edge(START, "welcome")` | দরজা থেকে প্রথম কর্মচারীর কাছে রাস্তা |
+| `compile()` | বানানো নকশাকে চালানোর মতো গ্রাফে রূপ দেয় |
+| `invoke({...})` | একটা গ্রাহক ঢুকিয়ে গ্রাফ চালানো |
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| `KeyError: 'note'` | invoke-এ যা পাঠাচ্ছ, state-এ সেই key আগে থেকে আছে কিনা দেখো |
-| `Graph must be compiled` | `builder.compile()` করে `graph`-এ চালাও |
-| node চলছে না | `add_edge(START, "নাম")`-এ নাম হুবহু `add_node`-এর নামের মতো কিনা দেখো |
+| `KeyError` | node যে ঘর পড়ছে, সেটা invoke-এ বা আগের node-এ ভরা হয়েছে কি না দেখো |
+| `Graph must have an entrypoint` | `START` থেকে edge টানা হয়নি |
+| node চলছে না | `add_node`-এর নাম আর `add_edge`-এর নাম হুবহু মিলছে কি না দেখো |
 
-পরের ধাপে [State ও Reducer](/langgraph/state-reducer) — একাধিক ধাপ একসাথে খাতায় লিখলে কী হয়।
+পরের ধাপে [দুজন কর্মচারী, এক লাইনে](/langgraph/two-nodes) — একজন যা লেখে, আরেকজন পড়বে।

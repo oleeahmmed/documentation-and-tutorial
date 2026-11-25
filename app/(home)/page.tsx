@@ -36,11 +36,11 @@ export default function HomePage() {
           <GitBranch className="size-6 text-fd-primary" />
           <h2 className="mt-4 text-lg font-semibold">LangGraph Tutorial</h2>
           <p className="mt-2 text-sm text-fd-muted-foreground">
-            করিম ভাইয়ের কাজের ধাপগুলো গ্রাফে সাজাও — State, Tool, Memory,
-            অনুমোদন আর Streaming, একদম শুরু থেকে।
+            রফিক সাহেবের দোকানের গল্পে ৯ ধাপে LangGraph — অর্ডার স্লিপ, রাস্তা
+            ভাগ, লুপ, মেমোরি আর অনুমোদন, key ছাড়াই শুরু।
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
-            ধাপে ধাপে শুরু করো
+            গল্পে গল্পে শিখো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>
