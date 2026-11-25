@@ -44,8 +44,9 @@ icon: Briefcase
 | পেজ | কী থাকছে |
 | --- | --- |
 | [Project 1 — Fraud Detection](/docs/project-based/project-1/overview) | আসল Upwork পোস্ট, ক্লায়েন্টের গল্প, স্কোপ |
-| [পর্ব ১ — Django Backend](/docs/project-based/project-1/backend-webhook) | শূন্য থেকে DRF + WooCommerce webhook |
-| [পর্ব ২ — React ড্যাশবোর্ড](/docs/project-based/project-1/react-dashboard) | Shadcn UI ড্যাশবোর্ডে লাইভ অর্ডার ও ঝুঁকির স্ট্যাটাস |
-| [সিস্টেম ডিজাইন](/docs/project-based/project-1/solution) | CrewAI এজেন্ট, রিস্ক স্কোর, WhatsApp ফ্লো, স্ট্যাক |
+| [পর্ব ১ — Django Backend](/docs/project-based/project-1/backend-webhook) | শূন্য থেকে DRF + WooCommerce webhook, একাধিক স্টোর ও ইউজার |
+| [পর্ব ২ — React ড্যাশবোর্ড](/docs/project-based/project-1/react-dashboard) | Shadcn UI ড্যাশবোর্ড — লগইন, ওয়েবসাইট যোগ, স্টোরভিত্তিক অর্ডার |
+| [পর্ব ৩ — CrewAI এজেন্ট](/docs/project-based/project-1/crewai-agent) | দুই এজেন্ট + Django সেতু — রিস্ক স্কোর ও WhatsApp |
+| [সিস্টেম ডিজাইন](/docs/project-based/project-1/solution) | মাল্টি-টেন্যান্ট আর্কিটেকচার, রিস্ক রুল, সেতু, স্ট্যাক |
 
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?

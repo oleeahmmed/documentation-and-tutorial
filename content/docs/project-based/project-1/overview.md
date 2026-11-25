@@ -66,27 +66,27 @@ We can provide test data and staging access after a short call. Please share 1�
 
 ## এই প্রজেক্টে যা বানাবো
 
+সিস্টেমটা এক ব্যবসায়ীর এক স্টোরের জন্য নয় — **একাধিক ব্যবসায়ী একই সার্ভারে** লগইন করবে, প্রত্যেকে নিজের একাধিক WooCommerce সাইট জুড়বে। প্রতিটা সাইটের আলাদা webhook token, আর প্রত্যেকে শুধু নিজের অর্ডার দেখবে।
+
 ```text
-WooCommerce (নতুন অর্ডার)
+WooCommerce (একাধিক স্টোর, প্রতি স্টোরে আলাদা webhook token)
    ↓ webhook
-Django API (verify + queue)
-   ↓
-CrewAI Crew
-   ├─ Order Intake Agent   → ডেটা পরিষ্কার, ডুপ্লিকেট ফোন
-   ├─ Risk Analyst Agent   → কুরিয়ার হিস্ট্রি + নিয়ম + ব্যাখ্যা
-   ├─ Customer Comms Agent → Bangla/Banglish WhatsApp
-   └─ Ops Reporter Agent   → দৈনিক সামারি
-   ↓
-React Dashboard + PostgreSQL
+Django API (user login, Website + Order, নিজের ডেটা ফিল্টার)
+   ↓ নতুন অর্ডার
+CrewAI Crew (ai_agents/)
+   ├─ Fraud Analyst Agent      → কুরিয়ার হিস্ট্রি + ঠিকানা যাচাই
+   └─ Verification Agent       → HIGH_RISK হলে Bengali WhatsApp
+   ↓ structured result
+React Dashboard (multi-store, login, স্টোরভিত্তিক অর্ডার)
 ```
 
 এই সিরিজে সিস্টেমটা ধাপে ধাপে বানাবো — আগে ডেটা পাইপলাইন, তারপর এজেন্ট:
 
 | পর্ব | কী বানাবে | পেজ |
 | --- | --- | --- |
-| ১ | Django + DRF + WooCommerce webhook — লাইভ অর্ডার রিসিভ | [পর্ব ১ — Django Backend](/docs/project-based/project-1/backend-webhook) |
-| ২ | React + Vite + Shadcn UI ড্যাশবোর্ড — অর্ডার, সামারি ও স্ট্যাটাস | [পর্ব ২ — React ড্যাশবোর্ড](/docs/project-based/project-1/react-dashboard) |
-| ৩ | CrewAI এজেন্ট — রিস্ক স্কোর + WhatsApp | (আসছে) |
+| ১ | Django + DRF + WooCommerce webhook — মাল্টি-টেন্যান্ট অর্ডার রিসিভ | [পর্ব ১ — Django Backend](/docs/project-based/project-1/backend-webhook) |
+| ২ | React + Vite + Shadcn UI ড্যাশবোর্ড — লগইন, ওয়েবসাইট যোগ, অর্ডার | [পর্ব ২ — React ড্যাশবোর্ড](/docs/project-based/project-1/react-dashboard) |
+| ৩ | CrewAI এজেন্ট + Django সেতু — রিস্ক স্কোর ও WhatsApp | [পর্ব ৩ — CrewAI এজেন্ট](/docs/project-based/project-1/crewai-agent) |
 
 এজেন্ট ডিজাইন, রিস্ক রুল আর মাইলস্টোন: **[System Design](/docs/project-based/project-1/solution)**।
 

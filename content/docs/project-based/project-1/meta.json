@@ -5,6 +5,7 @@
     "decision-matrix",
     "backend-webhook",
     "react-dashboard",
+    "crewai-agent",
     "solution"
   ]
 }
