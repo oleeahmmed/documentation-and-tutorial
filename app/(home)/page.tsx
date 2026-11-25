@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Blocks, Boxes, ChartColumn, Code, Sparkles, WandSparkles, Zap } from 'lucide-react';
+import { ArrowRight, Blocks, Boxes, ChartColumn, Code, GitBranch, Sparkles, WandSparkles, Zap } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -25,6 +25,22 @@ export default function HomePage() {
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
             ডকুমেন্টেশন দেখো
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+
+        <Link
+          href="/langgraph"
+          className="group rounded-xl border bg-fd-card p-6 transition-colors hover:bg-fd-accent"
+        >
+          <GitBranch className="size-6 text-fd-primary" />
+          <h2 className="mt-4 text-lg font-semibold">LangGraph Tutorial</h2>
+          <p className="mt-2 text-sm text-fd-muted-foreground">
+            করিম ভাইয়ের কাজের ধাপগুলো গ্রাফে সাজাও — State, Tool, Memory,
+            অনুমোদন আর Streaming, একদম শুরু থেকে।
+          </p>
+          <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
+            ধাপে ধাপে শুরু করো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>

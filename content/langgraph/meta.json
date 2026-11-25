@@ -1,0 +1,25 @@
+{
+  "title": "LangGraph Tutorial",
+  "pages": [
+    "index",
+    "---শুরু---",
+    "installation",
+    "first-graph",
+    "---Core Concepts---",
+    "state-reducer",
+    "nodes",
+    "edges",
+    "conditional-edges",
+    "llm-node",
+    "tools",
+    "parallel",
+    "persistence",
+    "human-in-the-loop",
+    "streaming",
+    "---Agent ও MCP---",
+    "agents",
+    "mcp",
+    "---শেষ---",
+    "full-project"
+  ]
+}

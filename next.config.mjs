@@ -131,6 +131,18 @@ const config = {
         source: '/power-bi/:path*.txt',
         destination: '/llms.mdx/power-bi/:path*.txt',
       },
+      {
+        source: '/langgraph.md',
+        destination: '/llms.mdx/langgraph.md',
+      },
+      {
+        source: '/langgraph/:path*.md',
+        destination: '/llms.mdx/langgraph/:path*.md',
+      },
+      {
+        source: '/langgraph/:path*.txt',
+        destination: '/llms.mdx/langgraph/:path*.txt',
+      },
     ];
   },
 };

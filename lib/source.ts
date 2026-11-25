@@ -95,6 +95,19 @@ const powerBiDocs = defineDocs({
   },
 });
 
+const langgraphDocs = defineDocs({
+  dir: 'content/langgraph',
+  docs: {
+    schema: pageSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
@@ -138,6 +151,12 @@ export const powerBiSource = loader({
   plugins: [lucideIconsPlugin()],
 });
 
+export const langgraphSource = loader({
+  baseUrl: '/langgraph',
+  source: langgraphDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
+
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
@@ -175,6 +194,12 @@ ${await page.data.getText('processed')}`,
 });
 
 export const powerBiLlms = llms(powerBiSource, {
+  renderPage: async (page) => `# ${page.data.title} (${page.url})
+
+${await page.data.getText('processed')}`,
+});
+
+export const langgraphLlms = llms(langgraphSource, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
 ${await page.data.getText('processed')}`,
