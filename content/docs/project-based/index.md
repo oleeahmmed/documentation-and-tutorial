@@ -49,4 +49,17 @@ icon: Briefcase
 | [পর্ব ৩ — CrewAI এজেন্ট](/docs/project-based/project-1/crewai-agent) | দুই এজেন্ট + Django সেতু — রিস্ক স্কোর ও WhatsApp |
 | [সিস্টেম ডিজাইন](/docs/project-based/project-1/solution) | মাল্টি-টেন্যান্ট আর্কিটেকচার, রিস্ক রুল, সেতু, স্ট্যাক |
 
+## দ্বিতীয় প্রকল্প — ShopBondhu AI
+
+**বাংলাদেশি অনলাইন শপের AI কাস্টমার সাপোর্ট** — Messenger/WhatsApp-এ উত্তর, ERP টুল দিয়ে অর্ডার-পেমেন্ট-কুরিয়ার তথ্য, টিকিট এসকেলেশন, শেষে multi-tenant SaaS। প্রযুক্তি: Django + DRF, CrewAI, PostgreSQL + pgvector, React।
+
+| ভাগ | ফেজ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি ও প্রথম এজেন্ট | ১–৪ | Django মডেল, এক এজেন্ট, RAG, ERP টুল |
+| দল ও প্রক্রিয়া | ৫–৭ | পাঁচ এজেন্ট, মানুষকে হস্তান্তর, Flow + Memory |
+| চ্যানেল ও ড্যাশবোর্ড | ৮–১০ | Messenger, WhatsApp, React কন্ট্রোল প্যানেল |
+| নির্ভরযোগ্যতা ও SaaS | ১১–১২ | টেস্ট/গার্ডরেল, Docker, multi-tenant |
+
+সব ১২ ফেজ: **[ShopBondhu AI — Project 2](/docs/project-based/project-2)**।
+
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
