@@ -1,34 +1,47 @@
 ---
 title: পর্ব ৩ — CrewAI এজেন্ট ও Django সেতু
-description: দুই CrewAI এজেন্ট, কুরিয়ার টুল, WhatsApp টুল আর Django-র সাথে নিরাপদ সেতু — নতুন অর্ডার নিজেই SAFE বা HIGH_RISK হয়ে যাবে।
+description: ছোট ছোট ১৩টা ধাপে দুই CrewAI এজেন্ট — venv ও .env থেকে শুরু, তারপর LLM, agent, task, tool, crew, run, শেষে Django সেতু।
 icon: Bot
 ---
 
-> **পরিকল্পনা:** পর্ব ১-এ অর্ডার এলো, পর্ব ২-এ ড্যাশবোর্ডে দেখা গেল — কিন্তু সব অর্ডার `Pending AI Check`। আজ তানভীরের দুই AI কর্মী নিয়োগ করব: **Fraud Analyst** ফোনের কুরিয়ার হিস্ট্রি আর ঠিকানা দেখবে, **Verification Agent** ঝুঁকিপূর্ণ হলে কাস্টমারকে ভদ্র Bengali WhatsApp পাঠাবে। শেষে Django-র webhook-এর সাথে সেতু বানাব, যাতে অর্ডার আসার সাথে সাথেই এজেন্ট চলে আর ড্যাশবোর্ডে ফলাফল বসে যায়।
+> **পরিকল্পনা:** পর্ব ১-এ অর্ডার এলো, পর্ব ২-এ ড্যাশবোর্ডে দেখা গেল — কিন্তু সব `Pending AI Check`। আজ দুই AI কর্মী নিয়োগ করব। কাজটা একবারে নয় — **ছোট ছোট ১৩টা ধাপ**, প্রতিটার শেষে একটা ছোট কমান্ড চালিয়ে নিজেই যাচাই করবে। কোনো ধাপে আটকে গেলে সেখানেই থামো, সমস্যা মিটিয়ে তারপর পরের ধাপে যাও।
 
-## এই পর্বে যা বানাবো
+## ধাপগুলো এক নজরে
 
-| ধাপ | কাজ |
-| --- | --- |
-| ১ | `ai_agents/` ফোল্ডার, আলাদা venv, CrewAI ইনস্টল |
-| ২ | `.env` — OpenRouter key আর মডেলের নাম |
-| ৩ | `llm_config.py` — সবার একটাই মস্তিষ্ক (LLM) |
-| ৪ | `tools.py` — কুরিয়ার চেক আর WhatsApp যন্ত্র |
-| ৫ | `agents.py` — দুই কর্মী |
-| ৬ | `tasks.py` — দুই কাজের স্লিপ আর Pydantic রিপোর্ট |
-| ৭ | `crew.py` — দল একসাথে নামানো |
-| ৮ | `test_run.py` — প্রথম ডেমো, `HIGH_RISK` আর `SAFE` দুটোই দেখা |
-| ৯ | `run_order.py` — stdin/stdout দিয়ে কথা বলার দরজা |
-| ১০ | Django সেতু — নতুন অর্ডার এলেই এজেন্ট, `analyze` endpoint |
-| ১১ | webhook → এজেন্ট → ড্যাশবোর্ড — পুরো ফ্লো টেস্ট |
+```text
+১. ঘর + venv          ২. .env চাবি        ৩. খালি ফাইল
+৪. LLM                ৫. এজেন্ট            ৬. কাজের স্লিপ
+৭. যন্ত্র (tool)       ৮. যন্ত্র এজেন্টের হাতে
+৯. দল (crew)          ১০. দল চালানোর method + test_run
+১১. run_order দরজা    ১২. Django সেতু      ১৩. পুরো ফ্লো টেস্ট
+```
 
-> **কে কোথায় থাকে:** এজেন্টরা Django-র ভেতরে নয় — আলাদা `ai_agents/` ফোল্ডারে, নিজের venv নিয়ে। কারণ CrewAI-র অনেক প্যাকেজ Django-র পাইথনের সাথে সংঘর্ষ করতে পারে। Django শুধু একটা **সাব-প্রসেস** চালিয়ে ফলাফল নেবে। এই আলাদা ঘরই আমাদের "সেতু"।
+| ধাপ | কী বানাবে | ফাইল |
+| --- | --- | --- |
+| ১ | এজেন্টদের আলাদা ঘর ও venv | `ai_agents/venv/` |
+| ২ | OpenRouter key | `ai_agents/.env` |
+| ৩ | দরকারি খালি ফাইল | `llm_config.py` ইত্যাদি |
+| ৪ | মস্তিষ্ক (LLM) | `llm_config.py` |
+| ৫ | দুই কর্মী | `agents.py` |
+| ৬ | দুই কাজের স্লিপ | `tasks.py` |
+| ৭ | কুরিয়ার আর WhatsApp যন্ত্র | `tools.py` |
+| ৮ | যন্ত্র এজেন্টের হাতে | `agents.py` (আপডেট) |
+| ৯ | দল | `crew.py` |
+| ১০ | দল চালানোর method + প্রথম টেস্ট | `crew.py`, `test_run.py` |
+| ১১ | Django থেকে ডাকার দরজা | `run_order.py` |
+| ১২ | Django সেতু | `orders/agent.py`, `views.py`, `urls.py` |
+| ১৩ | webhook → এজেন্ট → ড্যাশবোর্ড | — |
 
-## ধাপ ১: এজেন্টদের ঘর
+> **মনে রাখো:** এজেন্টরা Django-র ভেতরে নয় — আলাদা `ai_agents/` ফোল্ডারে, নিজের venv নিয়ে। Django শুধু একটা সাব-প্রসেস চালিয়ে ফলাফল নেবে। এতেই দুই পাইথনের সংঘর্ষ এড়ানো যায়।
 
-প্রজেক্ট রুটে (`fraud_shield_pro/`-এর পাশে) নতুন ফোল্ডার:
+---
+
+## ধাপ ১: ঘর আর venv
+
+প্রজেক্টের `backend` আর `frontend`-এর পাশে নতুন ফোল্ডার:
 
 ```bash
+cd fraud_shield_pro
 mkdir ai_agents
 cd ai_agents
 python -m venv venv
@@ -47,7 +60,7 @@ source venv/Scripts/activate
 source venv/bin/activate
 ```
 
-তারপর যন্ত্রপাতি:
+তারপর:
 
 ```bash
 pip install --upgrade pip
@@ -55,7 +68,26 @@ pip install crewai crewai-tools python-dotenv pydantic
 pip freeze > requirements.txt
 ```
 
-`ai_agents/.gitignore` (চাবি আর venv কখনো git-এ যাবে না):
+প্রম্পটের শুরুতে `(venv)` দেখলেই বুঝবে ঘর চালু হয়েছে। **এরপরের সব কমান্ড এই ফোল্ডার থেকেই** — নাহলে `No module named 'crew'` আসবে।
+
+**✅ যাচাই:**
+
+```bash
+python -c "import crewai; print('crewai ok')"
+```
+
+---
+
+## ধাপ ২: `.env` — চাবি
+
+`ai_agents/`-এ `.env` ফাইল বানাও:
+
+```text
+OPENROUTER_API_KEY="sk-or-v1-তোমার_নিজের_KEY"
+OPENROUTER_MODEL_NAME="openrouter/nvidia/nemotron-3-ultra-550b-a55b:free"
+```
+
+আর `.gitignore`:
 
 ```text
 .env
@@ -63,18 +95,33 @@ venv/
 __pycache__/
 ```
 
-## ধাপ ২: চাবি — `.env`
+> key কখনো কোডে, git-এ বা চ্যাটে দিও না। ফ্রি মডেল বন্ধ হলে OpenRouter থেকে tool চালাতে পারে এমন আরেকটা মডেলের slug বসাও — শুধু এই ফাইলে।
 
-```text
-OPENROUTER_API_KEY="sk-or-v1-তোমার_নিজের_KEY"
-OPENROUTER_MODEL_NAME="openrouter/nvidia/nemotron-3-ultra-550b-a55b:free"
+---
+
+## ধাপ ৩: প্রয়োজনীয় খালি ফাইল
+
+এক ফাইলে সব ঢুকালে পরে খুঁজে পাবে না। তাই আলাদা আলাদা:
+
+```bash
+touch llm_config.py tools.py agents.py tasks.py crew.py run_order.py test_run.py
 ```
 
-> **নিজের key বসাও।** OpenRouter-এ ফ্রি অ্যাকাউন্ট খুলে key বানাতে পারো। key কখনো কোডে, git-এ বা চ্যাটে দিও না। ফ্রি মডেল বন্ধ হয়ে গেলে OpenRouter-এর মডেল লিস্ট থেকে tool চালাতে পারে এমন আরেকটা মডেলের slug বসাও — কোড ছুঁতে হবে না।
+| ফাইল | গল্পে | কাজ |
+| --- | --- | --- |
+| `llm_config.py` | মস্তিষ্ক | একটাই LLM, সবাই ব্যবহার করে |
+| `agents.py` | কর্মী | কে, কী লক্ষ্য |
+| `tasks.py` | কাজের স্লিপ | কী করতে হবে + রিপোর্টের ফরম্যাট |
+| `tools.py` | যন্ত্র | কুরিয়ার চেক, WhatsApp |
+| `crew.py` | দল | সবাইকে একসাথে নামানো |
+| `run_order.py` | দরজা | Django থেকে JSON নিয়ে ফলাফল ফেরত |
+| `test_run.py` | প্রথম ডেমো | নকল অর্ডার দিয়ে টেস্ট |
 
-## ধাপ ৩: মস্তিষ্ক — `llm_config.py`
+---
 
-সব এজেন্ট একটাই LLM ব্যবহার করবে। তাই এক জায়গায় বানাই:
+## ধাপ ৪: মস্তিষ্ক — `llm_config.py`
+
+সবার একটাই LLM। তাই আগে এটা, তারপর বাকিরা:
 
 ```python
 import os
@@ -100,60 +147,28 @@ openrouter_llm = LLM(
 )
 ```
 
-`load_dotenv()` ছাড়া `OPENROUTER_API_KEY` ফাঁকা থাকবে। `base_url`-এ `/api/v1` বাদ দিলে OpenRouter 404 দেয়।
+`load_dotenv()` `.env` পড়ে key মেমরিতে ঢোকায়। `base_url`-এ `/api/v1` বাদ দিলে OpenRouter 404 দেয়।
 
-> **আসল সমস্যা যা আমরা পেয়েছি:** Windows-এর কোনো কোনো টার্মিনালে `NO_PROXY`-তে `[::1]` থাকে, আর httpx সেটাকে ভুল পোর্ট ভেবে `InvalidURL: Invalid port: ':1]'` ছোড়ে। উপরের লুপটা শুধু ওই অংশটা বাদ দেয় — বাকি proxy সেটিং অক্ষত থাকে।
+**✅ যাচাই:**
 
-## ধাপ ৪: হাত — `tools.py`
-
-```python
-from crewai.tools import tool
-
-
-@tool("Check Courier Fraud History")
-def check_courier_history(phone: str) -> str:
-    """
-    Checks a Bangladeshi customer's previous parcel delivery and return ratio
-    across Steadfast and Pathao using their phone number.
-    """
-    clean_phone = phone.strip().replace("+88", "")
-
-    if clean_phone.startswith("01700"):
-        return (
-            f"Phone: {clean_phone} | Total Parcels: 10 | Delivered: 2 | Returned: 8 | "
-            f"Success Rate: 20% | Status: HIGH_RISK"
-        )
-    else:
-        return (
-            f"Phone: {clean_phone} | Total Parcels: 15 | Delivered: 14 | Returned: 1 | "
-            f"Success Rate: 93.3% | Status: SAFE"
-        )
-
-
-@tool("Send WhatsApp Verification Message")
-def send_whatsapp_message(phone: str, message: str) -> str:
-    """
-    Sends an automated WhatsApp message to the customer asking for 120 BDT
-    advance delivery charge confirmation when the order is HIGH_RISK.
-    """
-    print(f"\n[WHATSAPP GATEWAY] Sending to {phone}:\n{message}\n")
-    return f"WhatsApp message sent to {phone}"
+```bash
+python -c "from llm_config import openrouter_llm; print(openrouter_llm.model)"
 ```
 
-| যন্ত্র | এখন যা করে | বাস্তবে যা হবে |
-| --- | --- | --- |
-| কুরিয়ার চেক | `01700` দিয়ে শুরু হলে নকল রিটার্ন-হিস্ট্রি, নাহলে ভালো হিস্ট্রি | Steadfast/Pathao/RedX-এর merchant API থেকে আসল পার্সেল-হিস্ট্রি |
-| WhatsApp | টার্মিনালে মেসেজ প্রিন্ট | WhatsApp Cloud API + অ্যাপ্রুভড টেমপ্লেট |
+আউটপুট: `nvidia/nemotron-3-ultra-550b-a55b:free`
 
-আসল API বসালে **শুধু এই ফাইলের ভেতরটা** বদলাবে — এজেন্ট, টাস্ক কিছুই না।
+> `InvalidURL: Invalid port: ':1]'` এলে উপরের NO_PROXY লুপটা কাজ করছে কি না দেখো।
 
-## ধাপ ৫: দুই কর্মী — `agents.py`
+---
+
+## ধাপ ৫: প্রথম কর্মী — `agents.py` (এখন খালি হাতে)
+
+এজেন্ট মানে চাকরির বিজ্ঞাপন — **পদবী, লক্ষ্য, পটভূমি**। এখন কোনো যন্ত্র দিচ্ছি না, শুধু কর্মীটাকে চিনি:
 
 ```python
 from crewai import Agent
 
 from llm_config import openrouter_llm
-from tools import check_courier_history, send_whatsapp_message
 
 fraud_analyst_agent = Agent(
     role="E-commerce Fraud & Courier Risk Analyst",
@@ -166,7 +181,6 @@ fraud_analyst_agent = Agent(
         "You always check courier return history first using your tool and "
         "inspect if the delivery address is complete."
     ),
-    tools=[check_courier_history],
     llm=openrouter_llm,
     verbose=True,
 )
@@ -183,18 +197,24 @@ verification_agent = Agent(
         "for 120 BDT bKash advance delivery charge and send it using the "
         "WhatsApp tool."
     ),
-    tools=[send_whatsapp_message],
     llm=openrouter_llm,
     verbose=True,
 )
 ```
 
-- **Fraud Analyst** — হাতে একটাই যন্ত্র, কুরিয়ার চেকার। ফোন + ঠিকানা দেখে রায় দেবে।
-- **Verification Agent** — হাতে WhatsApp যন্ত্র। `SAFE` হলে চুপ, `HIGH_RISK` হলে ভদ্র মেসেজ।
+**✅ যাচাই:**
 
-> এজেন্ট আর টাস্ক ফাইলের একদম উপরে লেখা — কোনো ফাংশনের ভেতরে নয়। তাই Django থেকেও এদের ঠিক এই রূপে পাওয়া যাবে।
+```bash
+python -c "from agents import fraud_analyst_agent, verification_agent; print(fraud_analyst_agent.role); print(verification_agent.role)"
+```
+
+দুই পদবী প্রিন্ট হবে। এখনো কোনো কাজ হয়নি — কর্মী শুধু তৈরি।
+
+---
 
 ## ধাপ ৬: কাজের স্লিপ — `tasks.py`
+
+কর্মীকে কাজ দিতে হবে। স্লিপে থাকে **কী করতে হবে** আর **রিপোর্ট কেমন হবে** (Pydantic দিয়ে চারটা ফিল্ড):
 
 ```python
 from crewai import Task
@@ -243,15 +263,167 @@ verify_and_report_task = Task(
 )
 ```
 
-তিনটা মূল কথা:
-
 | জিনিস | কেন |
 | --- | --- |
-| `{order_id}`, `{phone}` | ফাঁকা জায়গা — `kickoff(inputs=...)`-এ আসল অর্ডার বসবে |
+| `{order_id}`, `{phone}` | ফাঁকা জায়গা — পরে আসল অর্ডার বসবে |
 | `context=[analyze_order_task]` | দ্বিতীয় কাজ প্রথম কাজের রিপোর্ট পড়ে সিদ্ধান্ত নেবে |
-| `output_pydantic=FraudAnalysisResult` | এলোমেলো গল্প নয় — ঠিক চারটা ফিল্ডের JSON |
+| `output_pydantic=...` | এলোমেলো গল্প নয় — ঠিক চারটা ফিল্ডের JSON |
 
-## ধাপ ৭: দল — `crew.py`
+> স্লিপে `'Check Courier Fraud History'` আর `'Send WhatsApp Verification Message'` নাম দুটো লিখে রেখেছি — এই নামের যন্ত্রগুলো **পরের ধাপে** বানাব। আগে স্লিপ, পরে যন্ত্র।
+
+**✅ যাচাই:**
+
+```bash
+python -c "from tasks import FraudAnalysisResult; print(list(FraudAnalysisResult.model_fields))"
+```
+
+আউটপুট: `['risk_status', 'courier_success_rate', 'ai_analysis_note', 'whatsapp_sent']`
+
+---
+
+## ধাপ ৭: যন্ত্র — `tools.py`
+
+এখন যন্ত্র বানাই। `@tool` লাগালেই সাধারণ ফাংশন এজেন্টের ব্যবহারযোগ্য যন্ত্র হয়ে যায়:
+
+```python
+from crewai.tools import tool
+
+
+@tool("Check Courier Fraud History")
+def check_courier_history(phone: str) -> str:
+    """
+    Checks a Bangladeshi customer's previous parcel delivery and return ratio
+    across Steadfast and Pathao using their phone number.
+    """
+    clean_phone = phone.strip().replace("+88", "")
+
+    if clean_phone.startswith("01700"):
+        return (
+            f"Phone: {clean_phone} | Total Parcels: 10 | Delivered: 2 | Returned: 8 | "
+            f"Success Rate: 20% | Status: HIGH_RISK"
+        )
+    else:
+        return (
+            f"Phone: {clean_phone} | Total Parcels: 15 | Delivered: 14 | Returned: 1 | "
+            f"Success Rate: 93.3% | Status: SAFE"
+        )
+
+
+@tool("Send WhatsApp Verification Message")
+def send_whatsapp_message(phone: str, message: str) -> str:
+    """
+    Sends an automated WhatsApp message to the customer asking for 120 BDT
+    advance delivery charge confirmation when the order is HIGH_RISK.
+    """
+    print(f"\n[WHATSAPP GATEWAY] Sending to {phone}:\n{message}\n")
+    return f"WhatsApp message sent to {phone}"
+```
+
+| যন্ত্র | এখন | বাস্তবে |
+| --- | --- | --- |
+| কুরিয়ার চেক | `01700` দিয়ে শুরু হলে নকল রিটার্ন-হিস্ট্রি | Steadfast/Pathao/RedX merchant API |
+| WhatsApp | টার্মিনালে প্রিন্ট | WhatsApp Cloud API টেমপ্লেট |
+
+আসল API বসালে শুধু **এই ফাইলের ভেতরটা** বদলাবে।
+
+**✅ যাচাই (API কল ছাড়াই):**
+
+```bash
+python -c "from tools import check_courier_history; print(check_courier_history.run(phone='01700998877'))"
+```
+
+আউটপুট: `... Returned: 8 | Success Rate: 20% | Status: HIGH_RISK`
+
+---
+
+## ধাপ ৮: যন্ত্র এজেন্টের হাতে
+
+এখন `agents.py`-এ যন্ত্র জুড়বে — উপরে `tools` import, আর দুই এজেন্টের ভেতরে `tools=[...]`:
+
+```python
+from crewai import Agent
+
+from llm_config import openrouter_llm
+from tools import check_courier_history, send_whatsapp_message
+```
+
+প্রথম এজেন্টের ভেতরে (শেষে):
+
+```python
+    tools=[check_courier_history],
+    llm=openrouter_llm,
+    verbose=True,
+)
+```
+
+দ্বিতীয় এজেন্টের ভেতরে:
+
+```python
+    tools=[send_whatsapp_message],
+    llm=openrouter_llm,
+    verbose=True,
+)
+```
+
+পূর্ণ `agents.py` এখন এমন:
+
+```python
+from crewai import Agent
+
+from llm_config import openrouter_llm
+from tools import check_courier_history, send_whatsapp_message
+
+fraud_analyst_agent = Agent(
+    role="E-commerce Fraud & Courier Risk Analyst",
+    goal=(
+        "Analyze customer phone number and delivery address to detect fake "
+        "or high-return orders in Bangladesh."
+    ),
+    backstory=(
+        "You are a senior fraud analyst for Bangladeshi e-commerce stores. "
+        "You always check courier return history first using your tool and "
+        "inspect if the delivery address is complete."
+    ),
+    tools=[check_courier_history],
+    llm=openrouter_llm,
+    verbose=True,
+)
+
+verification_agent = Agent(
+    role="Customer Verification & WhatsApp Specialist",
+    goal=(
+        "Send a polite Bengali WhatsApp message asking for 120 BDT advance "
+        "delivery charge ONLY if the order is HIGH_RISK."
+    ),
+    backstory=(
+        "You represent 'Tanvir Clothing'. If an order is SAFE, you do nothing. "
+        "If an order is HIGH_RISK, you write a polite message in Bengali asking "
+        "for 120 BDT bKash advance delivery charge and send it using the "
+        "WhatsApp tool."
+    ),
+    tools=[send_whatsapp_message],
+    llm=openrouter_llm,
+    verbose=True,
+)
+```
+
+কোন এজেন্ট কোন যন্ত্র পাবে — ঠিক এটাই `tools=[...]` ঠিক করে। প্রথম জন কুরিয়ার দেখতে পারবে, WhatsApp পারবে না; দ্বিতীয় জন উল্টো।
+
+> **টাস্কেও যন্ত্র দেওয়া যায়:** `Task(..., tools=[check_courier_history])` লিখলে ওই কাজটা নিজেও যন্ত্র চালাতে পারে। আমাদের প্রজেক্টে দরকার নেই — এজেন্টের হাতেই যন্ত্র আছে। দুটো জায়গায় একসাথে দিও না, গুলিয়ে যাবে।
+
+**✅ যাচাই:**
+
+```bash
+python -c "from agents import fraud_analyst_agent, verification_agent; print([t.name for t in fraud_analyst_agent.tools]); print([t.name for t in verification_agent.tools])"
+```
+
+আউটপুট: `['Check Courier Fraud History']` আর `['Send WhatsApp Verification Message']`
+
+---
+
+## ধাপ ৯: দল — `crew.py`
+
+কর্মী তৈরি, কাজের স্লিপ তৈরি, যন্ত্র হাতে — এখন দল গঠন:
 
 ```python
 from crewai import Crew, Process
@@ -265,16 +437,35 @@ fraud_detection_crew = Crew(
     process=Process.sequential,
     verbose=True,
 )
+```
 
+`Process.sequential` — আগে প্রথম কাজ, শেষ হলে দ্বিতীয় কাজ। এখানে এজেন্ট আর টাস্কের ক্রম একই রাখতে হয়।
 
+**✅ যাচাই:**
+
+```bash
+python -c "from crew import fraud_detection_crew; print(len(fraud_detection_crew.agents), 'agents,', len(fraud_detection_crew.tasks), 'tasks')"
+```
+
+আউটপুট: `2 agents, 2 tasks`
+
+---
+
+## ধাপ ১০: দল চালানোর method + প্রথম টেস্ট
+
+### `crew.py`-তে method যোগ করো
+
+```python
 def execute_fraud_check(order_data: dict) -> dict:
     result = fraud_detection_crew.kickoff(inputs=order_data)
     return result.pydantic.model_dump()
 ```
 
-`Process.sequential` — আগে ডিটেকটিভের কাজ, তার রিপোর্ট হাতে নিয়েই কল-সেন্টার এজেন্ট। `model_dump()` রিপোর্টটাকে সাধারণ dict বানায়, যাতে Django/React সহজে পড়ে। **এই একটাই ফাংশন বাইরের দরজা।**
+- `kickoff(inputs=...)` — স্লিপের `{order_id}`, `{phone}` ফাঁকা জায়গায় আসল অর্ডার বসায়
+- `result.pydantic` — চার ফিল্ডের রিপোর্ট
+- `model_dump()` — সেটাকে সাধারণ dict বানায়, Django সহজে পড়বে
 
-## ধাপ ৮: প্রথম ডেমো — `test_run.py`
+### `test_run.py` — নকল অর্ডার দিয়ে টেস্ট
 
 ```python
 import sys
@@ -297,13 +488,13 @@ if __name__ == "__main__":
     print("\n=== FINAL CLEAN OUTPUT ===\n", report)
 ```
 
-চালাও (`ai_agents/`-এর ভেতর থেকেই):
+চালাও:
 
 ```bash
 python test_run.py
 ```
 
-প্রথম রানে যা দেখেছিলাম (মডেলের শব্দ কিছুটা বদলাতে পারে, চারটা ফিল্ড নিশ্চিত):
+ফ্রি মডেলে ১–৩ মিনিট লাগতে পারে। যা দেখবে (মডেলের শব্দ কিছুটা বদলাতে পারে, চারটা ফিল্ড নিশ্চিত):
 
 ```text
 [WHATSAPP GATEWAY] Sending to 01700998877:
@@ -315,19 +506,13 @@ python test_run.py
  'whatsapp_sent': True}
 ```
 
-দ্বিতীয় টেস্ট — ফোন `01712345678` (ভালো কাস্টমার):
+**দ্বিতীয় টেস্ট (ভালো কাস্টমার):** `phone` বদলে `01712345678` দাও — `SAFE`, `93.3%`, `whatsapp_sent: False` আসবে। এতে প্রমাণ হবে দুই পথই কাজ করে।
 
-```text
-{'risk_status': 'SAFE', 'courier_success_rate': '93.3%',
- 'ai_analysis_note': 'কুরিয়ার সফলতার হার ৯৩.৩% এবং ঠিকানা ডেলিভারির জন্য পর্যাপ্ত।',
- 'whatsapp_sent': False}
-```
+---
 
-দুই ফলাফলই প্রমাণ — যন্ত্র ঠিকমতো চাপছে, ঝুঁকি বুঝে WhatsApp যাচ্ছে/যাচ্ছে না, আর রিপোর্ট চারটা ফিল্ডেই আসছে।
+## ধাপ ১১: Django থেকে ডাকার দরজা — `run_order.py`
 
-## ধাপ ৯: দরজা — `run_order.py`
-
-Django থেকে কমান্ডলাইনে একটা অর্ডার পাঠাতে হবে, ফলাফল ফাইলে ফেরত নিতে হবে। এজন্যই:
+Django আলাদা প্রসেস, তাই কমান্ডলাইনে JSON পাঠিয়ে ফলাফল ফাইলে ফেরত নিতে হবে:
 
 ```python
 import json
@@ -353,22 +538,28 @@ if __name__ == "__main__":
         json.dump(report, output, ensure_ascii=False)
 ```
 
-ব্যবহার:
+| জিনিস | কাজ |
+| --- | --- |
+| stdin | Django থেকে আসল অর্ডার JSON |
+| `sys.argv[1]` | ফলাফল লেখার ফাইল |
+| `exit 1` | error হলে Django বুঝবে এজেন্ট চলেনি |
+
+**✅ যাচাই (ঐচ্ছিক, ২–৩ মিনিট):**
 
 ```bash
 echo '{"order_id":"1","customer_name":"Test","phone":"01700998877","address":"Uttara, Dhaka","total_amount":"1000"}' \
   | python run_order.py result.json
+
+cat result.json
 ```
 
-- stdin — Django থেকে JSON অর্ডার
-- `sys.argv[1]` — ফলাফল লেখার ফাইল
-- error হলে `exit 1` — Django বুঝবে এজেন্ট চলেনি
+`result.json`-এ চার ফিল্ডের JSON থাকবে।
 
-## ধাপ ১০: Django সেতু
+---
 
-### `backend/orders/agent.py` (নতুন ফাইল)
+## ধাপ ১২: Django সেতু
 
-Django-র পাইথন এজেন্টের venv চেনে না, তাই সাব-প্রসেসে ওই venv-এর পাইথন চালায়:
+### ১) `backend/orders/agent.py` (নতুন ফাইল)
 
 ```python
 import json
@@ -439,127 +630,61 @@ def start_agent(order_id):
 
 | লাইন | কেন |
 | --- | --- |
-| `AGENT_DIR` | `backend/orders/` থেকে দুই ধাপ উপরে উঠে `ai_agents/` |
+| `AGENT_DIR` | `backend/orders/` থেকে দুই ধাপ উপরে `ai_agents/` |
 | `_agent_python()` | Windows-এ `venv/Scripts/python.exe`, Linux/Mac-এ `venv/bin/python` |
-| `subprocess.run(...)` | এজেন্ট আলাদা প্রসেসে — Django-র প্যাকেজের সাথে সংঘর্ষ নেই |
-| `timeout=600` | ফ্রি মডেল মাঝে মাঝে ধীর; ১০ মিনিট পর ছেড়ে দেয় |
-| `threading.Thread(daemon=True)` | webhook সাথে সাথে রেসপন্স পায়, এজেন্ট পেছনে চলে |
-| exception হলে note | ড্যাশবোর্ডে "এজেন্ট চলেনি: ..." দেখে বোঝা যায় কী হলো |
+| `subprocess.run` | এজেন্ট আলাদা প্রসেসে — Django-র প্যাকেজের সাথে সংঘর্ষ নেই |
+| `timeout=600` | ধীর ফ্রি মডেলেও আটকে না থাকে |
+| `threading.Thread` | webhook সাথে সাথে রেসপন্স পায়, এজেন্ট পেছনে চলে |
+| exception → note | ড্যাশবোর্ডে "এজেন্ট চলেনি: ..." দেখে বোঝা যায় |
 
-### `backend/orders/views.py` — webhook আর analyze
+### ২) `backend/orders/views.py` — তিনটা ছোট বদল
 
-আগের `print`-এর জায়গায় `start_agent` বসবে, আর নতুন একটা `analyze` endpoint:
+উপরে import:
 
 ```python
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-
 from .agent import start_agent
-from .models import Order, Website
-from .serializers import OrderSerializer, WebsiteSerializer
+```
 
+webhook-এ `print(...)` লাইনটার জায়গায়:
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def woocommerce_webhook(request, token):
-    website = get_object_or_404(Website, webhook_token=token)
-    data = request.data
-
-    # WooCommerce ping টেস্টে webhook_id পাঠায়, অর্ডারের বডি থাকে না
-    if 'id' not in data:
-        return Response({"message": "Webhook ping received successfully!"}, status=status.HTTP_200_OK)
-
-    try:
-        wc_order_id = str(data.get('id'))
-        billing = data.get('billing', {})
-        customer_name = f"{billing.get('first_name', '')} {billing.get('last_name', '')}".strip()
-        phone = billing.get('phone', 'N/A')
-        address = f"{billing.get('address_1', '')}, {billing.get('city', '')}".strip(', ')
-        total_amount = data.get('total', 0)
-
-        order, created = Order.objects.update_or_create(
-            website=website,
-            wc_order_id=wc_order_id,
-            defaults={
-                'customer_name': customer_name,
-                'phone': phone,
-                'address': address,
-                'total_amount': total_amount,
-            },
-        )
-
+```python
         if created:
             start_agent(order.id)
+```
 
-        return Response(
-            {"status": "success", "order_id": wc_order_id, "website": website.name, "created": created},
-            status=status.HTTP_201_CREATED,
-        )
+নতুন view (নিচে যেকোনো জায়গায়):
 
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET'])
-def order_list(request):
-    orders = Order.objects.filter(website__owner=request.user).select_related('website')
-    website_id = request.query_params.get('website')
-    if website_id:
-        orders = orders.filter(website_id=website_id)
-    serializer = OrderSerializer(orders.order_by('-created_at'), many=True)
-    return Response(serializer.data)
-
-
+```python
 @api_view(['POST'])
 def analyze_order(request, pk):
     order = get_object_or_404(Order, pk=pk, website__owner=request.user)
     start_agent(order.id)
     return Response({"status": "queued", "order_id": order.id})
-
-
-@api_view(['GET', 'POST'])
-def website_list(request):
-    if request.method == 'GET':
-        websites = request.user.websites.order_by('created_at')
-        return Response(WebsiteSerializer(websites, many=True).data)
-
-    serializer = WebsiteSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save(owner=request.user)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-@api_view(['DELETE'])
-def website_detail(request, pk):
-    website = get_object_or_404(Website, pk=pk, owner=request.user)
-    website.delete()
-    return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
-`backend/orders/urls.py`-তে একটা লাইন যোগ করো:
+### ৩) `backend/orders/urls.py` — একটা লাইন
 
 ```python
-from django.urls import path
-
-from . import views
-
-urlpatterns = [
-    path('orders/webhook/woocommerce/<uuid:token>/', views.woocommerce_webhook, name='wc-webhook'),
-    path('orders/list/', views.order_list, name='order-list'),
     path('orders/<int:pk>/analyze/', views.analyze_order, name='order-analyze'),
-    path('websites/', views.website_list, name='website-list'),
-    path('websites/<int:pk>/', views.website_detail, name='website-detail'),
-]
 ```
 
-> `analyze_order` নিজে চেক করে অর্ডারটা `request.user`-এর কি না। তাই অন্যের অর্ডারে চাপ দিলে `404` — টেন্যান্ট আলাদা থাকল।
+`analyze_order` নিজে চেক করে অর্ডারটা `request.user`-এর কি না — অন্যের অর্ডারে চাপ দিলে `404`।
 
-## ধাপ ১১: পুরো ফ্লো — webhook থেকে ড্যাশবোর্ড
+**✅ যাচাই:** Django চালু করে কোনো নিজের অর্ডারের `analyze` endpoint-এ চাপ দাও:
 
-দুই সার্ভার চালু রাখো, তারপর নতুন অর্ডার পাঠাও:
+```bash
+curl -X POST http://127.0.0.1:8000/api/orders/1/analyze/ -H "Authorization: Token <token>"
+```
+
+```json
+{"status":"queued","order_id":1}
+```
+
+---
+
+## ধাপ ১৩: পুরো ফ্লো — webhook থেকে ড্যাশবোর্ড
+
+দুই সার্ভার চালু, তারপর নতুন অর্ডার:
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/orders/webhook/woocommerce/<তোমার_token>/ \
@@ -567,59 +692,53 @@ curl -X POST http://127.0.0.1:8000/api/orders/webhook/woocommerce/<তোমা�
   -d '{"id":9100,"total":"1550.00","billing":{"first_name":"Karim","last_name":"Hossain","phone":"01700112233","address_1":"House 7, Road 3, Uttara","city":"Dhaka"}}'
 ```
 
-রেসপন্স সাথে সাথে আসবে (`created: true`), আর Django টার্মিনালে এজেন্ট চলতে শুরু করবে। ৩০–৯০ সেকেন্ড পর:
+রেসপন্স সাথে সাথে: `{"status":"success", ..., "created":true}`। এরপর পেছনে এজেন্ট চলবে — ৩০–৯০ সেকেন্ড।
 
-```bash
-curl http://127.0.0.1:8000/api/orders/list/ -H "Authorization: Token <token>"
-```
-
-এই অর্ডারের `risk_status` এখন `HIGH_RISK`, `courier_success_rate: "20%"`, `whatsapp_sent: true`।
-
-ড্যাশবোর্ডে `Refresh` দিলে:
+কয়েক সেকেন্ড পর ড্যাশবোর্ডে `Refresh` দাও (অথবা `curl` দিয়ে লিস্ট দেখো):
 
 | আগে | পরে |
 | --- | --- |
 | Pending AI Check (হলুদ) | High Risk (লাল) বা Safe (সবুজ) |
-| Summary-তে Pending সংখ্যা বেশি | High Risk কার্ড বাড়ে |
+| Summary-তে Pending বেশি | High Risk কার্ড বাড়ে |
 
-`AI চেক চালাও` বাটনও এখন কাজ করবে — `POST /api/orders/<id>/analyze/` আবার এজেন্ট চালায় (৫ সেকেন্ড পর টেবিল নিজে রিফ্রেশ হয়)।
+`AI চেক চালাও` বাটনও এখন কাজ করবে — `POST /api/orders/<id>/analyze/` আবার এজেন্ট চালায়, ৫ সেকেন্ড পর টেবিল নিজে রিফ্রেশ হয়।
 
-> **ডেভেলপমেন্ট টিপ:** `runserver`-এ কোড বদলালে সার্ভার রিস্টার্ট হয় আর চলমান daemon থ্রেড মরে যায় — তখন অর্ডারটা `PENDING`-ই থাকে। সমস্যা নেই, `AI চেক চালাও` চেপে আবার চালাও।
+> **ডেভেলপমেন্ট টিপ:** `runserver`-এ কোড বদলালে সার্ভার রিস্টার্ট হয় আর চলমান থ্রেড মরে যায় — অর্ডার `PENDING`-ই থাকবে। সমাধান: `AI চেক চালাও` চেপে আবার চালাও।
 
-## একাধিক ব্যবসায়ী হলে কী হয়
+---
 
-- প্রতিটা অর্ডার তার `Website`-এর সাথে সেভ হয়, আর `UniqueConstraint(website, wc_order_id)` — তাই দুই স্টোরে একই `#1099` চলবে
-- webhook URL-এর token দেখে বোঝা যায় কোন স্টোর, তাই কোনো ইউজার অন্যের স্টোরের নামে অর্ডার পাঠাতে পারবে না
-- এজেন্টকে শুধু ওই একটা অর্ডারের ডেটা দেওয়া হয় — সে ডেটাবেসে হাত দেয় না, অন্যের ডেটা দেখেও না
-- ফলাফল সেই অর্ডারের সারিতেই লেখা হয়; ড্যাশবোর্ড নিজের অর্ডারই দেখে
-- এজেন্টের জব একটাই — "এই অর্ডারটা ঝুঁকিপূর্ণ কি না"। স্টোরভিত্তিক আলাদা মডেল/প্রম্পট দরকার হলে ভবিষ্যতে `Website`-এ কনফিগ ফিল্ড যোগ করা যায়
+## একাধিক ব্যবসায়ী হলে
+
+- অর্ডার তার `Website`-এর সাথে সেভ হয়; `UniqueConstraint(website, wc_order_id)` — দুই স্টোরে একই `#1099` চলবে
+- webhook URL-এর token বলেই বোঝা যায় কোন স্টোর — অন্যের নামে অর্ডার পাঠানো যায় না
+- এজেন্ট শুধু ওই একটা অর্ডারের ডেটা পায় — ডেটাবেসে হাত দেয় না, অন্যের ডেটা দেখে না
+- ফলাফল ওই অর্ডারের সারিতেই লেখা হয়; ড্যাশবোর্ড নিজের অর্ডারই দেখে
 
 ## বাস্তবে বসাতে শুধু যা বদলাবে
 
 | এখন (ডেমো) | বাস্তবে |
 | --- | --- |
 | `01700` দিয়ে নকল রিটার্ন-হিস্ট্রি | Steadfast/Pathao/RedX merchant API |
-| `[WHATSAPP GATEWAY]` প্রিন্ট | WhatsApp Cloud API + অ্যাপ্রুভড টেমপ্লেট |
-| Django থ্রেড + subprocess | Celery + Redis queue (বড় ভলিউমে) |
+| `[WHATSAPP GATEWAY]` প্রিন্ট | WhatsApp Cloud API টেমপ্লেট |
+| Django থ্রেড + subprocess | Celery + Redis queue |
 | SQLite | PostgreSQL |
-| `analyze` বাটন | অটো রিট্রাই + dead-letter queue |
 
-এজেন্ট, টাস্ক, দল — কিছুই বদলাবে না। শুধু `tools.py` আর queue-এর জায়গা।
+এজেন্ট, টাস্ক, দল — কিছুই বদলাবে না।
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| `ModuleNotFoundError: crewai` | `ai_agents/`-এর venv activate করেছ? `pip install crewai` |
-| `No module named 'crew'` | `ai_agents/`-এর ভেতর থেকে চালাও (`cwd` ভুল) |
-| `401` / auth এরর | `.env`-এ `OPENROUTER_API_KEY` ঠিক আছে? চ্যাটে শেয়ার করো না |
+| `ModuleNotFoundError: crewai` | `ai_agents/`-এর venv activate করেছ? |
+| `No module named 'crew'` | `ai_agents/`-এর ভেতর থেকে চালাও — `cd` ভুল |
+| `401` / auth এরর | `.env`-এ `OPENROUTER_API_KEY` ঠিক আছে? |
 | `404 model not found` | `.env`-এর মডেল slug exact; ফ্রি মডেল বন্ধ হলে নতুন ফ্রি + tool-সাপোর্টেড মডেল |
-| `429 rate limit` | ফ্রি মডেলের লিমিট — কিছুক্ষণ পরে `AI চেক চালাও` |
-| `InvalidURL: Invalid port: ':1]'` | `llm_config.py`-এর NO_PROXY ফিক্স আছে তো? |
+| `429 rate limit` | ফ্রি মডেলের লিমিট — কিছুক্ষণ পরে আবার |
+| `InvalidURL: Invalid port: ':1]'` | `llm_config.py`-এর NO_PROXY লুপ আছে তো? |
 | `UnicodeEncodeError: 'charmap'` | `run_order.py` / `test_run.py`-এর UTF-8 ফিক্স |
-| অর্ডার `PENDING`-ই থাকে | Django টার্মিনালে error দেখো; `ai_analysis_note`-এ "এজেন্ট চলেনি: ..." আছে কি না |
+| অর্ডার `PENDING`-ই থাকে | Django টার্মিনালে error; `ai_analysis_note`-এ "এজেন্ট চলেনি: ..." দেখো |
 | `agent failed` / exit 1 | `ai_agents/venv` ঠিক জায়গায়? `run_order.py` stdin পাচ্ছে? |
-| ওয়েবপেজে স্ট্যাটাস বদলায় না | ৩০–৯০ সেকেন্ড লাগে; Refresh চাপো। ফ্রি মডেল ধীর |
+| ওয়েবপেজে স্ট্যাটাস বদলায় না | ৩০–৯০ সেকেন্ড লাগে; Refresh চাপো |
 | `analyze`-এ 404 | অর্ডারটা তোমার স্টোরের? নিজের অর্ডারেই চাপ দাও |
 
 ## চেকলিস্ট
@@ -634,7 +753,7 @@ curl http://127.0.0.1:8000/api/orders/list/ -H "Authorization: Token <token>"
 
 ## শেষ
 
-এখন সিস্টেমটা পুরো ছবি দেখায়: WooCommerce থেকে অর্ডার → Django সেভ → CrewAI দুই এজেন্ট → রিস্ক স্ট্যাটাস আর WhatsApp → React ড্যাশবোর্ড। পরের ধাপে চাইলে আসল Steadfast/Pathao API, WhatsApp Cloud API, Celery আর PostgreSQL বসিয়ে প্রোডাকশনে নেওয়া যায়।
+WooCommerce থেকে অর্ডার → Django সেভ → CrewAI দুই এজেন্ট → রিস্ক স্ট্যাটাস ও WhatsApp → React ড্যাশবোর্ড। পরের ধাপে আসল Steadfast/Pathao API, WhatsApp Cloud API, Celery আর PostgreSQL বসিয়ে প্রোডাকশনে নেওয়া যায়।
 
 ➡️ আগের পর্ব: [পর্ব ২ — React ড্যাশবোর্ড](/docs/project-based/project-1/react-dashboard)
 ➡️ সিস্টেমের পুরো ছবি: [System Design](/docs/project-based/project-1/solution)
