@@ -59,6 +59,8 @@ from pathlib import Path
 from langchain.agents import create_agent
 from langchain.mcp import MCPAdapter
 
+from llm import model
+
 
 async def main():
     async with MCPAdapter(Path("mcp_server.py")) as adapter:
@@ -66,7 +68,7 @@ async def main():
         print("পাওয়া টুল:", [t.name for t in tools])
 
         agent = create_agent(
-            model="openai:gpt-4.1-mini",
+            model=model,
             tools=tools,
             system_prompt="তুমি রূপসী ফ্যাশনের সহকারী। গুদামের তথ্য MCP টুল থেকে নাও।",
         )

@@ -73,11 +73,10 @@ for chunk in graph.stream({"topic": "মাটি-রঙা থিম"}, stream_
 LLM-এর উত্তর শব্দে শব্দে দেখাতে:
 
 ```python
-from langchain.chat_models import init_chat_model
 from langchain.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END, MessagesState
 
-model = init_chat_model("openai:gpt-4.1-mini")
+from llm import model
 
 
 def chat(state: MessagesState):

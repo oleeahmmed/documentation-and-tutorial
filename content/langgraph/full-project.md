@@ -32,7 +32,6 @@ START → research ─┬─(টুল চাইলে)→ tools ─┐
 
 ```python
 from typing import Literal
-from langchain.chat_models import init_chat_model
 from langchain.messages import HumanMessage, SystemMessage
 from langchain.tools import tool
 from langgraph.graph import StateGraph, START, END, MessagesState
@@ -40,7 +39,7 @@ from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import interrupt, Command
 
-model = init_chat_model("openai:gpt-4.1-mini")
+from llm import model
 
 
 @tool
@@ -153,10 +152,11 @@ print(graph.get_state(config).values["final_post"])
 
 ## প্রোডাকশনে যাওয়ার আগে
 
+- প্রোভাইডার/মডেল বদলাতে শুধু `.env`-এর `OPENROUTER_MODEL` বদলাও — `llm.py` আর বাকি কোড অপরিবর্তিত
 - `InMemorySaver`-এর বদলে `SqliteSaver` বা `PostgresSaver` নাও
 - টুলের ভেতরে try/except দিয়ে বন্ধুত্বপূর্ণ error বার্তা দাও
 - খরচ ট্র্যাক করতে LangSmith বা টোকেন কাউন্ট রাখো
-- `OPENAI_API_KEY` কখনো কোডে নয় — `.env`, আর `.env` `gitignore`-এ
+- `OPENROUTER_API_KEY` কখনো কোডে নয় — `.env`-এ, আর `.env` `gitignore`-এ
 
 ## শেষ কথা
 

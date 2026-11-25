@@ -25,8 +25,10 @@ llm_call → (tool চাইলে) tools → llm_call → ... → END
 ```python
 from langchain.agents import create_agent
 
+from llm import model
+
 agent = create_agent(
-    model="openai:gpt-4.1-mini",
+    model=model,
     tools=[stock_lookup],
     system_prompt="তুমি রূপসী ফ্যাশনের সহকারী।",
 )
@@ -39,6 +41,8 @@ agent = create_agent(
 ```python
 from langchain.agents import create_agent
 from langchain.tools import tool
+
+from llm import model
 
 
 @tool
@@ -55,7 +59,7 @@ def sales_last_week() -> str:
 
 
 agent = create_agent(
-    model="openai:gpt-4.1-mini",
+    model=model,
     tools=[stock_lookup, sales_last_week],
     system_prompt="তুমি রূপসী ফ্যাশনের সহকারী। উত্তর সংক্ষেপে বাংলায় দাও।",
 )
@@ -104,7 +108,7 @@ agent = create_agent(..., checkpointer=InMemorySaver())
 
 ## নতুন কী শিখলে
 
-- `create_agent(model=..., tools=..., system_prompt=...)` — এক লাইনে agent
+- `create_agent(model=model, tools=[...], system_prompt=...)` — এক লাইনে agent; `model` আসে `llm.py` থেকে, তাই প্রোভাইডার বদলালেও এখানে হাত দিতে হবে না
 - node, edge, tool loop — সব আগের ১২ ধাপেই শেখা জিনিস
 - জটিল নিয়ন্ত্রণ লাগলে হাতে গ্রাফ বানানোই ভালো
 

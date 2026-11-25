@@ -28,12 +28,11 @@ config = {"configurable": {"thread_id": "karim-nadia-1"}}
 ## কোড (`persistence_project.py`)
 
 ```python
-from langchain.chat_models import init_chat_model
 from langchain.messages import HumanMessage
 from langgraph.graph import StateGraph, START, END, MessagesState
 from langgraph.checkpoint.memory import InMemorySaver
 
-model = init_chat_model("openai:gpt-4.1-mini")
+from llm import model
 
 
 def chat(state: MessagesState):

@@ -14,7 +14,7 @@ CrewAI-তে আমরা একটা **টিম** বানিয়েছ�
 
 - [Python Basic](/python-basic) — ফাংশন, ক্লাস আর type hint জানা থাকলে `TypedDict` বোঝা সহজ হবে
 - [CrewAI](/docs) সেকশনটা পড়া থাকলে Agent, Tool আর LLM-এর ধারণা আগেই তৈরি
-- একটা LLM প্রোভাইডারের API key (উদাহরণে OpenAI: `OPENAI_API_KEY`)
+- একটা LLM প্রোভাইডারের API key — পুরো সিরিজে OpenRouter ব্যবহার হয়েছে (GPT, Claude, Gemini এক key-তেই); চাইলে যেকোনো প্রোভাইডারে বদলানো যাবে
 
 ## অধ্যায়গুলো
 
@@ -22,7 +22,7 @@ CrewAI-তে আমরা একটা **টিম** বানিয়েছ�
 
 | পর্ব | পেজ | কী শিখবে |
 | --- | --- | --- |
-| ১ | [ইনস্টলেশন](/langgraph/installation) | venv, `pip install -U langgraph langchain langchain-openai` |
+| ১ | [ইনস্টলেশন](/langgraph/installation) | venv, `pip install -U langgraph langchain langchain-openrouter`, `llm.py` দিয়ে মডেল |
 | ২ | [প্রথম Graph](/langgraph/first-graph) | `StateGraph`, node, edge, `compile()`, `invoke()` |
 | ৩ | [State ও Reducer](/langgraph/state-reducer) | `TypedDict`, `Annotated`, `operator.add` |
 | ৪ | [Nodes](/langgraph/nodes) | state পড়ে আংশিক update লেখা |

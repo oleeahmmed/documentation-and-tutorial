@@ -1,6 +1,6 @@
 ---
 title: LLM Node
-description: ধাপ ৭ — খাতায় এবার সত্যিকারের AI লেখে; MessagesState আর init_chat_model দিয়ে নাদিয়ার লেখার ধাপ।
+description: ধাপ ৭ — খাতায় এবার সত্যিকারের AI লেখে; MessagesState আর llm.py-এর মডেল দিয়ে নাদিয়ার লেখার ধাপ।
 icon: Sparkles
 ---
 
@@ -31,11 +31,10 @@ class FashionState(MessagesState):
 ## কোড (`llm_project.py`)
 
 ```python
-from langchain.chat_models import init_chat_model
 from langchain.messages import HumanMessage, SystemMessage
 from langgraph.graph import StateGraph, START, END, MessagesState
 
-model = init_chat_model("openai:gpt-4.1-mini")
+from llm import model
 
 
 def marketing(state: MessagesState):
@@ -91,17 +90,18 @@ START → marketing (LLM) → END
 ## নতুন কী শিখলে
 
 - `MessagesState` = মেসেজের জন্য প্রস্তুত state, reducer ছাড়া হাতে লেখার দরকার নেই
-- `init_chat_model("openai:gpt-4.1-mini")` — স্ট্রিং দেখেই প্রোভাইডার বোঝে; `"anthropic:claude-sonnet-4-5"`-ও এভাবেই
+- `model` আসে `llm.py` থেকে — এখানে OpenRouter, কিন্তু `.env` বদলালে OpenAI/Claude/Gemini-ও একই কোডে চলবে
 - system message দিয়ে চরিত্র ঠিক হয় — এখানে নাদিয়ার ব্যক্তিত্ব
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| `AuthenticationError` | `.env`-এ `OPENAI_API_KEY` আছে, আর `dotenv` লোড হচ্ছে কি না দেখো |
-| `NotFoundError` | মডেলের নাম ভুল; প্রোভাইডারের চলতি মডেল-ID ব্যবহার করো |
+| `AuthenticationError` / `401` | `.env`-এ `OPENROUTER_API_KEY` ঠিক আছে, আর `llm.py`-তে `load_dotenv()` চলছে কি না দেখো |
+| `402 ... requires more credits` | OpenRouter-এ ব্যালেন্স নেই — টাকা যোগ করো বা সস্তা মডেল নাও |
+| `NotFoundError` | `OPENROUTER_MODEL`-এর নাম ভুল; OpenRouter-এর মডেল-তালিকা থেকে হুবহু নাও |
 | উত্তর ইংরেজিতে আসছে | system message-এ স্পষ্ট করে "বাংলায় লেখো" দাও |
 
-> API খরচ কমাতে ছোট মডেল (`gpt-4.1-mini`) দিয়েই শেখা চালাও। বড় মডেল দরকার হলে পরে নাম বদলালেই হবে।
+> শেখার সময় সস্তা মডেল (যেমন `openai/gpt-4.1-mini`) ব্যবহার করো — `.env`-এ `OPENROUTER_MODEL=openrouter/openai/gpt-4.1-mini` লিখলেই হবে, কোডে হাত দিতে হবে না।
 
 পরের ধাপে [Tools](/langgraph/tools) — AI নিজে হাতে কাজ করবে।

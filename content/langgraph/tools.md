@@ -26,13 +26,12 @@ icon: Wrench
 
 ```python
 from typing import Literal
-from langchain.chat_models import init_chat_model
 from langchain.messages import HumanMessage, SystemMessage
 from langchain.tools import tool
 from langgraph.graph import StateGraph, START, END, MessagesState
 from langgraph.prebuilt import ToolNode
 
-model = init_chat_model("openai:gpt-4.1-mini")
+from llm import model
 
 
 @tool
