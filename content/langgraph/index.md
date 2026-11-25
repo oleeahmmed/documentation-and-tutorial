@@ -43,7 +43,7 @@ CrewAI-তে আমরা একটা **টিম** বানিয়েছ�
 | ৬ | [ঘুরে আসার লুপ](/langgraph/loop) | লুপ আর থামার শর্ত |
 | ৭ | [গ্রাহককে মনে রাখো](/langgraph/memory) | checkpointer, `thread_id`, `add_messages` |
 | ৮ | [রফিক সাহেবের অনুমতি](/langgraph/approval) | `interrupt`, `Command(resume=...)` |
-| ৯ | [LLM গেটম্যান](/langgraph/llm-node) | OpenRouter + structured output |
+| ৯ | [LLM গেটম্যান](/langgraph/llm-node) | সহজ `llm.py` + OpenRouter দিয়ে সত্যিকারের AI |
 | শেষ | [সারসংক্ষেপ ও অভ্যাস](/langgraph/summary) | সাধারণ ভুল, নিজে করার কাজ, CrewAI তুলনা |
 
 শুরু করতে [ইনস্টলেশন](/langgraph/installation) পেজে যাও।
