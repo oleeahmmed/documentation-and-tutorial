@@ -74,6 +74,29 @@ my-odoo/
 
 সেকশনের মূল পাতা: [Invoice Module](/odoo/invoice-module)।
 
+## HRM (গার্মেন্টস ফ্যাক্টরির হিউম্যান রিসোর্স)
+
+রহিম অ্যাপারেলসের ৩০০ কর্মী — Department, শিফট, হাজিরা, ছুটি, নিয়োগ, মূল্যায়ন থেকে মাসিক রিপোর্ট। মালিক সেটআপ করবেন, করিম স্যার (HR Manager) চালাবেন। প্রতিটা ধাপ আলাদা পেজে:
+
+| ধাপ | পেজ | কী শিখবে |
+| --- | --- | --- |
+| ০ | [শুরুর তথ্য](/odoo/hrm/preparation) | কর্মী তালিকা, পদবি, শ্রম আইনের ছুটি |
+| ১ | [Odoo ইনস্টল](/odoo/hrm/install) | Online/Docker, ডেমো ছাড়া ডাটাবেস |
+| ২–৩ | [HR অ্যাপ ও কোম্পানি](/odoo/hrm/apps-company) | ৯টা অ্যাপ, কোম্পানি, BDT |
+| ৪ | [HR Manager অ্যাকাউন্ট](/odoo/hrm/hr-manager) | Users, অ্যাক্সেস রাইট |
+| ৫ | [Department থেকে Employee](/odoo/hrm/people) | Department, পদবি, শিফট, Import |
+| ৬ | [Time Off](/odoo/hrm/time-off) | ছুটির ধরন, Allocation, Accrual |
+| ৭ | [Attendance](/odoo/hrm/attendance) | Kiosk, Badge/PIN, ওভারটাইম |
+| ৮ | [Recruitment](/odoo/hrm/recruitment) | Applicant পাইপলাইন |
+| ৯ | [Appraisals](/odoo/hrm/appraisals) | Goal, ফিডব্যাক (Enterprise) |
+| ১০ | [Expenses](/odoo/hrm/expenses) | খরচের দাবি ও অনুমোদন |
+| ১১ | [Fleet](/odoo/hrm/fleet) | গাড়ি, সার্ভিস, ইনসুরেন্স |
+| ১২ | [Maintenance](/odoo/hrm/maintenance) | মেশিন ও রিকোয়েস্ট |
+| ১৩ | [Lunch](/odoo/hrm/lunch) | ক্যান্টিন অর্ডার |
+| ১৪ | [রুটিন ও চেকলিস্ট](/odoo/hrm/routine) | দৈনিক/মাসিক কাজ, রিপোর্ট |
+
+সেকশনের মূল পাতা: [HRM](/odoo/hrm) — Odoo 19-এর মেনু অনুসারে।
+
 ## Development (অ্যাডঅন ইনস্টল)
 
 ডিফল্ট Odoo-তে নেই এমন মডিউল দরকার হলে — UI, `custom_addons` ফোল্ডার বা CLI — তিন পদ্ধতির গাইড:
