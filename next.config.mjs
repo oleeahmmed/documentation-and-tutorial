@@ -47,6 +47,66 @@ const config = {
         destination: '/odoo/general-settings/:path*',
         permanent: true,
       },
+      {
+        source: '/odoo/hrm/preparation',
+        destination: '/odoo/hrm',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/preparation.md',
+        destination: '/odoo/hrm.md',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/install',
+        destination: '/odoo/installation',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/install.md',
+        destination: '/odoo/installation.md',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/appraisals',
+        destination: '/odoo/hrm/recruitment',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/appraisals.md',
+        destination: '/odoo/hrm/recruitment.md',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/fleet',
+        destination: '/odoo/hrm/expenses',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/fleet.md',
+        destination: '/odoo/hrm/expenses.md',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/lunch',
+        destination: '/odoo/hrm/maintenance',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/lunch.md',
+        destination: '/odoo/hrm/maintenance.md',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/routine',
+        destination: '/odoo/hrm/summary',
+        permanent: true,
+      },
+      {
+        source: '/odoo/hrm/routine.md',
+        destination: '/odoo/hrm/summary.md',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

@@ -1,80 +1,92 @@
 ---
-title: "ধাপ ৮ — Recruitment (নিয়োগ)"
-description: ৫০ জন Sewing Operator লাগবে — জব পোস্ট থেকে Applicant পাইপলাইন, ইন্টারভিউ, শেষে এক ক্লিকে Employee।
-icon: UserSearch
+title: "নিয়োগ ও মূল্যায়ন সেটিংস"
+description: "ভাগ ১ — Recruitment-এর Stage ও Refuse Reason, পদের বিজ্ঞাপন, আর Appraisals-এর বার্ষিক চক্র (Enterprise)।"
+icon: Briefcase
 ---
 
 ## গল্প
 
-Sewing লাইনে ৫০ জন Sewing Operator দরকার। করিম স্যার এক জায়গা থেকে জব পোস্ট করবেন, আবেদনকারীদের কার্ড ধরে ধরে এক স্টেজ থেকে আরেক স্টেজে নেবেন, আর যাকে নেবেন তাকে Employee-ও বানিয়ে ফেলবেন। কাগজের CV আর ফেসবুক ইনবক্সে আলাদা খাতা রাখতে হবে না।
+সেলাই লাইনে নতুন অপারেটর দরকার। আবেদনকারী থেকে চাকরি নিশ্চিত হওয়া পর্যন্ত একটা পথ — Stage-এ Stage এগোবে। আর বছর শেষে কার কাজ কেমন, সেটা মাপার জন্য মূল্যায়নের নিয়ম আগেই ঠিক করে রাখতে হবে।
 
-## ৮.১ — Job Position পোস্ট করা
+## ১.৯ — Recruitment সেটিংস
 
-1. **Recruitment → Applications → By Job Positions → New**
-2. ফিল্ডগুলো:
+### (ক) Stages
+
+**Recruitment → Configuration → Stages** — ধাপগুলো এই ক্রমে:
+
+| Stage |
+| --- |
+| New |
+| Initial Qualification |
+| First Interview |
+| Second Interview |
+| Contract Proposal |
+| Contract Signed |
+
+> Stage-এর ক্রমই Applicant কার্ডের পাইপলাইন। এখানে নতুন Stage যোগ করলে নিয়োগ প্রক্রিয়া আরও ভাগ করা যায় (যেমন "Practical Test") — কিন্তু বেশি Stage মানে বেশি সময়; ছোট ফ্যাক্টরিতে ৫–৬টাই যথেষ্ট।
+
+### (খ) Refuse Reasons
+
+**Recruitment → Configuration → Refuse Reasons**
+
+| কারণ |
+| --- |
+| Not Skilled |
+| Salary Expectation |
+| No Show |
+| Other |
+
+> Refuse করার সময় কারণ বাছা বাধ্যতামূলক করলে পরে বোঝা যায় কেন লোক পাওয়া যাচ্ছে না — বেতন কম না স্কিল কম। মাসে একবার এই তালিকা দেখো।
+
+### (গ) Job Position (পদ খোলা)
+
+যে পদে নিয়োগ চলছে সেটা **Recruitment → New** দিয়ে চালু করো। **Recruiter: Karim**।
 
 | ফিল্ড | মান |
 | --- | --- |
 | Job Position | `Sewing Operator` |
 | Department | `Sewing` |
 | Recruiter | `Karim Hossain` |
-| Expected New Employees | 50 |
-| Job Location | Factory (থাকলে) |
-| Employment Type | Full-time |
+| Expected Employees | কতজন লাগবে |
 
-3. **Save**
+## ১.১০ — Appraisals সেটিংস (Enterprise)
 
-> **Website অ্যাপ থাকলে:** জব ফর্মের উপরে **Publish** চাপলে কোম্পানির সাইটের `/jobs` পেজে ভ্যাকেন্সি দেখাবে, আর আবেদনের ফর্মও তৈরি হবে। Website না থাকলে জবের শেয়ারযোগ্য লিংকটা ফেসবুক/ক্লাসিফায়েডে দাও।
+**Appraisals → Configuration → Settings**
 
-## ৮.২ — Applicant পাইপলাইন
+| সেটিংস | মান |
+| --- | --- |
+| Frequency | প্রতি ৬ বা ১২ মাস |
+| Employee Feedback | চালু |
+| Manager Feedback | চালু |
 
-আবেদনকারী এলে **Recruitment → Applications → All Applications**-এ কার্ড আকারে দেখাবে। ডিফল্ট স্টেজ:
+Goals-এর Template/Tags: `Production Target`, `Quality`, `Discipline`।
 
-```text
-New → Initial Qualification → First Interview → Second Interview → Contract Proposal → Contract Signed
-```
+> **Community-তে নেই:** Appraisals শুধু Enterprise/Online-এ। Community ব্যবহার করলে মূল্যায়নের রেকর্ড Excel-এ রাখো — পরে Enterprise-এ গেলে Appraisal-এ তুলে নেওয়া যাবে।
 
-কাজের ধরন:
-
-1. কার্ড ধরে ড্র্যাগ করে এক ধাপ থেকে পরের ধাপে নাও
-2. প্রতিটা কার্ডে CV সংযুক্ত করো, মন্তব্য লেখো
-3. ইন্টারভিউয়ের দিন থাকলে **Schedule Interview** (Calendar-এর সাথে যুক্ত)
-4. Stress/interview ফিডব্যাক রাখো Notes-এ
-
-> **স্টেজ নিজের মতো সাজাতে:** Recruitment → Configuration → Job Positions → Stages-এ নতুন স্টেজ যোগ করো, ক্রম বদলাও, বা কোনো স্টেজে "Hired Stage" টিক দাও। স্টেজ বদলালে সব Job Position-এ প্রভাব পড়ে — নির্দিষ্ট পদের জন্য আলাদা স্টেজও করা যায়।
-
-## ৮.৩ — নেওয়ার সিদ্ধান্ত
-
-1. যাকে নেবে তার কার্ড **Contract Signed** (বা Hired হিসেবে চিহ্নিত) স্টেজে নাও
-2. কার্ড/রেকর্ডে **Create Employee** বাটন আসবে — চাপলে Applicant-এর ডেটা দিয়েই Employee তৈরি হয়ে যাবে
-3. Employee রেকর্ডে গিয়ে Department, Work Schedule, PIN/Badge — বাকিগুলো পূরণ করো
-
-> **ডেটা দুইবার নয়:** Create Employee চাপলে নাম, ইমেইল, ফোন, CV — সব চলে যায়। নতুন করে টাইপ করার দরকার নেই; শুধু HR-এর বাকি তথ্য (কর্মীর তালিকা, NID, ব্যাংক) যোগ করো।
+> **Employee Feedback মানে** কর্মী নিজেও নিজের কাজের মূল্যায়ন লিখবে। প্রথম বছর চালু রাখলে ম্যানেজারের সাথে আলোচনা সহজ হয় — কর্মীর মনে হয় সে শুনছে।
 
 ## বাস্তবে কী ঘটে
 
-- একই Job Position-এ একাধিক আবেদনকারী এলে সবাই একই পাইপলাইনে জমা হয়, Department অনুযায়ী ফিল্টার করা যায়
-- পাবলিশ করা চাকরি সাইটে দেখা যায়; Unpublish করলে লুকিয়ে যায়
-- Applicant-এর সাথে সব চ্যাটার (ইমেইল/নোট) এক জায়গায় থাকে — কে কবে কী বলেছে
-- Create Employee করার পর Applicant রেকর্ডও থেকে যায় — Employee আলাদা রেকর্ড
-- বাতিল করা আবেদনকারীকে Refuse করলে কারণ লিখতে হয় — পরে রিপোর্টে কাজে লাগে
+- Applicant কার্ড Stage বদলালে ইতিহাসে কে কখন সরাল তা জমা থাকে
+- Contract Signed-এ গেলে Applicant কার্ড থেকে **Create Employee** চাপলে সব তথ্য Employee-তে চলে যায় ([কর্মী Entry](/odoo/hrm/employee-entry))
+- Appraisal চক্র চালু হলে নির্দিষ্ট সময়ে কর্মীর জন্য মূল্যায়ন তৈরি হয়; Goal ট্যাগ দিয়ে ফিল্টার করা যায়
+- Recruiter সেট না থাকলে কে দায়িত্বে, বোঝা যায় না — Karim বসাও
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| New বাটনে Job Position ফিল্ড খালি | Department/Job Position আগে বানানো আছে কি না দেখো (ধাপ ৫.২) |
-| /jobs পেজে দেখা যাচ্ছে না | Website ইনস্টল, জব **Published**, সাইটের ডোমেইন ঠিক কি না |
-| Create Employee বাটন নেই | Applicant স্টেজ Hired হিসেবে চিহ্নিত কি না, Recruitment-এ Administrator কি না |
-| কার্ড ড্র্যাগ হচ্ছে না | স্টেজে বসিয়ে Save করো; মোবাইলে কার্ডের মেনু থেকে Stage বদলাও |
+| Stages মেনু নেই | Recruitment অ্যাপ ইনস্টল করো |
+| Job Position খুঁজে পাচ্ছি না | Employees সেটিংসে Job Position বানানো আছে কিনা দেখো ([Employees সেটিংস](/odoo/hrm/people)) |
+| Appraisals অ্যাপ নেই | Community ভার্সন — Enterprise/Online লাগবে |
+| Goal-এর ট্যাগ দেখাচ্ছে না | Appraisals → Configuration → Tags-এ তিনটা ট্যাগ বানাও |
 
 ## চেকলিস্ট
 
-- [ ] Job Position + Expected New Employees
-- [ ] Website থাকলে Publish, লিংক শেয়ার
-- [ ] Applicant পাইপলাইন স্টেজ ঠিক
-- [ ] CV সংযুক্তি ও নোট
-- [ ] Create Employee দিয়ে টেস্ট
-- [ ] নতুন Employee-র Work Information পূরণ
+- [ ] ৬টা Recruitment Stage
+- [ ] ৪টা Refuse Reason
+- [ ] চলমান পদের Job Position + Recruiter Karim
+- [ ] Appraisal Frequency, Employee + Manager Feedback
+- [ ] Goals: Production Target, Quality, Discipline
 
-এরপর মূল্যায়ন — [Appraisals](/odoo/hrm/appraisals)।
+পরের ধাপে [Expense ও Fleet সেটিংস](/odoo/hrm/expenses) — খরচের ধরন আর গাড়ির হিসাব।

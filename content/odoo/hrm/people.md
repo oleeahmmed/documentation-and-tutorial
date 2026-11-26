@@ -1,126 +1,134 @@
 ---
-title: "ধাপ ৫ — Department থেকে Employee"
-description: করিম স্যারের প্রথম কাজ — ৯টা Department, ১১টা Job Position, ৮টা–৫টার শিফট, তারপর ৩০০ কর্মীর ডেটা।
+title: "Employees সেটিংস"
+description: "ভাগ ১ — Work Location, Department, Job Position, শিফট, Skill Type, Departure Reason আর Tag — কর্মী ঢোকানোর আগে সব ভিত্তি।"
 icon: UsersRound
 ---
 
 ## গল্প
 
-ফ্যাক্টরির কাঠামোটা আগে দাঁড় করাতে হবে — কোন কোন Department, কার কী পদ, কে কখন কাজ করে। তারপর কর্মী ঢোকাব। এই ক্রমটা উল্টালে সমস্যা: কর্মী বানানোর সময় Department আর Job Position ড্রপডাউনে না পেলে আটকে যাবে।
+কর্মী ঢোকানোর আগে ফ্যাক্টরির "খাপ" বানাতে হবে — কোন কোন Department, কার কী পদ, কে কখন কাজ করে, কোন মেশিনে কার দক্ষতা। আগে না বানালে Employee ফর্মের ড্রপডাউন খালি থাকবে, Import-ও আটকে যাবে।
 
-## ৫.১ — Department বানানো
+## (ক) Settings চেক
 
-**Employees → Departments → New** (অথবা Departments পেজে কানবান ভিউয়ের নিচে **New**)
+**Employees → Configuration → Settings** — **Skills Management** চালু রাখো (Sewing-এর দক্ষতা ট্র্যাক করার জন্য)। **Save**।
 
-একটা একটা করে বানাও:
+> Skills Management বন্ধ থাকলে Employee ফর্মে Resume/Skills ট্যাব আসবে না, `Single Needle - Expert`-এর মতো তথ্য রাখা যাবে না।
 
-| Department | Manager (পরে বসাবে) |
+## (খ) Work Locations
+
+**Employees → Configuration → Work Locations → New** — একটা একটা করে:
+
+| Work Location |
+| --- |
+| Factory Floor 1 |
+| Factory Floor 2 |
+| Cutting Section |
+| Head Office |
+| Store |
+
+## (গ) Departments (Manager এখন ফাঁকা)
+
+**Employees → Configuration → Departments → New**
+
+| Department | Parent |
 | --- | --- |
-| Cutting | Cutting Manager |
-| Sewing | Production Manager |
-| Finishing | |
-| Quality Control | |
-| Packing | |
-| Store & Logistics | |
-| Merchandising | |
-| Accounts | |
-| HR & Admin | Karim Hossain |
+| Production | none |
+| Cutting | Production |
+| Sewing | Production |
+| Finishing | Production |
+| Quality Control | none |
+| Packing | Production |
+| Store & Logistics | none |
+| Merchandising | none |
+| Accounts | none |
+| HR & Admin | none |
 
-> **Manager ঘরটা এখন ফাঁকা রাখো।** কর্মী তৈরি হওয়ার পর ফিরে এসে বসাবে।
->
-> চাইলে **Parent Department** দিয়ে hierarchy বানাতে পারো (যেমন "Production"-এর নিচে Cutting, Sewing, Finishing)। Departments ড্যাশবোর্ডে **hierarchy view** বেছে নিলে গাছের মতো দেখা যাবে; পূর্ণ Org Chart Enterprise/Online-এ পাওয়া যায়।
+> **Manager ঘরটা এখন ফাঁকা রাখো।** কর্মী তৈরি হওয়ার পর ফিরে এসে বসাবে ([কর্মী Entry](/odoo/hrm/employee-entry) পেজে)। Parent দিলে Departments-এর hierarchy view গাছের মতো দেখাবে।
 
-## ৫.২ — Job Position (পদবি) বানানো
+## (ঘ) Job Positions
 
-**Employees → Configuration → Recruitment → Job Positions → New** (Recruitment অ্যাপ ইনস্টল থাকলে **Recruitment → Configuration → Job Positions**-ও একই জায়গা)
+**Employees → Configuration → Job Positions → New** — প্রতিটাতে Department বসাও:
 
-যেমন: `Sewing Operator`, `Senior Sewing Operator`, `Line Chief`, `Supervisor`, `Cutting Master`, `QC Inspector`, `Packing Man`, `Store Keeper`, `Merchandiser`, `Accountant`, `HR Executive`।
+| Job Position | Department |
+| --- | --- |
+| Sewing Operator | Sewing |
+| Senior Sewing Operator | Sewing |
+| Line Chief | Sewing |
+| Supervisor | Production |
+| Cutting Master | Cutting |
+| Cutter | Cutting |
+| QC Inspector | Quality Control |
+| Iron Man | Finishing |
+| Packing Man | Packing |
+| Store Keeper | Store & Logistics |
+| Merchandiser | Merchandising |
+| Accountant | Accounts |
+| HR Executive | HR & Admin |
+| Mechanic | Maintenance-সংশ্লিষ্ট (না থাকলে Production) |
+| Driver | Store & Logistics |
 
-প্রতিটাতে লেখো:
+> বানান হুবহু এক রাখো — `Sewing Operator` আর `Sewing operator` আলাদা পদ হয়ে যাবে, পরে রিপোর্টে দুইটা লাইন দেখাবে।
 
-- **Job Position** নাম
-- **Department**
-- **Expected New Employees** (কতজন লাগবে)
+## (ঙ) Working Schedule
 
-> **টিপস:** নামের বানান একদম একই রাখো — `Sewing Operator` আর `Sewing operator` আলাদা পদ হয়ে যাবে, পরে রিপোর্টে দুইটা লাইন দেখাবে।
+**Employees → Configuration → Working Schedules** (পুরোনো পথ: Settings → Technical)
 
-## ৫.৩ — Work Schedule (কাজের সময়সূচি)
+নতুন: `General Shift 8am-5pm`
 
-**Employees → Configuration → Employee → Working Schedules**
+| ফিল্ড | মান |
+| --- | --- |
+| Timezone | **Asia/Dhaka** |
+| সোম–শনি | ৮:০০–১২:০০ এবং ১:০০–৫:০০ |
+| শুক্রবার | কোনো লাইন নেই |
+| মোট | দিনে ৮ ঘণ্টা (১ ঘণ্টা বিরতি) |
 
-> Odoo 19-এ Developer Mode লাগে না। পুরোনো সংস্করণে `Settings → Technical → Working Schedules` পথেও পাওয়া যেত।
+Night Shift থাকলে `Night Shift` নামে আলাদা Schedule বানাও।
 
-এখানে `Standard 40 Hours/Week` বদলে নিজের নিয়ম বসাও:
+> Attendances এই Schedule দেখে হিসাব করে কে দেরি করেছে, কে আগে গেছে, কত ঘণ্টা Overtime হলো। Schedule ভুল থাকলে হাজিরার হিসাবও ভুল হবে।
 
-- নাম: `General Shift 8am-5pm`
-- সোম–শনি সকাল ৮:০০–১২:০০ এবং দুপুর ১:০০–৫:০০ (মোট ৮ ঘণ্টা, ১ ঘণ্টা বিরতি)
-- **শুক্রবার: কোনো লাইন নেই** (সাপ্তাহিক ছুটি)
-- Timezone: **Asia/Dhaka**
+## (চ) Skill Types
 
-যদি Night Shift থাকে, আলাদা Schedule বানাও (`Night Shift 8pm-5am`)। Guards বা Security-দের জন্য আলাদা Schedule লাগবে — এক শিফটে সবাইকে ঢুকিয়ে দিও না।
+Skills চালু থাকলে **Employees → Configuration → Skill Types → New**:
 
-> **কেন সময়সূচি আগে?** Attendances এই Schedule দেখে হিসাব করে কে দেরি করেছে, কে আগে গেছে, কত ঘণ্টা ওভারটাইম হলো। Schedule ভুল থাকলে হাজিরার হিসাবও ভুল হবে।
+| Skill Type | Skills | Levels |
+| --- | --- | --- |
+| Machine Skills | Single Needle, Overlock, Flatlock, Button Hole | Beginner, Intermediate, Expert |
 
-## ৫.৪ — Employee যোগ করা
+## (ছ) Departure Reasons
 
-**Employees → Employees → New** — প্রথমে এক জনকে দিয়ে প্র্যাকটিস করি: Sewing Operator **Rina Akter**।
+**Employees → Configuration → Departure Reasons** — `Resigned`, `Terminated`, `Retired`, `Absconded`, `End of Contract`।
 
-**উপরের অংশ:**
+## (জ) Employee Tags (ঐচ্ছিক)
 
-- Employee's Name: `Rina Akter`
-- Job Position: `Sewing Operator`
-- Work Mobile / Work Email / Work Phone
+**Employees → Configuration → Employee Tags** — `Permanent`, `Casual`, `Probation`, `Female`, `Night Shift`।
 
-**Work Information ট্যাব:**
-
-- Department: `Sewing`
-- Manager: তার লাইন চিফ (তৈরি হলে)
-- Work Location: `Factory Floor 2` (না থাকলে `Employees → Configuration → Employee → Work Locations`-এ নতুন বানাও)
-- Working Hours: `General Shift 8am-5pm`
-- Timezone: `Asia/Dhaka`
-
-**Private Information ট্যাব:**
-
-- ঠিকানা, জন্মতারিখ, NID নম্বর (Identification No.), বৈবাহিক অবস্থা
-- ব্যাংক/bKash অ্যাকাউন্ট (বেতন দেওয়ার জন্য)
-- জরুরি যোগাযোগ
-
-**HR Settings ট্যাব:**
-
-- **PIN Code** — কিয়স্কে হাজিরার জন্য (৪–৬ ডিজিট, অনুমান করা কঠিন এমন)
-- **RFID/Badge Number** — কার্ড থাকলে **Generate** চেপে নম্বর বানাও, চাইলে ব্যাজ প্রিন্টও করা যায়
-- **User** — অফিসের কর্মী হলে login দিতে চাইলে এখানে User জুড়ো; ফ্লোরের অপারেটরের User লাগবে না
-
-**Resume ট্যাব:** আগের কাজের অভিজ্ঞতা, দক্ষতা (Skills: `Single Needle`, `Overlock`, `Flatlock` ইত্যাদি)। Resume ট্যাব না দেখলে `Employees → Configuration → Settings`-এ **Skills Management** চালু করো।
-
-**Save**।
-
-## ৩০০ জনকে এক একজন করে নয় — Excel Import
-
-1. Excel বানাও (Name, Identification No, Department, Job Position, Work Mobile ইত্যাদি কলাম)
-2. **Employees → Employees** লিস্টে গিয়ে **Favorites → Import records**
-3. ফাইল আপলোড → **Test** → কোনো এরর নেই দেখলে **Import**
-
-> **প্রথমে ২০–৩০ জন দিয়ে টেস্ট করো।** ঠিকঠাক আসলে বাকিদের ঢোকাও। Department আর Job Position-এর নাম Excel-এ হুবহু Odoo-র নামের মতো লিখো — নাহলে Import নতুন Department বানিয়ে ফেলবে বা এরর দেবে।
-
-এরপর ফিরে গিয়ে Department-এর Manager ঘরগুলো পূরণ করো, Departments-এর hierarchy view চেক করো।
+> Tag দিয়ে পরে ফিল্টার/Group By করা যায় — যেমন শুধু Probation কর্মীদের তালিকা, বা Night Shift-এ কতজন।
 
 ## বাস্তবে কী ঘটে
 
-- Employee তৈরি হলে Attendance, Time Off, Expense — সব অ্যাপে সে নিজে থেকেই দেখা যায়
-- Department-এ Manager বসালে সে ওই Department-এর ছুটি/খরচ অনুমোদন করতে পারবে (অ্যাপের সেটিং অনুযায়ী)
-- Parent Department সেট করলে Departments-এর hierarchy view স্বয়ংক্রিয়ভাবে গাছ বানায়
-- Working Hours না দিলে কোম্পানির ডিফল্ট Schedule বসে — ভুল শিফটে থেকে হিসাব নষ্ট হতে পারে
-- Import-এ ভুল হলে ফাইল ডাউনলোড করে এরর কলাম দেখে ঠিক করে আবার Test করো — সরাসরি Import করলে ভুল ডেটা ঢুকে যাবে
+- Department-এর Parent সেট করলে Org Chart আর hierarchy view নিজে থেকেই গাছ বানায়
+- Job Position-এ Department বসানো থাকলে Employee-তে পদ বাছলেই Department বসে যেতে পারে
+- Working Schedule না দিলে কোম্পানির ডিফল্ট Schedule বসে — ভুল শিফটে থেকে দেরি/ওভারটাইমের হিসাব নষ্ট হতে পারে
+- Skill Type একবার বানালে সব কর্মীর Resume ট্যাবে সেই দক্ষতাগুলোই বাছা যাবে
+
+## সমস্যা হলে
+
+| সমস্যা | সমাধান |
+| --- | --- |
+| Configuration মেনুতে Departments নেই | Employees অ্যাপ ইনস্টল/আপগ্রেড করো; Odoo 19-এ Departments সরাসরি Employees মেনুতে |
+| Working Schedules দেখা যাচ্ছে না | Developer Mode চালু করো; পুরোনো ভার্সনে Settings → Technical |
+| Skills ট্যাব নেই | Configuration → Settings → Skills Management চালু করো |
+| Department ডুপ্লিকেট হয়ে গেছে | Employees-এ Group By Department করে একই নাম খুঁজে একটা Archive করো |
 
 ## চেকলিস্ট
 
-- [ ] ৯টা Department (Manager পরে)
-- [ ] ১১টা Job Position + Expected New Employees
-- [ ] `General Shift 8am-5pm` + শুক্রবার বন্ধ + Asia/Dhaka
-- [ ] Rina Akter-এর প্রোফাইল (PIN/Badge, Resume)
-- [ ] Excel Import দিয়ে বাকি কর্মী
-- [ ] Department-এর Manager পূরণ
-- [ ] Departments-এর hierarchy view চেক
+- [ ] Skills Management চালু
+- [ ] ৫টা Work Location
+- [ ] ১০টা Department (Parent সহ, Manager ফাঁকা)
+- [ ] ১৫টা Job Position + Department
+- [ ] `General Shift 8am-5pm`, Asia/Dhaka, শুক্রবার বন্ধ
+- [ ] Skill Type: Machine Skills (৪টা Skill, ৩ Level)
+- [ ] ৫টা Departure Reason
+- [ ] Tags (ঐচ্ছিক)
 
-এবার ছুটির ব্যবস্থা — [Time Off](/odoo/hrm/time-off)।
+পরের ধাপে [Time Off সেটিংস](/odoo/hrm/time-off) — ছুটির ধরন, সরকারি ছুটি আর বছরে জমার নিয়ম।

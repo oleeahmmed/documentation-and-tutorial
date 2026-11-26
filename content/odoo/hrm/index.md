@@ -1,14 +1,25 @@
 ---
 title: HRM
-description: গার্মেন্টস ফ্যাক্টরির ৩০০ কর্মীর হিউম্যান রিসোর্স — Employees, Time Off, Attendance, Recruitment থেকে মাসিক রিপোর্ট পর্যন্ত, ধাপে ধাপে।
+description: গার্মেন্টস ফ্যাক্টরির হিউম্যান রিসোর্স — ৯টা HR অ্যাপ ইনস্টল, সব Settings, কর্মী Entry, দৈনিক কাজ আর মাসিক রিপোর্ট পর্যন্ত ধাপে ধাপে।
 icon: Users
 ---
 
-**রহিম অ্যাপারেলস লিমিটেড** — বগুড়ার একটা গার্মেন্টস ফ্যাক্টরি। ৩০০ জন কর্মী: Cutting, Sewing, Finishing, QC, Packing, Store, Merchandising, Accounts, Admin। মালিক নিজে Odoo বসাবেন, তারপর এক **HR Manager** বানাবেন — করিম হোসেন (Karim Sir)। এরপর HR-এর সব কাজ করিম স্যার করবেন, মালিক শুধু সময়ে সময়ে দেখবেন।
+**রহিম অ্যাপারেলস লিমিটেড** — বগুড়ার একটা গার্মেন্টস ফ্যাক্টরি। ৩০০ জন কর্মী: Cutting, Sewing, Finishing, QC, Packing, Store, Merchandising, Accounts, Admin। মালিক নিজে Odoo-তে HR বসাবেন, তারপর একটা **HR Manager** অ্যাকাউন্ট বানাবেন — করিম হোসেন (Karim Sir)। এরপর HR-এর সব কাজ করিম স্যার করবেন, মালিক শুধু সময়ে সময়ে রিপোর্ট দেখবেন।
 
-এই সেকশনে সেই পুরো যাত্রা — শূন্য থেকে Odoo-তে একটি ফ্যাক্টরির HR চালু করা, প্রতিটি মেনু ও ফিল্ড হাতে-কলমে।
+এই সেকশনে পুরো যাত্রাটা চার ভাগে সাজানো — প্রতিটা ভাগ আলাদা পেজে, প্রতিটা কাজ হাতে-কলমে।
 
-> **সংস্করণ:** পুরো সিরিজটা **Odoo 19**-এর মেনু ও লেবেল অনুসারে লেখা। Odoo 17/18-এও ধাপগুলো একই, শুধু কয়েকটা মেনু বা নাম আলাদা — নিচের টেবিলে বড় পার্থক্যগুলো দেখে নাও। কোনো মেনু না মিললে Odoo-র সার্চ বক্সে নাম লিখে খুঁজে নাও।
+## চার ভাগের নিয়ম
+
+| ভাগ | কখন করবে | কী থাকছে |
+| --- | --- | --- |
+| **ভাগ ১ — Settings** | একবারই | লগইন, অ্যাপ ইনস্টল, ডেভেলপার মোড, কোম্পানি, HR Manager, সব অ্যাপের সেটিংস |
+| **ভাগ ২ — Employee Entry** | একবারই | কর্মীর তালিকা হাতে ও Excel দিয়ে ঢোকানো, তারপর একবারের "জোড়া লাগানো" কাজ |
+| **ভাগ ৩ — দৈনিক Entry** | প্রতিদিন | নতুন কর্মী, হাজিরা, ছুটি, নিয়োগ, Expense, মেশিন, গাড়ি, Lunch |
+| **ভাগ ৪ — Report** | যখন দরকার | হাজিরা, ছুটি, ওভারটাইম, খরচ, নিয়োগ, মূল্যায়নের রিপোর্ট |
+
+> **কেন এভাবে ভাগ?** সেটিংস আর এন্ট্রি একসাথে করলে প্রতিদিন ভুল করে সেটিংসে হাত পড়ে। একবার সেটিংস শেষ — তারপর শুধু ডেটা ঢোকানো।
+
+> **সংস্করণ:** এই সেকশনের মেনুপথ Odoo 17/18 ধরে লেখা। Odoo 19-এ কয়েকটা মেনু ও লেবেল আলাদা — নিচের টেবিলে বড় পার্থক্যগুলো দেখে নাও। কোনো মেনু না মিললে Odoo-র সার্চ বক্সে নাম লিখে খুঁজে নাও।
 >
 > **Appraisals** অ্যাপ শুধু Odoo Enterprise/Online-এ আছে, Community-তে নেই। বাকি অ্যাপগুলোর বেশিরভাগ Community-তেও পাবে। বেতন (Payroll) আলাদা মডিউল — এই সেকশনের বাইরে।
 
@@ -16,7 +27,7 @@ icon: Users
 
 | Odoo 17/18-এ | Odoo 19-এ |
 | --- | --- |
-| Departments ছিল Configuration-এর ভেতরে | `Employees → Departments` (সরাসরি মেনু) |
+| Departments ছিল Configuration-এর ভেতরে | `Employees → Departments` |
 | Job Positions | `Employees → Configuration → Recruitment → Job Positions` |
 | Working Schedules-এ Developer Mode লাগত | `Employees → Configuration → Employee → Working Schedules` |
 | Kind of Time Off = Day | **Duration Type** = Day |
@@ -30,78 +41,62 @@ icon: Users
 | অ্যাপ | কী করে | কে ব্যবহার করবে |
 | --- | --- | --- |
 | **Employees** | কর্মীর প্রোফাইল, Department, Job Position, hierarchy | সবাই (HR পুরোটা) |
-| **Recruitment** | চাকরির বিজ্ঞাপন, আবেদনকারী, ইন্টারভিউ | Karim |
+| **Recruitment** | পদ, আবেদনকারী, ইন্টারভিউ | Karim |
 | **Time Off** | ছুটির আবেদন, অনুমোদন, ব্যালেন্স | Karim + কর্মী |
 | **Attendances** | হাজিরা, Kiosk, ওভারটাইম | Karim + গেটের ট্যাবলেট |
-| **Appraisals** | বার্ষিক মূল্যায়ন (Enterprise) | Karim + ম্যানেজার |
+| **Appraisals** | মূল্যায়ন (Enterprise) | Karim + ম্যানেজার |
 | **Expenses** | ভ্রমণ/খাবারের খরচের দাবি | Merchandiser, Karim |
 | **Fleet** | কোম্পানির গাড়ি, সার্ভিস, ইনসুরেন্স | Karim |
 | **Maintenance** | মেশিন নষ্ট, সার্ভিসিং | অপারেটর → মেকানিক |
 | **Lunch** | ক্যান্টিনের অর্ডার (ঐচ্ছিক) | কর্মী + Karim |
 
+## এই সেকশনে যা বানাবো
+
+| ভাগ | পেজ | কী শিখবে |
+| --- | --- | --- |
+| ১ | [লগইন, অ্যাপ ও কোম্পানি](/odoo/hrm/apps-company) | Login, ৯টা অ্যাপ, Developer Mode, Rahim Apparels + BDT |
+| ১ | [HR Manager-এর অ্যাকাউন্ট](/odoo/hrm/hr-manager) | Users, অ্যাক্সেস রাইট, Invitation |
+| ১ | [Employees সেটিংস](/odoo/hrm/people) | Work Locations, Department, Job Position, Shift, Skills |
+| ১ | [Time Off সেটিংস](/odoo/hrm/time-off) | Public Holidays, ছুটির ধরন, Accrual Plan |
+| ১ | [Attendance সেটিংস](/odoo/hrm/attendance) | Kiosk, Barcode/PIN, Overtime, Tolerance |
+| ১ | [নিয়োগ ও মূল্যায়ন সেটিংস](/odoo/hrm/recruitment) | Stages, Refuse Reasons, Appraisal চক্র |
+| ১ | [Expense ও Fleet সেটিংস](/odoo/hrm/expenses) | খরচের Category, গাড়ির Model, Service Type |
+| ১ | [Maintenance, Lunch ও চেকলিস্ট](/odoo/hrm/maintenance) | Equipment, Team, ক্যান্টিন + সেটিংস চেকলিস্ট |
+| ২ | [কর্মী Entry ও Import](/odoo/hrm/employee-entry) | Rina Akter, Excel Import, Allocation, Org Chart |
+| ৩ | [প্রতিদিনের Entry](/odoo/hrm/daily-entry) | হাজিরা, ছুটি, নিয়োগ, Expense, মেশিন, Lunch |
+| ৪ | [রিপোর্ট দেখা](/odoo/hrm/reports) | হাজিরা, ওভারটাইম, ছুটি, খরচ, গাড়ি |
+| — | [সারসংক্ষেপ ও চূড়ান্ত চেকলিস্ট](/odoo/hrm/summary) | পুরো ম্যাপ, রুটিন, পরের ধাপ |
+
 ## পুরো যাত্রাটা এক নজরে
 
 ```text
-তথ্য গোছানো (ধাপ ০)
+ভাগ ১ (একবার):
+  Login → ৯টা অ্যাপ ইনস্টল → Developer Mode → কোম্পানি + BDT
     ↓
-Odoo ইনস্টল + ডাটাবেস (ধাপ ১)  →  HR অ্যাপ ইনস্টল (ধাপ ২)
+  Karim Sir-এর User (Settings ছাড়া বাকি সব অ্যাপে Administrator)
     ↓
-কোম্পানি + BDT (ধাপ ৩)  →  HR Manager-এর ইউজার (ধাপ ৪)
-    ↓  ← এখান থেকে করিম স্যার
-Department → Job Position → Work Schedule → Employee (ধাপ ৫)
+  Employees সেটিংস: Work Location → Department → Job Position → Shift → Skills
     ↓
-Public Holidays → Time Off Types → Allocations → Accrual (ধাপ ৬)
+  Time Off: Public Holidays → ছুটির ধরন → Accrual Plan → Allocation
     ↓
-Attendance Kiosk + Overtime (ধাপ ৭)
+  Attendance (Kiosk) → Recruitment Stages → Appraisal → Expense → Fleet → Maintenance → Lunch
+
+ভাগ ২ (একবার):
+  Rina Akter হাতে Entry → Excel Import (২০ জন টেস্ট, পরে বাকিরা)
     ↓
-Recruitment (ধাপ ৮) → Appraisals (ধাপ ৯)
-    ↓
-Expenses (১০) → Fleet (১১) → Maintenance (১২) → Lunch (১৩)
-    ↓
-দৈনিক/সাপ্তাহিক/মাসিক রুটিন আর রিপোর্ট (ধাপ ১৪)
+  Department Manager → Org Chart → ছুটির Allocation → Fleet/Maintenance জোড়া
+
+ভাগ ৩ (প্রতিদিন):
+  হাজিরা → ছুটি → নিয়োগ → Expense → মেশিন → গাড়ি → Lunch
+
+ভাগ ৪ (মাসে/যখন দরকার):
+  Attendance + Overtime Export → Accounts-কে বেতনের জন্য
 ```
 
-## কে কী করবে
+## শুরু করার আগে
 
-| ধাপ | কাজ | কে |
-| --- | --- | --- |
-| ০ | কাগজে তথ্য রেডি | মালিক |
-| ১ | Odoo ইনস্টল ও ডাটাবেস | মালিক / IT |
-| ২–৩ | HR অ্যাপ, কোম্পানি, BDT | মালিক |
-| ৪ | HR Manager-এর অ্যাকাউন্ট ও অ্যাক্সেস | মালিক (শেষ কাজ) |
-| ৫–১৩ | Department থেকে Lunch পর্যন্ত | Karim Sir |
-| ১৪ | রিপোর্ট, রুটিন, চেকলিস্ট | Karim + মালিক |
+- Odoo চলছে এমন একটা ডাটাবেস — ডেমো ডেটা থাকলে সমস্যা নেই, তবে নিজের কোম্পানি বানিয়ে নাও ([Installation](/odoo/installation))
+- **Admin** হিসেবে লগইন করার অ্যাক্সেস
+- ফ্যাক্টরির তথ্য: Department-এর তালিকা, পদবি, শিফট, কর্মীর তালিকা (Excel হলে ভালো)
 
-## এই সেকশনে যা বানাবো
-
-| ধাপ | পেজ | কী শিখবে |
-| --- | --- | --- |
-| ০ | [শুরুর তথ্য প্রস্তুত](/odoo/hrm/preparation) | কর্মী তালিকা, পদবি, ছুটির নিয়ম |
-| ১ | [Odoo ইনস্টল ও ডাটাবেস](/odoo/hrm/install) | Online বা Docker, ডেমো ডেটা ছাড়া ডাটাবেস |
-| ২–৩ | [HR অ্যাপ ও কোম্পানি](/odoo/hrm/apps-company) | ৯টা অ্যাপ, কোম্পানির তথ্য, BDT |
-| ৪ | [HR Manager-এর অ্যাকাউন্ট](/odoo/hrm/hr-manager) | Users, অ্যাক্সেস রাইট, নিরাপত্তা |
-| ৫ | [Department থেকে Employee](/odoo/hrm/people) | Department, Job Position, Shift, ৩০০ কর্মী |
-| ৬ | [Time Off — ছুটির ব্যবস্থা](/odoo/hrm/time-off) | ছুটির ধরন, বরাদ্দ, Accrual, অনুমোদন |
-| ৭ | [Attendance — হাজিরা](/odoo/hrm/attendance) | Kiosk, Badge/PIN, ওভারটাইম |
-| ৮ | [Recruitment — নিয়োগ](/odoo/hrm/recruitment) | Job Position, Applicant পাইপলাইন |
-| ৯ | [Appraisals — মূল্যায়ন](/odoo/hrm/appraisals) | Goals, ফিডব্যাক, বার্ষিক চক্র |
-| ১০ | [Expenses — খরচের দাবি](/odoo/hrm/expenses) | Category, রিপোর্ট, অনুমোদন |
-| ১১ | [Fleet — গাড়ি](/odoo/hrm/fleet) | সার্ভিস, ইনসুরেন্স, জ্বালানি ও খরচ |
-| ১২ | [Maintenance — মেশিন](/odoo/hrm/maintenance) | Equipment, রিকোয়েস্ট, Kanban |
-| ১৩ | [Lunch — ক্যান্টিন](/odoo/hrm/lunch) | Vendor, Product, অর্ডার |
-| ১৪ | [HR-এর রুটিন ও চেকলিস্ট](/odoo/hrm/routine) | দৈনিক/সাপ্তাহিক/মাসিক কাজ |
-
-## চূড়ান্ত চেকলিস্ট (এক নজরে)
-
-- [ ] Odoo ইনস্টল ও ডাটাবেস তৈরি (মালিক)
-- [ ] HR অ্যাপগুলো ইনস্টল (মালিক)
-- [ ] কোম্পানির তথ্য ও BDT সেট (মালিক)
-- [ ] Karim Sir-এর User ও অ্যাক্সেস রাইট (মালিক)
-- [ ] Department → Job Position → Work Schedule (Karim)
-- [ ] Employees (প্রথমে ১ জন, পরে Excel দিয়ে Import)
-- [ ] Public Holidays → Time Off Types → Allocations → Accrual
-- [ ] Attendance Kiosk ও ওভারটাইম সেটিং
-- [ ] Recruitment, Expenses, Appraisals সেটআপ
-- [ ] Fleet, Maintenance, Lunch (দরকার অনুযায়ী)
-
-শুরু করতে [শুরুর তথ্য প্রস্তুত](/odoo/hrm/preparation) পেজে যাও। Odoo-র অ্যাকাউন্ট ও পারমিশন নিয়ে আরও দেখতে [Users & Access Rights](/odoo/users-access) সেকশন পাশে রাখো।
+শুরু করতে [লগইন, অ্যাপ ও কোম্পানি](/odoo/hrm/apps-company) পেজে যাও। অ্যাকাউন্ট ও পারমিশন নিয়ে আরও দেখতে [Users & Access Rights](/odoo/users-access) সেকশন পাশে রাখো।

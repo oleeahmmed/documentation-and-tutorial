@@ -76,26 +76,24 @@ my-odoo/
 
 ## HRM (গার্মেন্টস ফ্যাক্টরির হিউম্যান রিসোর্স)
 
-রহিম অ্যাপারেলসের ৩০০ কর্মী — Department, শিফট, হাজিরা, ছুটি, নিয়োগ, মূল্যায়ন থেকে মাসিক রিপোর্ট। মালিক সেটআপ করবেন, করিম স্যার (HR Manager) চালাবেন। প্রতিটা ধাপ আলাদা পেজে:
+রহিম অ্যাপারেলসের ৩০০ কর্মী — Department, শিফট, হাজিরা, ছুটি, নিয়োগ, মূল্যায়ন থেকে মাসিক রিপোর্ট। মালিক সেটআপ করবেন, করিম স্যার (HR Manager) চালাবেন। পুরো যাত্রা চার ভাগে: Setup → Entry → দৈনিক কাজ → Report।
 
-| ধাপ | পেজ | কী শিখবে |
+| ভাগ | পেজ | কী শিখবে |
 | --- | --- | --- |
-| ০ | [শুরুর তথ্য](/odoo/hrm/preparation) | কর্মী তালিকা, পদবি, শ্রম আইনের ছুটি |
-| ১ | [Odoo ইনস্টল](/odoo/hrm/install) | Online/Docker, ডেমো ছাড়া ডাটাবেস |
-| ২–৩ | [HR অ্যাপ ও কোম্পানি](/odoo/hrm/apps-company) | ৯টা অ্যাপ, কোম্পানি, BDT |
-| ৪ | [HR Manager অ্যাকাউন্ট](/odoo/hrm/hr-manager) | Users, অ্যাক্সেস রাইট |
-| ৫ | [Department থেকে Employee](/odoo/hrm/people) | Department, পদবি, শিফট, Import |
-| ৬ | [Time Off](/odoo/hrm/time-off) | ছুটির ধরন, Allocation, Accrual |
-| ৭ | [Attendance](/odoo/hrm/attendance) | Kiosk, Badge/PIN, ওভারটাইম |
-| ৮ | [Recruitment](/odoo/hrm/recruitment) | Applicant পাইপলাইন |
-| ৯ | [Appraisals](/odoo/hrm/appraisals) | Goal, ফিডব্যাক (Enterprise) |
-| ১০ | [Expenses](/odoo/hrm/expenses) | খরচের দাবি ও অনুমোদন |
-| ১১ | [Fleet](/odoo/hrm/fleet) | গাড়ি, সার্ভিস, ইনসুরেন্স |
-| ১২ | [Maintenance](/odoo/hrm/maintenance) | মেশিন ও রিকোয়েস্ট |
-| ১৩ | [Lunch](/odoo/hrm/lunch) | ক্যান্টিন অর্ডার |
-| ১৪ | [রুটিন ও চেকলিস্ট](/odoo/hrm/routine) | দৈনিক/মাসিক কাজ, রিপোর্ট |
+| ১ | [লগইন, অ্যাপ ও কোম্পানি](/odoo/hrm/apps-company) | Login, ৯টা অ্যাপ, Developer Mode, Rahim Apparels + BDT |
+| ১ | [HR Manager-এর অ্যাকাউন্ট](/odoo/hrm/hr-manager) | Users, অ্যাক্সেস রাইট, Invitation |
+| ১ | [Employees সেটিংস](/odoo/hrm/people) | Work Locations, Department, Job Position, Shift, Skills |
+| ১ | [Time Off সেটিংস](/odoo/hrm/time-off) | Public Holidays, ছুটির ধরন, Accrual Plan |
+| ১ | [Attendance সেটিংস](/odoo/hrm/attendance) | Kiosk, Badge/PIN, Overtime, Tolerance |
+| ১ | [নিয়োগ ও মূল্যায়ন সেটিংস](/odoo/hrm/recruitment) | Stages, Refuse Reasons, Appraisal চক্র |
+| ১ | [Expense ও Fleet সেটিংস](/odoo/hrm/expenses) | খরচের Category, গাড়ির Model, Service Type |
+| ১ | [Maintenance, Lunch ও চেকলিস্ট](/odoo/hrm/maintenance) | Equipment, Team, ক্যান্টিন + সেটিংস চেকলিস্ট |
+| ২ | [কর্মী Entry ও Import](/odoo/hrm/employee-entry) | Rina Akter, Excel Import, Allocation, Org Chart |
+| ৩ | [প্রতিদিনের Entry](/odoo/hrm/daily-entry) | হাজিরা, ছুটি, নিয়োগ, Expense, মেশিন, Lunch |
+| ৪ | [রিপোর্ট দেখা](/odoo/hrm/reports) | হাজিরা, ওভারটাইম, ছুটি, খরচ, গাড়ি |
+| — | [সারসংক্ষেপ ও চূড়ান্ত চেকলিস্ট](/odoo/hrm/summary) | পুরো ম্যাপ, রুটিন, পরের ধাপ |
 
-সেকশনের মূল পাতা: [HRM](/odoo/hrm) — Odoo 19-এর মেনু অনুসারে।
+সেকশনের মূল পাতা: [HRM](/odoo/hrm)।
 
 ## Development (অ্যাডঅন ইনস্টল)
 

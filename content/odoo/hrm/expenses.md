@@ -1,79 +1,64 @@
 ---
-title: "ধাপ ১০ — Expenses (খরচের দাবি)"
-description: ভ্রমণ, খাবার, মোবাইল বিলের খরচ — কর্মী দাবি করবে, মালিক/ম্যানেজার অনুমোদন করবে, Accounts পরিশোধ করবে।
-icon: Receipt
+title: "Expense ও Fleet সেটিংস"
+description: "ভাগ ১ — খরচের Category, গাড়ির Model, Service Type আর Contract Type — কে কী খরচ করবে, গাড়ির হিসাব কোথায় থাকবে।"
+icon: ReceiptText
 ---
 
 ## গল্প
 
-Merchandiser জাহিদ বায়ারের সাথে দেখা করতে ঢাকা গেল। ট্রেন ভাড়া, হোটেল, খাবার — খরচগুলো কাগজের রসিদে ভরে অ্যাকাউন্টসে জমা দিত। Odoo-তে সে ফোন থেকে ছবি তুলে দাবি করবে, ম্যানেজার অনুমোদন দেবে, অ্যাকাউন্টস পেমেন্ট করবে — সব এক ট্রেইলে।
+Merchandiser মাসে কয়েকবার বায়ার অফিসে যান, গাড়ি চলে ঢাকা-বগুড়া। এই খরচগুলো আর গাড়ির সার্ভিসের হিসাব আলাদা খাতায় না রেখে Odoo-তে এক জায়গায় রাখা হবে।
 
-## ১০.১ — Expense Categories
+## ১.১১ — Expenses Settings
 
-**Expenses → Configuration → Expense Categories** → **New**
+**Expenses → Configuration → Expense Categories → New** — প্রতিটাতে Cost/Unit ও Taxes ঠিক করো:
 
-| ক্যাটাগরি | কেন |
-| --- | --- |
-| Transport | ট্রেন, বাস, সিএনজি |
-| Food | বাইরের খাবার |
-| Mobile Bill | ফোন বিল |
-| Sample Courier | স্যাম্পল পাঠানোর কুরিয়ার |
-| Travel/Hotel (Buyer visit) | হোটেল, বিমান |
-| Misc | অন্যান্য |
+| Category |
+| --- |
+| Transport |
+| Food |
+| Mobile Bill |
+| Courier |
+| Buyer Visit Travel |
+| Hotel |
+| Misc |
 
-প্রতিটা ক্যাটাগরিতে চাইলে Default Account বসাও — তখন অ্যাকাউন্টসে পোস্ট করলে সঠিক খরচের খাতায় যাবে।
+> **Taxes:** খরচের রসিদে VAT থাকলে সংশ্লিষ্ট ট্যাক্স বসাও — পরে ইনপুট ট্যাক্সের হিসাব মিলবে। না জানা থাকলে খালি রাখো; Accounts পরে ঠিক করবে।
 
-> **টিপস:** ক্যাটাগরি কম রাখো, স্পষ্ট রাখো। "Misc" বেশি ব্যবহার হলে পরে খরচের রিপোর্ট দেখে কিছুই বোঝা যাবে না — কোন খাতে টাকা যাচ্ছে।
+## ১.১২ — Fleet Settings
 
-## ১০.২ — কর্মীর কাজ
+### (ক) Vehicle Models
 
-1. **Expenses → My Expenses → New** (শুধু **New** লেখা থাকতে পারে)
-2. ফিল্ড: Description (`Buyer visit – Dhaka, 12 Nov`), Category (`Travel/Hotel`), Amount, রসিদের ছবি আপলোড
-3. **Create Report** — কয়েকটা খরচ একসাথে এক রিপোর্টে জমা দেওয়া যায়
-4. **Submit to Manager**
+**Fleet → Configuration → Vehicle Models → New** — `Toyota Hiace`, `Hero Bike` ইত্যাদি।
 
-> **রসিদ ছাড়া দাবি:** ক্যামেরা আইকনে ক্লিক করে ছবি তোলো। রসিদে তারিখ, অঙ্ক আর দোকানের নাম দেখা যেতে হবে — নাহলে অনুমোদন আটকে যাবে।
+### (খ) Service Types
 
-## ১০.৩ — অনুমোদন ও পরিশোধ
+**Fleet → Configuration → Service Types** — `Oil Change`, `Tyre`, `Repair`, `Fitness`, `Tax Token`।
 
-**ম্যানেজার/করিম স্যার:**
+### (গ) Contract Types
 
-1. **Expenses → My Expenses → Expenses to Process** — যেসব রিপোর্টে তোমার হাতের দরকার আছে, সেই তালিকা
-2. রিপোর্ট খুলে **Approve** (বা **Refuse**, কারণ লিখে)
-3. সব খরচ একসাথে দেখতে: **Expenses → Reporting → Expenses Analysis**
+**Fleet → Configuration → Contract Types** — `Insurance`, `Leasing`, `Registration`।
 
-**Accounts টিম:**
-
-1. একই **Expenses to Process** তালিকা থেকে রিপোর্ট খুলে **Approve**
-2. **Post Journal Entries** — রিপোর্ট পোস্ট হলে খরচ হিসাবে ঢোকে
-3. **Register Payment** — কর্মীর কাছে টাকা পরিশোধ
-4. Accounting ইনস্টল থাকলে **Accounting → Vendors → Employee Expenses** থেকেও একই রিপোর্ট পাওয়া যায়
-
-> **কারা অনুমোদন করবে:** Employee-র Approver সেট থাকে (Work Information/HR Settings), সে-ই প্রথম ধাপে অনুমোদন করে। খরচের অঙ্ক বেশি হলে দ্বিতীয় ধাপে করিম/Accounts অনুমোদন — এটা Expense Settings-এ ঠিক করা যায়।
+> **Fitness আর Tax Token** আলাদা Service Type রাখলে মেয়াদ শেষ হওয়ার আগেই রিপোর্টে ধরা পড়বে — গাড়ি রাস্তায় না আটকে যায়।
 
 ## বাস্তবে কী ঘটে
 
-- Expense Report-এর স্টেটাস: Draft → Submitted → Approved → Posted → In Payment → Paid
-- Approve না হলে Accounts পোস্ট করতে পারে না
-- এক রিপোর্টে একাধিক খরচ থাকতে পারে — একসাথে Submit, একসাথে Approve
-- Refuse করলে কর্মী কারণ দেখতে পায়, ঠিক করে আবার Submit করতে পারে
-- Posted খরচ আর বদলানো যায় না — ভুল হলে Credit Note/Adjustment লাগবে, তাই Approve করার আগে রসিদ মিলিয়ে নাও
+- Expense Category ঠিক না থাকলে কর্মী "Misc"-এ সব ঢুকিয়ে দেবে — রিপোর্টে খরচের ধরন বোঝা যাবে না
+- গাড়ির Model আগে বানালে Vehicle যোগ করার সময় ড্রপডাউনে পাবে; Service Type বাছলে সার্ভিসের ইতিহাস আলাদা করে দেখা যায়
+- Contract Type দিয়ে ইনসুরেন্স/ট্যাক্স টোকেনের মেয়াদ ট্র্যাক হবে ([কর্মী Entry](/odoo/hrm/employee-entry) পেজে গাড়ির সাথে Contract জোড়া লাগবে)
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| Category ড্রপডাউনে খালি | আগে Expense Categories বানাও |
-| Submit বাটন নেই | Approver সেট নেই বা রিপোর্টে খরচ নেই — Employee-র Approver দেখো |
-| Approve-এ পারমিশন নেই | Expenses-এ Manager/Administrator লেভেল দাও |
-| Posted খরচ বদলাতে পারছি না | Posted মানে হিসাবে ঢুকে গেছে — Accounts-এর সাথে কথা বলে Adjustment করো |
+| Expense Categories মেনু নেই | Expenses অ্যাপ ইনস্টল করো |
+| Vehicle Model খুঁজে পাচ্ছি না | Fleet → Configuration → Vehicle Models-এ আগে বানাও |
+| Service Type ডুপ্লিকেট | ব্যবহৃত রেকর্ড থাকলে Delete না, Archive করো |
 
 ## চেকলিস্ট
 
-- [ ] ৬টা Expense Category
-- [ ] Employee-র Approver সেট
-- [ ] টেস্ট খরচ + রসিদ আপলোড
-- [ ] Submit → Approve → Post → Payment ফ্লো টেস্ট
-- [ ] Accounting থাকলে জার্নালে দেখা
+- [ ] ৭টা Expense Category (Cost/Unit, Taxes সহ)
+- [ ] Vehicle Model: Toyota Hiace, Hero Bike
+- [ ] ৫টা Service Type
+- [ ] ৩টা Contract Type
 
-এরপর গাড়ি — [Fleet](/odoo/hrm/fleet)।
+পরের ধাপে [Maintenance, Lunch ও সেটিংস চেকলিস্ট](/odoo/hrm/maintenance) — মেশিন, টিম আর ক্যান্টিন।

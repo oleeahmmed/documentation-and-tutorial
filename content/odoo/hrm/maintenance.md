@@ -1,98 +1,82 @@
 ---
-title: "ধাপ ১২ — Maintenance (মেশিন)"
-description: গার্মেন্টসে মেশিন বন্ধ মানে প্রোডাকশন বন্ধ — Equipment, নষ্ট মেশিনের রিকোয়েস্ট, মেকানিক আর প্রতিরোধমূলক সার্ভিস।
+title: "Maintenance, Lunch ও সেটিংস চেকলিস্ট"
+description: "ভাগ ১ শেষ — মেশিনের Category ও টিম, ক্যান্টিনের Vendor-Product, আর পুরো ভাগ ১-এর চেকলিস্ট।"
 icon: Wrench
 ---
 
 ## গল্প
 
-Juki সেলাই মেশিনের সুই ভেঙেছে — অপারেটর সুপারভাইজারকে বলল, সুপারভাইজার মেকানিককে খুঁজল, মেকানিক অন্য লাইনে ছিল। দুই ঘণ্টা মেশিন বসে থাকল। Maintenance অ্যাপে অপারেটর নিজেই রিকোয়েস্ট খুলবে, মেকানিক অ্যাসাইন হবে, কানবানে অবস্থা দেখা যাবে — কে কখন ঠিক করল, তার রেকর্ডও থাকবে।
+ফ্যাক্টরির প্রাণ মেশিন — সেলাই মেশিন, কাটিং মেশিন, বয়লার। নষ্ট হলে কে ঠিক করবে, কত সময় লাগবে, সেটা ট্র্যাক না থাকলে লাইন বন্ধ। আর ক্যান্টিন থাকলে দুপুরের খাবারের অর্ডারও Odoo থেকে নেওয়া যায়।
 
-## ১২.১ — Equipment Categories
+## ১.১৩ — Maintenance Settings
 
-**Maintenance → Configuration → Equipment Categories → New**
+### (ক) Equipment Categories
 
-| ক্যাটাগরি |
+**Maintenance → Configuration → Equipment Categories**
+
+| Category |
 | --- |
 | Sewing Machine |
 | Cutting Machine |
-| Boiler/Generator |
-| Iron Table |
+| Iron/Press |
+| Boiler |
+| Generator |
+| Compressor |
 
-ক্যাটাগরি দিয়ে পরে রিপোর্টে বলা যাবে — "এই মাসে সেলাই মেশিনে কতবার সমস্যা হলো"।
+### (খ) Maintenance Teams
 
-## ১২.২ — Equipment যোগ করা
+**Maintenance → Configuration → Maintenance Teams**
 
-**Maintenance → Equipment → New**
+| Team |
+| --- |
+| Mechanical Team |
+| Electrical Team |
 
-| ফিল্ড | উদাহরণ |
-| --- | --- |
-| Equipment Name | `Juki Single Needle #101` |
-| Equipment Category | Sewing Machine |
-| Used By | Department → Sewing |
-| Maintenance Team | (থাকলে) Sewing Maintenance |
-| Technician | নির্দিষ্ট মেকানিক (থাকলে) |
-| Work Location | Factory Floor 2 |
+Team Members পরে যোগ হবে — কর্মী তৈরি হলে মেকানিকদের টিমে বসাতে হবে।
 
-**Product Information ট্যাব:** Vendor, Model, Serial Number, Cost, **Warranty Expiration Date**।
+## ১.১৪ — Lunch Settings (ক্যান্টিন থাকলে)
 
-**Maintenance Team** না থাকলে **Configuration → Maintenance Teams**-এ টিম বানাও, সদস্য (মেকানিক) যোগ করো।
+**Lunch → Configuration → Vendors** — ক্যান্টিন সরবরাহকারীর নাম, ফোন।
 
-> **সিরিয়াল নম্বর:** একই মডেলের ২০০টা মেশিনের মধ্যে কোনটা কোনটা — সিরিয়াল ছাড়া আলাদা করা যাবে না। নামের সাথে নম্বর দাও (`Juki #101`), সিরিয়ালও বসাও।
+**Lunch → Products → New** — `ভাত-ডাল-মুরগি`, `খিচুড়ি`, `ডিম-ভাত` + দাম।
 
-## ১২.৩ — Maintenance Request (নষ্ট মেশিন)
+**Lunch → Configuration → Locations** — `Floor 1 Canteen`।
 
-**Maintenance → Maintenance → Maintenance Requests → New**
+> ক্যান্টিন না থাকলে Lunch অ্যাপটা বাদ দাও — বাকি HR কাজে কোনো প্রভাব পড়বে না।
 
-1. **Request**: `সুই ভেঙেছে / মোটর ঘুরছে না`
-2. **Equipment**: মেশিন বাছো
-3. **Maintenance Type**: **Corrective** (নষ্ট হয়ে গেছে)
-4. **Maintenance Team** / **Responsible** (মেকানিক) অ্যাসাইন করো
-5. **Save** — কানবানে কার্ড আসবে
+## Settings শেষের চেকলিস্ট
 
-মেকানিক কাজ শুরু করলে কার্ড **In Progress**-এ, শেষ হলে **Repaired**-এ নেবে। নোটে কী বদলানো হলো লেখো (যেমন `Needle bar replaced`)।
+- [ ] সব App Install
+- [ ] Company ও BDT
+- [ ] Karim-এর User
+- [ ] Work Locations, Departments, Job Positions
+- [ ] Working Schedule (Asia/Dhaka)
+- [ ] Skill Types, Departure Reasons
+- [ ] Public Holidays, Time Off Types, Accrual Plan
+- [ ] Attendance Kiosk ও Overtime
+- [ ] Recruitment Stages
+- [ ] Appraisal Settings
+- [ ] Expense Categories
+- [ ] Fleet Models/Service Types
+- [ ] Maintenance Categories/Teams
+- [ ] Lunch Vendor/Products
 
-> **কে রিকোয়েস্ট করতে পারবে:** সাধারণ কর্মী শুধু সেই মেশিনে রিকোয়েস্ট করতে পারবে যার Follower সে, অথবা যার Maintenance-এ Equipment Manager অ্যাক্সেস আছে। ফ্লোরের সুপারভাইজারকে Equipment Manager/Follower বানিয়ে দাও।
+**সব টিক পড়লে ভাগ ২-এ যাও।**
 
-## ১২.৪ — প্রতিরোধমূলক সার্ভিস (Preventive)
-
-**Maintenance Type: Preventive** দিয়ে রিকোয়েস্ট খোলো, তারপর **Recurrent** টগল চালু করো:
-
-1. **Maintenance → Maintenance → Maintenance Requests → New**
-2. Equipment: মেশিন বাছো
-3. Maintenance Type: **Preventive**
-4. **Recurrent** ✓ → **Repeat Every** `30` **Days**
-5. **Until**: `Forever` (অথবা নির্দিষ্ট **End Date**)
-6. **Save**
-
-এরপর প্রতি ৩০ দিনে Odoo নিজেই এই রিকোয়েস্টটা নতুন করে খুলে দেবে — মেকানিক কাজ শেষ করে কার্ড বন্ধ করলেও পরের মাসে আবার আসবে।
-
-> **কেন দরকার:** Corrective maintenance মানে মেশিন নষ্ট হওয়ার পরে ঠিক করা — ততক্ষণ প্রোডাকশন বন্ধ। Preventive মানে আগেই তেল/পরিষ্কার/চেক — downtime কমে। গার্মেন্টসে সেলাই মেশিনের জন্য এটা বাদ দিলে চলবে না।
+> **ভাগ ১ শেষ মানে সেটিংসে আর ফিরবে না** — বছরে একবার নতুন Public Holiday আর ছুটির Allocation বাদে। এরপর শুধু ডেটা ঢোকানো, তাই ভুল করে Settings বদলানোর ভয় নেই।
 
 ## বাস্তবে কী ঘটে
 
-- রিকোয়েস্ট তৈরি হলে Technician/Team-কে অ্যাসাইন করা যায়; কানবানে সবাই অবস্থা দেখতে পায়
-- Repaired হলে মেশিনের "Latest Failure" আপডেট হয়, MTBF (Mean Time Between Failure) হিসাব হয়
-- বারবার একই মেশিন নষ্ট হলে MTBF কমে — কোন মেশিন বদলানো দরকার, রিপোর্টে ধরা পড়ে
-- Equipment-এ Cost/Warranty থাকলে ওয়ারেন্টির ভেতরে সার্ভিস হলে খরচ হিসাব করতে সুবিধা
-- Scrap স্টেজে নিলে মেশিন আর ব্যবহারের তালিকায় থাকে না
+- Equipment বানানোর সময় Category বাছলে একই ধরনের মেশিনের সমস্যা একসাথে দেখা যায়
+- Maintenance Team-এ মেকানিক থাকলে Request তাকে Assign করা যায়; না থাকলে Team খালি দেখাবে
+- Lunch Product-এ দাম থাকলে মাসের শেষে ক্যান্টিনের বিল মেলানো সহজ
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| Equipment Categories মেনু নেই | Maintenance অ্যাপ ইনস্টল, Administrator কি না দেখো |
-| রিকোয়েস্ট করতে পারছি না | Employee-কে Equipment-এর Follower বানাও, বা Maintenance-এ Equipment Manager দাও |
-| কানবানে স্টেজ নেই | Stages কাস্টমাইজ করা আছে কি না দেখো (Configuration) |
-| Preventive রিকোয়েস্ট আসছে না | **Recurrent** টগল, Repeat Every ও Until ঠিক আছে কি না দেখো |
+| Maintenance মেনু নেই | Maintenance অ্যাপ ইনস্টল করো |
+| Lunch মেনু নেই | Lunch অ্যাপ ইনস্টল করো (ঐচ্ছিক) |
+| Team Members যোগ করা যাচ্ছে না | আগে Employees-এ মেকানিকদের Entry দাও, তারপর টিমে যোগ করো |
 
-## চেকলিস্ট
-
-- [ ] ৪টা Equipment Category
-- [ ] মূল মেশিনগুলো Equipment হিসেবে (নম্বর/সিরিয়ালসহ)
-- [ ] Maintenance Team + মেকানিক
-- [ ] একটা Corrective রিকোয়েস্ট → In Progress → Repaired
-- [ ] Preventive রিকোয়েস্ট (Recurrent, প্রতি ৩০ দিন)
-- [ ] Follower/অ্যাক্সেস ঠিক করা
-
-এরপর ঐচ্ছিক ক্যান্টিন — [Lunch](/odoo/hrm/lunch)।
+পরের ধাপে [কর্মী Entry ও Import](/odoo/hrm/employee-entry) — ভাগ ২ শুরু, Rina Akter-কে হাতে ঢুকিয়ে বাকিদের Excel দিয়ে।

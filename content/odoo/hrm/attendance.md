@@ -1,92 +1,68 @@
 ---
-title: "ধাপ ৭ — Attendance (হাজিরা)"
-description: কিয়স্ক মোড, Badge/PIN দিয়ে চেক-ইন, ওভারটাইমের হিসাব আর HR-এর জন্য রিপোর্ট।
-icon: ClockCheck
+title: "Attendance সেটিংস"
+description: "ভাগ ১ — গেটের ট্যাবলেটে Kiosk Mode, Badge/PIN দিয়ে Check In/Out, Extra Hours আর ১০ মিনিটের Tolerance।"
+icon: Clock
 ---
 
 ## গল্প
 
-গেটে একটা ট্যাবলেট বসিয়ে দিলে কর্মী কার্ড ট্যাপ করেই ঢুকবে-বের হবে। HR-কে আর খাতায় টিক দিতে হবে না — কে দেরি করল, কে আসেনি, কার কত ঘণ্টা ওভারটাইম — সব Odoo নিজেই হিসাব করবে। তবে এর আগে কয়েকটা সেটিং ঠিক করতে হবে।
+ফ্যাক্টরির গেটে একটা ট্যাবলেট বা পুরোনো ল্যাপটপ রাখা হবে। কর্মীরা সকালে এসে Badge স্ক্যান করবে বা PIN দেবে, বের হওয়ার সময় আবার। এতে HR-কে আর খাতায় হাজিরা লিখতে হবে না — দেরি, ওভারটাইম, অনুপস্থিতি সব নিজে থেকেই হিসাব হবে।
 
-## ৭.১ — সেটিংস
+## ১.৮ — Attendances Settings
 
 **Attendances → Configuration → Settings**
 
-### Modes
-
-| সেটিং | কী করবে |
+| সেটিংস | মান |
 | --- | --- |
-| **Attendances from Backend** | কর্মী Odoo-র ভেতর থেকেই চেক-ইন/আউট করতে পারবে (অফিস স্টাফদের জন্য) |
-| **Automatic Check-Out** | কাজ শেষে ভুলে গেলে নির্দিষ্ট সময় পরে নিজে থেকেই চেক-আউট; সাথে **Tolerance** (ঘণ্টায়) |
-| **Absence Management** | ছুটি ছাড়া অনুপস্থিতি হাজিরা রিপোর্টে দেখাবে |
+| **Kiosk Mode** | চালু |
+| Authentication | **Barcode/RFID** অথবা **PIN** — একটা ঠিক করো |
+| **Extra Hours / Overtime** | চালু |
+| Tolerance | ১০ মিনিট |
 
-### Kiosk
+**Save**।
 
-| সেটিং | কী করবে |
-| --- | --- |
-| **Kiosk Mode** | `Barcode/RFID`, `Barcode/RFID and Manual Selection`, `Manual Selection` |
-| **Barcode Source** | Scanner, Front Camera বা Back Camera |
-| **Display Time** | কনফার্মেশন কত সেকেন্ড দেখাবে |
-| **Employee PIN Identification** | PIN দিয়ে চেক-ইন বাধ্যতামূলক — কার্ড না থাকলে এটা চালু করো |
-| **Attendance Kiosk Url** | গেটের ট্যাবলেটে এই URL খুললেই কিয়স্ক, Odoo লগইন ছাড়াই |
+> **Tolerance কী?** শিফট শুরুর ১০ মিনিট পরে পর্যন্ত দেরি ধরবে না। ৮:০৫-এ এসে কেউ Late হবে না; ৮:১১-এ এলে হবে। Overtime-এর ক্ষেত্রেও একই ছাড় প্রযোজ্য — শিফট শেষের ১০ মিনিট পর থেকে অতিরিক্ত ঘণ্টা গোনা শুরু।
 
-### Extra Hours (ওভারটাইম)
+> **Barcode না PIN?** কার্ড থাকলে Barcode/RFID — দ্রুত, কর্মী নিজে কিছু টাইপ করে না। কার্ড হারায় বা বানাতে খরচ লাগে বলে PIN বেছে নিলে প্রতিটা কর্মীর HR Settings-এ ৪–৬ ডিজিটের PIN বসাতে হবে। দুটোই একসাথে চালু রাখলে কর্মী যেকোনোটা ব্যবহার করতে পারে।
 
-| সেটিং | মান (উদাহরণ) |
-| --- | --- |
-| **Tolerance Time In Favor Of Company** | ১০ মিনিট — এর কম বাড়তি সময় ওভারটাইমে গোনা হবে না |
-| **Tolerance Time In Favor Of Employee** | ১০ মিনিট — এর কম দেরি হলে বেতন কাটবে না |
-| **Extra Hours Validation** | **Automatically Approved** বা **Approved by Manager** |
-| **Display Extra Hours** | চেক-আউটে কর্মীকে বাড়তি ঘণ্টা দেখাবে |
+## Kiosk চালু করলে কেমন লাগে
 
-সব ঠিক করে **Save**।
+1. Attendances → **Kiosk Mode** খোলো (Settings-এ চালু থাকলে মেনুতে দেখা যায়)
+2. গেটের ট্যাবলেটে ওই পেজটা ফুলস্ক্রিনে রাখো — লগইন করা সেশনেই চলবে
+3. কর্মী কার্ড স্ক্যান / PIN দিলে স্ক্রিনে নাম আর সময় দেখায়
+4. দিনের শেষে আবার স্ক্যান — Check Out
 
-> **নিরাপত্তা:** কিয়স্ক URL-এ কোনো পাসওয়ার্ড নেই — যার URL আছে সে কিয়স্ক খুলতে পারে। লিংক বাইরে ছড়ালে Settings-এ **Generate new URL** চেপে নতুনটা নাও, পুরোনোটা বাতিল হয়ে যাবে।
+> ট্যাবলেটটা চার্জে রাখো আর Wi-Fi টা স্থির করো। সেশন লগআউট হয়ে গেলে কেউ Check In করতে পারবে না — সকালে হাজিরা শুরুর আগে একবার দেখে নাও।
 
-## ৭.২ — কীভাবে কাজ করে
+## Overtime কীভাবে হিসাব হবে
 
-1. ফ্যাক্টরির গেটে একটা ট্যাবলেট/কম্পিউটারে **Attendances → Kiosk Mode** (উপরের মেনু) খুলে রাখো — অথবা Settings-এর **Attendance Kiosk Url** ব্রাউজারে খোলো
-2. কর্মী ঢুকে Badge (কার্ড/বারকোড) স্ক্যান করবে বা PIN দেবে → **Check In**
-3. বের হওয়ার সময় আবার স্ক্যান/PIN → **Check Out**
-4. HR-এর জন্য: **Attendances → Reporting** বা Attendances লিস্টে দিনের তালিকা — কে দেরিতে এল, কে আসেনি, কার কত ঘণ্টা
-
-> **প্রথম দিনের টিপস:** কিয়স্কে ৫–১০ জনকে দিয়ে টেস্ট করো — কার্ড পড়ছে কি না, PIN কাজ করছে কি না, Check In/Out-এ নাম ঠিক দেখাচ্ছে কি না। সব ঠিক থাকলে বাকিদের মেসেজ দাও, নাহলে গেটে লাইন পড়ে যাবে।
-
-## ৭.৩ — ওভারটাইম ও বেতন
-
-আইন অনুযায়ী সাধারণত স্বাভাবিক মজুরির **দ্বিগুণ হারে** ওভারটাইম দিতে হয়। Odoo ঘণ্টাগুলো গণনা করে দেয় — Work Schedule-এর বাইরের সময়, Tolerance বাদ দিয়ে, Extra Hours হিসেবে জমা হয়।
-
-- Manager-approval চালু থাকলে করিম স্যার অনুমোদন করবেন
-- মাসের শেষে Attendances → Reporting থেকে ঘণ্টার রিপোর্ট বের করে Accounts-কে দাও
-- বেতনে ঘণ্টা × রেট বসিয়ে Payslip বানানো **Payroll মডিউল** বা আলাদা শিটের কাজ — এই সেকশনের বাইরে
-
-> **কেন Schedule ঠিক থাকা জরুরি:** Attendance ওভারটাইম হিসাব করে Employee-র Working Hours ধরে। Rina-র Work Information-এ `General Shift 8am-5pm` সেট না থাকলে ওভারটাইমের হিসাবই ভুল হবে।
+- শিফট শেষের পর Extra Hours ট্র্যাক হলে Overtime জমবে
+- HR/ম্যানেজার পরে **Approve** করবে — অনুমোদন ছাড়া ঘণ্টা বেতনে যোগ হবে না
+- মাসের শেষে Attendances → Reporting থেকে Extra Hours বের করে Accounts-কে দেবে ([রিপোর্ট](/odoo/hrm/reports))
 
 ## বাস্তবে কী ঘটে
 
-- কিয়স্কে Check In হলে সাথে সাথে Attendance রেকর্ড তৈরি হয় — ইন্টারনেট থাকলেই
-- Attendance from Backend বন্ধ থাকলে অফিস স্টাফও কিয়স্ক ছাড়া চেক-ইন করতে পারবে না
-- Automatic Check-Out চালু থাকলে ভুলে যাওয়া চেক-আউট নিজে থেকে হয়ে যায়
-- Absence Management চালু থাকলে ছুটি ছাড়া অনুপস্থিত দিনগুলো রিপোর্টে লাল দেখায়
-- PIN/Badge ছাড়া কেউ চেক-ইন করতে পারবে না (Kiosk Mode অনুযায়ী Manual Selection থাকলে নাম খুঁজে বেছে নিতে পারবে — দুর্বল নিয়ন্ত্রণ)
+- Kiosk-এ Check In করলে কর্মীর Attendance রেকর্ড নিজে থেকেই তৈরি হয়
+- শিফট না দেওয়া কর্মীর হাজিরা কোম্পানির ডিফল্ট Schedule ধরে হিসাব হবে — তাই [Working Schedule](/odoo/hrm/people) আগে ঠিক করা জরুরি
+- কেউ স্ক্যান করতে ভুলে গেলে HR হাতে Entry দিতে পারে: **Attendances → New** → Employee, Check In, Check Out সময়
+- Overtime চালু না থাকলে অতিরিক্ত সময় কোথাও জমবে না — বেতনের হিসাবেও আসবে না
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| কিয়স্কে কার্ড পড়ছে না | Barcode Source (Scanner/Camera) আর কার্ডের RFID নম্বর Employee-এ বসানো আছে কি না দেখো |
-| PIN ঢুকছে না | Employee-র HR Settings-এ **PIN Code** আছে কি না, Kiosk Settings-এ **Employee PIN Identification** চালু কি না |
-| কিয়স্কে কর্মীর নাম নেই | কর্মীর Department/Company ফিল্টার, আর Employee রেকর্ড Active কি না দেখো |
-| ওভারটাইম আসছে না | Work Schedule সেট আছে কি না, Extra Hours Validation, Tolerance মান দেখো |
-| ভুল দিনের হাজিরা | Attendances লিস্টে রেকর্ড খুলে হাতে ঠিক করো, তারপর Save — অডিটের জন্য কারণ লিখে রাখো |
+| Kiosk মেনু নেই | Settings-এ Kiosk Mode চালু করো, পেজ রিফ্রেশ করো |
+| PIN কাজ করছে না | Employees → কর্মী → HR Settings → PIN Code সেট আছে কিনা দেখো |
+| Badge স্ক্যান হচ্ছে না | কার্ডের RFID/Badge Number ফর্মে বসানো আছে কিনা, স্ক্যানার কিবোর্ড মোডে কিনা দেখো |
+| দেরি সবাইকে দেখাচ্ছে | শিফটের সময় আর Timezone Asia/Dhaka কিনা দেখো; Tolerance ১০ মিনিট সেভ হয়েছে কিনা |
+| Overtime জমছে না | Extra Hours/Overtime সেটিং চালু করো; Overtime নীতিতে Approve লাগে কিনা দেখো |
 
 ## চেকলিস্ট
 
-- [ ] Attendances Settings-এ Kiosk Mode + Barcode/PIN
-- [ ] Employee PIN/Badge নম্বর বসানো
-- [ ] Extra Hours + Tolerance
-- [ ] কিয়স্ক ট্যাবলেটে URL/Mode চালু, টেস্ট করা
-- [ ] Reporting-এ দিনের হাজিরা দেখা
-- [ ] মাসিক ওভারটাইম রিপোর্ট বের করা
+- [ ] Kiosk Mode চালু
+- [ ] Barcode/RFID অথবা PIN — একটা ঠিক করা
+- [ ] Extra Hours / Overtime চালু
+- [ ] Tolerance ১০ মিনিট
+- [ ] গেটের ট্যাবলেটে Kiosk পেজ ফুলস্ক্রিন
 
-এরপর নিয়োগ — [Recruitment](/odoo/hrm/recruitment)।
+পরের ধাপে [নিয়োগ ও মূল্যায়ন সেটিংস](/odoo/hrm/recruitment) — Applicant পাইপলাইন আর বার্ষিক মূল্যায়নের চক্র।

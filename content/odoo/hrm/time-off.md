@@ -1,138 +1,86 @@
 ---
-title: "ধাপ ৬ — Time Off (ছুটি)"
-description: সরকারি ছুটি, ছুটির ধরন, সবাইকে বরাদ্দ, অর্জিত ছুটির Accrual Plan — আর কর্মীর আবেদন থেকে অনুমোদন পর্যন্ত।
-icon: CalendarOff
+title: "Time Off সেটিংস"
+description: "ভাগ ১ — সরকারি ছুটি, ছুটির ধরন (Casual, Sick, Annual, Maternity, Unpaid) আর Annual Leave-এর Accrual Plan।"
+icon: CalendarDays
 ---
 
 ## গল্প
 
-৩০০ জনের ছুটির হিসাব খাতায় রাখা অসম্ভব — কে কত দিন নিয়েছে, কার কত বাকি, কে একসাথে ছুটি নিচে প্রোডাকশন বন্ধ করার উপক্রম। Odoo-র **Time Off** অ্যাপ এই পুরোটা সামলায়: সরকারি ছুটি, ছুটির ধরন, বার্ষিক বরাদ্দ, আবেদন আর অনুমোদন।
+শ্রম আইন মেনে ছুটির হিসাব রাখা HR-এর সবচেয়ে সংবেদনশীল কাজ। আগে ছুটির ধরন আর সরকারি ছুটির দিনগুলো Odoo-তে বসাতে হবে — তারপর কর্মী আবেদন করলে Odoo নিজেই ব্যালেন্স মিলিয়ে দেখবে।
 
-সম্পূর্ণ কাজটাই **Time Off** অ্যাপ থেকে — করিম স্যার লগইন করা অবস্থায়।
+## (ক) Public Holidays
 
-## ৬.১ — সরকারি ছুটি (Public Holidays)
-
-**Time Off → Configuration → Public Holidays → New**
-
-লিস্ট ভিউয়ে **New** চাপলে নিচে নতুন লাইন আসবে — Name, Start Date, End Date বসাও:
+**Time Off → Configuration → Public Holidays → New** — প্রতিটা ছুটি আলাদা করে, তারিখ সহ:
 
 | ছুটি | তারিখ |
 | --- | --- |
-| Eid-ul-Fitr | সরকারি ঘোষণা অনুযায়ী (২–৩ দিন) |
-| Eid-ul-Adha | সরকারি ঘোষণা অনুযায়ী (২–৩ দিন) |
-| Pohela Boishakh | ১৪ এপ্রিল |
 | Shaheed Day | ২১ ফেব্রুয়ারি |
 | Independence Day | ২৬ মার্চ |
+| Pohela Boishakh | ১৪ এপ্রিল |
+| May Day | ১ মে |
+| Eid-ul-Fitr | সরকারি ঘোষণা অনুযায়ী |
+| Eid-ul-Adha | সরকারি ঘোষণা অনুযায়ী |
+| Buddha Purnima | সরকারি ঘোষণা অনুযায়ী |
+| Durga Puja | সরকারি ঘোষণা অনুযায়ী |
 | Victory Day | ১৬ ডিসেম্বর |
-| Durga Puja | ঘোষণা অনুযায়ী |
-| Buddha Purnima | ঘোষণা অনুযায়ী |
 
-- Start Date-এ `12:00 AM`, End Date-এ `11:59 PM` রাখো — এতে সব শিফটের কর্মীই ছুটি পান
-- **Working Hours** ফাঁকা রাখলে সবাই এ ছুটি পাবে; নির্দিষ্ট শিফটে সীমাবদ্ধ করতে চাইলে Schedule বাছো
+> ঈদের তারিখ আগে থেকে নিশ্চিত নয় — সরকারি ঘোষণার পরে বসাও। ভুল তারিখে ছুটি থাকলে ওই দিনের হাজিরা/অনুপস্থিতির হিসাব ভুল দেখাবে।
 
-> **ঈদের তারিখ:** বছরে বছরে সরকারি ঘোষণা অনুযায়ী বদলায়, তাই ঘোষণার পর আপডেট করো। ভুল তারিখে ছুটি বসলে Attendance ও বেতনের হিসাবে গরমিল হবে।
-
-## ৬.২ — ছুটির ধরন (Time Off Types)
+## (খ) Time Off Types
 
 **Time Off → Configuration → Time Off Types → New**
 
-| Name | Approval | Requires allocation | নোট |
+| Name | Approval | Allocation | নোট |
 | --- | --- | --- | --- |
-| Casual Leave | By Time Off Officer | ✓ | ১০ দিন |
-| Sick Leave | By Time Off Officer | ✓ | **Require Supporting Document** চালু (ডাক্তারের সার্টিফিকেট) |
-| Annual (Earned) Leave | By Time Off Officer | ✓ | Accrual Plan দিয়ে বাড়বে |
-| Maternity Leave | By Time Off Officer | ✓ | ১১২ দিন (১৬ সপ্তাহ) |
-| Unpaid Leave | By Time Off Officer | ✗ | বরাদ্দের সীমা নেই, বেতন কাটা যাবে |
+| Casual Leave | Time Off Officer | Set by Time Off Officer | ১০ দিন |
+| Sick Leave | Time Off Officer | Set by Time Off Officer | Supporting Document চালু |
+| Annual Leave | Time Off Officer | Set by Time Off Officer | Accrual-এ জমবে |
+| Maternity Leave | Time Off Officer | Set by Time Off Officer | ১১২ দিন |
+| Unpaid Leave | Time Off Officer | No Allocation | বেতন কাটা যাবে |
 
-প্রতিটা টাইপে খেয়াল করো:
+**Responsible** বা **Approver** ঘরে Karim Sir-কে বসাও।
 
-- **Duration Type = Day** (Odoo 17/18-এ এটার নাম ছিল "Kind of Time Off")
-- **Count as = Absence** — ছুটির দিনকে কাজের সময় হিসেবে গোনা হবে না
-- **Notify HR** — কে অনুমোদন করবেন (Time Off Officer = করিম স্যার)
-- **Requires allocation** চালু থাকলে বরাদ্দ ছাড়া কেউ আবেদন করতে পারবে না
+> **Supporting Document** (Sick Leave-এ): কর্মী মেডিকেল সার্টিফিকেট আপলোড করতে হবে। ছবি তোলা কাগজও চলবে — কিন্তু ছাড়া আবেদন Approval-এ আটকে যাবে।
 
-> **Odoo 19-এর নাম বদল:** আগের "Allow employees to request" চেকবক্সটা এখন **Allocation Requests** সেকশনের ভেতরে — আগে **Requires allocation** চালু করো, তারপর **Allow Employee Requests** (বরাদ্দের বেশি চাইতে দেবে কি না)। Unpaid-এর মতো টাইপে Requires allocation বন্ধ রাখলে কোনো সীমাই থাকবে না।
+> **No Allocation** (Unpaid Leave): ব্যালেন্সের হিসাব নেই — যত দিন লাগে নেওয়া যায়, কিন্তু বেতন কাটা যাবে। তাই আলাদা ধরন, Casual-এর সাথে মেশাও না।
 
-## ৬.৩ — Allocations (প্রত্যেকের ছুটির হিসাব)
-
-### সবাইকে একসাথে
-
-**Time Off → Management → Allocations** → **New Group Allocation**
-
-- **Grant**: **By Company** বা **By Department** (সব Sewing কর্মীকে একসাথে দিতে চাইলে By Department → Sewing)
-- Time Off Type: `Casual Leave`
-- Allocation Type: **Regular Allocation** (একবারে দেওয়া)
-- Validity Period: ১ জানুয়ারি – ৩১ ডিসেম্বর
-- Allocation: `10 days`
-
-সেভ করে **Allocate Time Off** → Generated Allocations পেজে সবাইকে দেওয়া হয়েছে কি না দেখো। Sick Leave-এর জন্যও একইভাবে ১৪ দিন।
-
-> **একজনকে আলাদা দিতে:** Management → Allocations → **New** → Employee বাছো। মাঝপথে যোগ দেওয়া কর্মীর ক্ষেত্রে এটাই লাগবে — Group Allocation শুধু তখনকার কর্মীদের ওপর হয়।
-
-### Annual Leave — Accrual Plan (১৮ দিনে ১ দিন)
+## (গ) Accrual Plan (Annual Leave-এর জন্য)
 
 **Time Off → Configuration → Accrual Plans → New**
 
 | ফিল্ড | মান |
 | --- | --- |
-| Title | `Annual Leave Plan` |
-| When the time is accrued | At the start of the accrual period |
-| Based on worked time | Yes (ছুটির দিন বাদে কাজের দিনেই জমবে) |
-| Carry over | Lost বা Up to (কোম্পানির নিয়ম) |
+| Name | `Annual Leave Plan` |
+| Level | নির্দিষ্ট সময় পরপর দিন যোগ |
+| নিয়ম | ১৮ দিনে ১ দিন (≈ মাসে ১.৬ দিন) |
 
-তারপর **Create a milestone**:
+**Save**।
 
-- **Set the employee accrual frequency**: `1.5 Day(s)` / `Monthly` (মোটামুটি বছরে ১৮ দিন)
-- **This milestone will be reached**: At allocation creation
+> Accrual মানে "কাজ করার সাথে সাথে জমছে"। কর্মী এক বছর কাজ করলে ১৮ দিনের সমান জমবে — তাই বছরের শুরুতে হাতে হাতে ১৮ দিন দেওয়ার দরকার নেই, এবং মাঝপথে যোগ দিলেও অনুপাতে জমবে।
 
-সেভ করে এখন Allocation-এ যাও → Allocation Type = **Accrual Allocation** → Accrual Plan = `Annual Leave Plan`।
-
-> আইনে "১৮ দিন কাজে ১ দিন" — মাসে গড়ে প্রায় ১.৫ দিন। কেউ যদি দিন-ভিত্তিক হিসাব চায়, milestone-এ `Per Hour Worked`/`Daily` অপশনও আছে; তবে বাস্তবে মাসিক হিসাবই সবচেয়ে সহজ।
-
-## ৬.৪ — আবেদন ও অনুমোদন (দৈনন্দিন কাজ)
-
-**কর্মীর দিক থেকে:**
-
-1. **Time Off → My Time → New Time Off**
-2. Type, From–To তারিখ, কারণ লেখো
-3. **Submit** (Sick হলে ডাক্তারের সার্টিফিকেট আপলোড)
-
-**করিম স্যারের দিক থেকে:**
-
-1. **Time Off → Management → Time Off** → ফিল্টার **To Approve**
-2. রিকোয়েস্টে ক্লিক → **Approve** (বা **Refuse**, কারণ লিখে)
-3. দুই ধাপের অনুমোদন থাকলে আগে **Approve**, পরে **Validate**
-
-**Overview** মেনুতে ক্যালেন্ডারে দেখা যাবে কে কবে ছুটিতে, কোন Department-এ কতজন নেই — নিচের Total লাইনে প্রতিদিন কতজন বাইরে থাকবে তার গ্রাফ।
-
-> **প্রোডাকশন প্ল্যানিং:** Sewing-এর ৫০ জন একসাথে Approved হয়ে গেলে মেশিন বসে থাকবে। Overview-তে দিনভিত্তিক মোট দেখে ঠিক করো — একই দিনে এক Department-এর নির্দিষ্ট সংখ্যার বেশি ছুটি অনুমোদন করবে না।
+> **শ্রম আইন:** বাংলাদেশ শ্রম আইন ২০০৬ অনুযায়ী Casual ১০, Sick ১৪, Annual ১৮ দিনে ১ দিন, উৎসব ১১ দিন, মাতৃত্ব ১৬ সপ্তাহ। চূড়ান্ত করার আগে কমপ্লায়েন্স অফিসারের সাথে মিলিয়ে নাও — কোম্পানির নিজস্ব নীতি ভিন্ন হতে পারে।
 
 ## বাস্তবে কী ঘটে
 
-- Public Holiday থাকলে ছুটির আবেদনের দিনসংখ্যা নিজে থেকেই কমে (ছুটির টাইপে Ignore Public Holidays সেটিং অনুযায়ী)
-- Requires allocation চালু থাকলে বরাদ্দ শেষে আর আবেদন করা যায় না (Allow Negative Cap চালু না থাকলে)
-- Accrual Allocation ধীরে ধীরে বাড়ে — আগামী মাসের ছুটি এই মাসেই চাইলে ব্যালেন্স নেগেটিভ হতে পারে
-- Approve হলে Attendance-এ ওই দিন "ছুটি" হিসেবে দেখাবে, কাজের ঘণ্টা হিসেবে গোনা হবে না
-- Refuse করলে কর্মী নোটিফিকেশন পায় (Discuss/ইমেইল সেটআপ থাকলে)
+- Public Holiday-তে কেউ ছুটি নিলে সেটা ব্যালেন্স থেকে কাটে না
+- Allocation না দিলে কর্মী Casual/Annual আবেদন করতে পারবে না ("No allocation") — [কর্মী Entry](/odoo/hrm/employee-entry) পেজে By Company দিয়ে সবার জন্য একবারে দেবে
+- Sick Leave-এ Supporting Document লাগালে Approval-এর আগে ফাইল আপলোড বাধ্যতামূলক হয়
+- Unpaid Leave-এর দিন বেতনের হিসাব থেকে কাটতে হবে — Accounts-কে মাসের শেষে জানাও
 
 ## সমস্যা হলে
 
 | সমস্যা | সমাধান |
 | --- | --- |
-| Time Off Types মেনু নেই | করিমের Time Off অ্যাপে Administrator আছে কি না দেখো |
-| বরাদ্দ দেওয়ার পরও ব্যালেন্স ০ | Allocation **Validate/Approve** করেছ কি না দেখো; Validity Period চলছে কি না |
-| Accrual বাড়ছে না | Milestone আছে কি না, Start Date অতীতে কি না, টাইপের Count as ঠিক কি না |
-| আবেদনে "No allocation" এরর | Requires allocation চালু কিন্তু বরাদ্দ নেই — Allocation দাও, নয়তো Allow Employee Requests চালু করো |
-| Overview-তে কেউ নেই | Overview-তে করিমের টিম ফিল্টার দেখো; Employee-র Manager সেট আছে কি না |
+| Time Off Types মেনু নেই | Time Off অ্যাপ ইনস্টল করো |
+| কর্মী আবেদন করতে পারছে না | Allocation আছে কিনা, Time Off Type-এ Allow Employee Requests চালু কিনা দেখো |
+| Approver-এর নাম আসছে না | Type-এ Responsible/Approver ঘরে Karim Sir বসাও |
+| Accrual জমছে না | Plan-এর Level আর ১৮ দিনে ১ দিনের নিয়ম দেখো; Allocation Type **Accrual** কিনা যাচাই করো |
 
 ## চেকলিস্ট
 
-- [ ] বছরের Public Holidays (ঈদ পরে আপডেট)
-- [ ] ৫টা Time Off Type (Duration Type = Day)
-- [ ] Sick-এ Supporting Document চালু
-- [ ] Casual ১০, Sick ১৪ — Group Allocation + Validate
-- [ ] Annual-এর Accrual Plan + Milestone
-- [ ] Maternity ১১২ দিন, Unpaid বরাদ্দ-মুক্ত
-- [ ] একটা টেস্ট আবেদন → Approve → Overview-তে দেখা
+- [ ] সরকারি ছুটির তালিকা (ঈদের তারিখ ঘোষণার পর)
+- [ ] ৫টা Time Off Type + Approver Karim
+- [ ] Sick Leave-এ Supporting Document
+- [ ] `Annual Leave Plan` (১৮ দিনে ১ দিন)
 
-এরপর হাজিরা — [Attendance](/odoo/hrm/attendance)।
+পরের ধাপে [Attendance সেটিংস](/odoo/hrm/attendance) — গেটের Kiosk, Badge/PIN আর Overtime।

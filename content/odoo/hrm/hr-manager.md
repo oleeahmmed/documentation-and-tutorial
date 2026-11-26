@@ -1,74 +1,78 @@
 ---
-title: "ধাপ ৪ — HR Manager-এর অ্যাকাউন্ট"
-description: করিম স্যারের ইউজার বানানো, শুধু HR অ্যাপগুলোর Administrator অ্যাক্সেস দেওয়া — আর যা কখনোই দেওয়া যাবে না।
-icon: UserCog
+title: "HR Manager-এর অ্যাকাউন্ট"
+description: "ভাগ ১ — করিম হোসেনের জন্য আলাদা User, প্রতিটা HR অ্যাপে Administrator, কিন্তু Settings-এ ঢোকার অধিকার নেই।"
+icon: UserPlus
 ---
 
 ## গল্প
 
-Odoo-তে একটা নিয়ম আছে: **যে যতটুকু দরকার, ততটুকুই অ্যাক্সেস**। করিম স্যার HR-এর সব কাজ করবেন, কিন্তু সিস্টেমের সেটিংস, ডাটাবেস, ট্যাক্স — এসব তার হাতে দেওয়ার দরকার নেই। তাই তাকে শুধু HR অ্যাপগুলোর Administrator দেব, Settings-এর Administration দেব না। এটা মালিকের শেষ বড় কাজ।
+মালিক নিজে সব করলে HR-এর কাজ আটকে থাকবে। তাই ফ্যাক্টরির HR Manager **করিম হোসেন** (Karim Sir)-এর জন্য আলাদা অ্যাকাউন্ট বানাতে হবে — যিনি কাজ চালাবেন, কিন্তু কোম্পানির Settings বা অন্য অ্যাপের গোপন সেটিংস বদলাতে পারবেন না।
 
-## ৪.১ — নতুন ইউজার
+## ১.৫ — HR Manager-এর User বানাও
 
-1. **Settings → Users & Companies → Users** (কিছু সংস্করণে **Settings → Users**) → **New**
-2. Name: `Karim Hossain`
-3. Email: `karim@rahimapparels.com` — এটাই তার login
-4. ফোন থাকলে দিন
+**Settings → Users & Companies → Users → New**
 
-## ৪.২ — অ্যাক্সেস রাইট
-
-**Access Rights** ট্যাবে (বা পেজের মধ্যে) প্রতিটা অ্যাপের লেভেল সেট করো:
-
-| অ্যাপ | লেভেল |
+| ফিল্ড | মান |
 | --- | --- |
-| Employees | **Administrator** |
-| Recruitment | **Administrator** |
-| Time Off | **Administrator** |
-| Attendances | **Administrator** |
-| Appraisals | **Administrator** |
-| Expenses | **Administrator** |
-| Fleet | **Administrator** |
-| Maintenance | **Administrator** |
-| Lunch | **Administrator** |
+| Name | `Karim Hossain` |
+| Email | `karim@rahimapparels.com` |
 
-> **সতর্কতা:** Settings-এর "Administration" অ্যাক্সেস করিমকে দিও না। এটা শুধু মালিক/IT-এর কাছে থাকবে। তাতে করিম শুধু HR-এর কাজ করতে পারবে, সিস্টেম ভাঙতে পারবে না — ট্যাক্স, জার্নাল, ডাটাবেসের মতো জিনিসে হাত পড়বে না।
+### Access Rights
 
-## ৪.৩ — পাসওয়ার্ড সেট
+Access Rights ট্যাবে প্রতিটা HR অ্যাপের পাশে **Administrator** বসাও:
 
-**Save** → পাসওয়ার্ড সেট করতে:
-
-- **Send Invitation Email** চাপো — করিম নিজেই পাসওয়ার্ড সেট করবেন, অথবা
-- **Action → Change Password** দিয়ে তুমি নিজে সেট করে দাও
-
-> ইমেইল সেটআপ না থাকলে Invitation যাবে না — তখন Change Password পথে যাও, আর প্রথম লগইনে পাসওয়ার্ড বদলানোর কথা বলে দাও।
-
-## ৪.৪ — যাচাই করা (খুব জরুরি)
-
-শুধু "Save হয়ে গেছে" দেখে থামবে না। একটা **incognito/private উইন্ডো** খুলে করিমের ইমেইল-পাসওয়ার্ড দিয়ে লগইন করো, তারপর দেখো:
-
-| চেক | কী দেখতে চাও |
+| অ্যাপ | অ্যাক্সেস |
 | --- | --- |
-| হোম স্ক্রিনে অ্যাপ | Employees, Recruitment, Time Off, Attendances, Expenses, Fleet, Maintenance, Lunch দেখা যাচ্ছে |
-| Settings মেনু | নেই (বা শুধু নিজের প্রোফাইল) |
-| Employees → New | খোলা যাচ্ছে |
-| Settings → Technical | নেই |
+| Employees | Administrator |
+| Recruitment | Administrator |
+| Time Off | Administrator |
+| Attendances | Administrator |
+| Appraisals | Administrator |
+| Expenses | Administrator |
+| Fleet | Administrator |
+| Maintenance | Administrator |
+| Lunch | Administrator |
+| Administration / Settings | কোনো অ্যাক্সেস নয় |
 
-তারপর **মালিকের অ্যাকাউন্টে ফিরে Logout করো।** এখান থেকে বাকি সব কাজ **Karim Sir** করবেন।
+তারপর **Save** → **Send Invitation Email**।
 
-## বাস্তবে কী ঘটে
+> **কেন Settings বন্ধ?** Settings-এ ডাটাবেসের গুরুত্বপূর্ণ জিনিস থাকে — সিকোয়েন্স, ট্যাক্স, কারেন্সি, ইন্টিগ্রেশন। HR কাজের জন্য ওগুলোর দরকার নেই; ভুল করে কিছু বদলালে পুরো ফ্যাক্টরির হিসাব এলোমেলো হতে পারে। মালিকের অ্যাকাউন্টই Settings-এর একমাত্র অধিকারী থাকুক।
 
-- Administrator লেভেল পেলে করিম তার অ্যাপের সব রেকর্ড (সব Department, সব কর্মী) দেখতে ও বদলাতে পারবেন
-- Settings-এর Administration না থাকলে তিনি ট্যাক্স, জার্নাল, ডাটাবেস ব্যাকআপ — এসব ধরতে পারবেন না
-- একজন ইউজার একাধিক কোম্পানিতে থাকতে পারে; এখন একটাই কোম্পানি
-- ভুলে যদি বেশি অ্যাক্সেস দিয়ে ফেলো — Users-এ গিয়ে অ্যাপের লেভেল কমিয়ে দাও, সাথে সাথে কার্যকর হয়
+> এখন থেকে চাইলে Karim Sir-এর লগইন দিয়েই ভাগ ২, ৩ আর ৪-এর কাজ করা যায় — অ্যাক্সেস ঠিক আছে কিনা বাস্তবে যাচাই হয়ে যাবে।
+
+## Invitation-এর পর কী হয়
+
+1. করিম স্যারের ইমেইলে লিংক যায়
+2. তিনি লিংকে ক্লিক করে নিজের পাসওয়ার্ড সেট করেন
+3. লগইন করলে তিনি শুধু নয়টা HR অ্যাপ আর সাধারণ মেনু দেখেন — Settings নেই
+
+> ইমেইল সেটআপ না থাকলে Invitation যাবে না। তখন **Users** → করিমের রেকর্ড → **Action → Change Password** দিয়ে সরাসরি পাসওয়ার্ড বসিয়ে তাকে জানিয়ে দাও।
+
+## যাচাই করো (হাতে-কলমে)
+
+1. একটা ইনকগনিটো/প্রাইভেট উইন্ডো খোলো
+2. `karim@rahimapparels.com` দিয়ে লগইন করো
+3. নিশ্চিত করো:
+   - বাঁ দিকের অ্যাপ মেনুতে Employees, Recruitment, Time Off, Attendances, Appraisals, Expenses, Fleet, Maintenance, Lunch দেখা যায়
+   - **Settings** অ্যাপ দেখা যায় না
+4. যাচাই শেষ — লগআউট করে মালিকের অ্যাকাউন্টে ফিরে যাও
+
+## সমস্যা হলে
+
+| সমস্যা | সমাধান |
+| --- | --- |
+| Invitation ইমেইল আসেনি | Spam দেখো; না পেলে Change Password দিয়ে পাসওয়ার্ড বসাও |
+| লগইনে "Access Denied" | Access Rights-এ অ্যাপের Administrator সেভ হয়েছে কিনা দেখো |
+| করিম Sir Settings দেখতে পাচ্ছেন | Users → করিম → Access Rights → Administration-এর সব খালি করো |
+| HR অ্যাপের কিছু মেনু নেই | সেই অ্যাপ ইনস্টল হয়েছে কিনা Apps-এ দেখো |
+| দুইজন একসাথে ঢুকতে পারছে না | Odoo-তে একাধিক ইউজার একসাথে কাজ করতে পারে; সেশন আলাদা ব্রাউজার/ইনকগনিটোতে রাখো |
 
 ## চেকলিস্ট
 
-- [ ] Karim Hossain-এর ইউজার তৈরি
+- [ ] `Karim Hossain` / `karim@rahimapparels.com` User
 - [ ] ৯টা HR অ্যাপে Administrator
-- [ ] Administration অ্যাক্সেস **নেই**
-- [ ] পাসওয়ার্ড সেট (Invitation বা Change Password)
-- [ ] incognito-তে লগইন করে যাচাই
-- [ ] মালিক Logout
+- [ ] Administration/Settings-এ কোনো অ্যাক্সেস নেই
+- [ ] Invitation পাঠানো (বা পাসওয়ার্ড সরাসরি বসানো)
+- [ ] ইনকগনিটোতে লগইন করে যাচাই
 
-এখন করিম স্যার কাজ শুরু করবেন — প্রথমে [Department ও Employee](/odoo/hrm/people)।
+পরের ধাপে [Employees সেটিংস](/odoo/hrm/people) — Work Location, Department, পদবি আর শিফট।

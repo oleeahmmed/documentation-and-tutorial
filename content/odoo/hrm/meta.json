@@ -2,19 +2,17 @@
   "title": "HRM",
   "pages": [
     "index",
-    "preparation",
-    "install",
     "apps-company",
     "hr-manager",
     "people",
     "time-off",
     "attendance",
     "recruitment",
-    "appraisals",
     "expenses",
-    "fleet",
     "maintenance",
-    "lunch",
-    "routine"
+    "employee-entry",
+    "daily-entry",
+    "reports",
+    "summary"
   ]
 }
