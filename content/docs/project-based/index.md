@@ -75,4 +75,17 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Support Crew — Project 3](/docs/project-based/project-3)**।
 
+## চতুর্থ প্রকল্প — Blastify Lead-Gen Crew
+
+**একই Blastify, এবার সেলস টিম** — ১৪ ধাপে আরেকটা ৩ এজেন্টের Crew: তানভীর লিডের ওয়েবসাইট রিসার্চ করে, মিতু Blastify-র সার্ভিস তথ্য মিলিয়ে পার্সোনালাইজড কোল্ড ইমেইল লেখে, আরিফ ফলো-আপের তারিখ `followups.json`-এ লগ করে। সাপোর্ট প্রজেক্টের পাশে এটা করলে একই প্যাটার্ন (research → write → schedule) দুই ধরনের কাজে বসানো শেখা হয়ে যায়।
+
+| ভাগ | ধাপ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি | ১–৫ | Python, ফোল্ডার, venv, ইনস্টল, YAML স্ট্রাকচার |
+| টিম | ৬–৭ | ৩ Agent, ৩ Task + context চেইন |
+| জ্ঞান ও ক্ষমতা | ৮–১০ | Blastify পিচ নলেজ, `schedule_followup` টুল, `skills.md` |
+| রান | ১১–১৪ | `crew.py`, `main.py`, `.env`, `install` + `run` |
+
+সব ১৪ ধাপ: **[Blastify Lead-Gen Crew — Project 4](/docs/project-based/project-4)**।
+
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
