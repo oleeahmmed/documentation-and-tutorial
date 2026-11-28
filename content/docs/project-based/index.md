@@ -101,7 +101,7 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Invoice Crew — Project 5](/docs/project-based/project-5)**।
 
-## আসন্ন প্রকল্প — Project 6 থেকে 12
+## আসন্ন প্রকল্প — Project 6 থেকে 19
 
 Project 3/4/5-এর মতো একই কাঠামোর আরও চারটা এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
 
@@ -114,5 +114,12 @@ Project 3/4/5-এর মতো একই কাঠামোর আরও চা�
 | [Project 10 — Email to Task & Project](/docs/project-based/project-10) | মেইলের কাজের নির্দেশনা পড়ে Trello/Asana/Notion/ClickUp-এ টাস্ক/টিকিট তৈরি | এজেন্সি, ফ্রিল্যান্স টিম, সাপোর্ট |
 | [Project 11 — Supplier Quotation & Price Comparison](/docs/project-based/project-11) | সাপ্লায়ারের কোটেশন বিশ্লেষণ করে সেরা দাম বের করে Excel শিটে সাজানো | গার্মেন্টস, রিটেইল, প্রোকিউরমেন্ট |
 | [Project 12 — Newsletter & Market Research Summary](/docs/project-based/project-12) | ইন্ডাস্ট্রি নিউজলেটার পড়ে ট্রেন্ড আলাদা করে সংক্ষিপ্ত রিসার্চ রিপোর্ট | মার্কেটিং টিম, প্রোডাক্ট, ফাউন্ডার |
+| [Project 13 — Contract & Legal Document Review](/docs/project-based/project-13) | চুক্তি পড়ে মূল শর্ত, মেয়াদ শেষের তারিখ আর ঝুঁকিপূর্ণ ক্লজ হাইলাইট | কনসালটিং, স্টার্টআপ, ফ্রিল্যান্সার |
+| [Project 14 — Subscription & Renewal Reminder](/docs/project-based/project-14) | ডোমেইন/হোস্টিং/সফটওয়্যার রিনিউয়াল ট্র্যাক করে মেয়াদের আগে অ্যালার্ট | এজেন্সি, IT/অপস, স্টার্টআপ |
+| [Project 15 — Customer Feedback & Sentiment Analysis](/docs/project-based/project-15) | রিভিউ/অভিযোগ বিশ্লেষণ করে পজিটিভ-নেগেটিভ আলাদা, নেগেটিভে অ্যালার্ট | SaaS, ই-কমার্স, এজেন্সি |
+| [Project 16 — Travel & Booking Management](/docs/project-based/project-16) | ফ্লাইট/হোটেল/ইভেন্ট বুকিং ক্যালেন্ডারে যোগ করে আইটিনারি তৈরি | এক্সিকিউটিভ অ্যাসিস্ট্যান্ট, কনসালট্যান্ট |
+| [Project 17 — Sales Pipeline & CRM Update](/docs/project-based/project-17) | ইমেইল কথোপকথন দেখে HubSpot/Salesforce/Odoo-তে লিড স্ট্যাটাস আপডেট | সেলস টিম, সেলস-অপস |
+| [Project 18 — Order Entry Automation](/docs/project-based/project-18) | মেইল/Excel অর্ডার পড়ে ERP/ইনভেন্টরিতে অর্ডার এন্ট্রি | ডিস্ট্রিবিউটর, ম্যানুফ্যাকচারিং |
+| [Project 19 — Sponsorship & Collaboration Filtering](/docs/project-based/project-19) | স্পনসরশিপ/কোলাব অফার যাচাই করে বাজেট অনুযায়ী ফিল্টার | কন্টেন্ট ক্রিয়েটর, মিডিয়া, ইনফ্লুয়েন্সার ম্যানেজার |
 
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
