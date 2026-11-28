@@ -88,4 +88,17 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Lead-Gen Crew — Project 4](/docs/project-based/project-4)**।
 
+## পঞ্চম প্রকল্প — Blastify Invoice Crew
+
+**একই Blastify, এবার অ্যাকাউন্টস টিম** — ১৪ ধাপে তৃতীয় ৩-এজেন্ট Crew: রিনা ইনভয়েস থেকে ভেন্ডর-তারিখ-অঙ্ক বের করে, ফাহিম চার্ট-অফ-অ্যাকাউন্টস মিলিয়ে খাত ঠিক করে (৫০,০০০ টাকার বেশি হলে ফ্ল্যাগ), সুমাইয়া `save_to_ledger` টুল দিয়ে `ledger.csv`-এ এন্ট্রি লেখে। extract → classify → save প্যাটার্নের সবচেয়ে ব্যবহারিক রূপ — বিলিং অটোমেশনের সূচনা।
+
+| ভাগ | ধাপ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি | ১–৫ | Python, ফোল্ডার, venv, ইনস্টল, YAML স্ট্রাকচার |
+| টিম | ৬–৭ | ৩ Agent, ৩ Task + context চেইন |
+| জ্ঞান ও ক্ষমতা | ৮–১০ | চার্ট-অফ-অ্যাকাউন্টস নলেজ, `save_to_ledger` টুল, `skills.md` |
+| রান | ১১–১৪ | `crew.py`, `main.py`, `.env`, `install` + `run` |
+
+সব ১৪ ধাপ: **[Blastify Invoice Crew — Project 5](/docs/project-based/project-5)**।
+
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
