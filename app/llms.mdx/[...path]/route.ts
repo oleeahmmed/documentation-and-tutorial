@@ -2,6 +2,7 @@ import {
   djangoLlms,
   docsLlms,
   fastapiLlms,
+  landLlms,
   langgraphLlms,
   odooLlms,
   powerBiLlms,
@@ -30,7 +31,9 @@ export async function GET(_req: Request, { params }: RouteContext<'/llms.mdx/[..
               ? powerBiLlms
               : url.startsWith('/langgraph')
                 ? langgraphLlms
-                : docsLlms;
+                : url.startsWith('/land')
+                  ? landLlms
+                  : docsLlms;
 
   return (await llms.serve(url)) ?? new Response(null, { status: 404 });
 }
@@ -46,6 +49,7 @@ export async function generateStaticParams() {
     ...(await fastapiLlms.files()),
     ...(await powerBiLlms.files()),
     ...(await langgraphLlms.files()),
+    ...(await landLlms.files()),
   ];
   for (const file of files) {
     // `/llms.txt` and `/llms-full.txt` have their own routes

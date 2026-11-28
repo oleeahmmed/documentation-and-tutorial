@@ -203,6 +203,18 @@ const config = {
         source: '/langgraph/:path*.txt',
         destination: '/llms.mdx/langgraph/:path*.txt',
       },
+      {
+        source: '/land.md',
+        destination: '/llms.mdx/land.md',
+      },
+      {
+        source: '/land/:path*.md',
+        destination: '/llms.mdx/land/:path*.md',
+      },
+      {
+        source: '/land/:path*.txt',
+        destination: '/llms.mdx/land/:path*.txt',
+      },
     ];
   },
 };

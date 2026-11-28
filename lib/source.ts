@@ -108,6 +108,19 @@ const langgraphDocs = defineDocs({
   },
 });
 
+const landDocs = defineDocs({
+  dir: 'content/land',
+  docs: {
+    schema: pageSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: docsRoute,
@@ -157,6 +170,12 @@ export const langgraphSource = loader({
   plugins: [lucideIconsPlugin()],
 });
 
+export const landSource = loader({
+  baseUrl: '/land',
+  source: landDocs.toFumadocsSource(),
+  plugins: [lucideIconsPlugin()],
+});
+
 export const docsLlms = llms(source, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
@@ -200,6 +219,12 @@ ${await page.data.getText('processed')}`,
 });
 
 export const langgraphLlms = llms(langgraphSource, {
+  renderPage: async (page) => `# ${page.data.title} (${page.url})
+
+${await page.data.getText('processed')}`,
+});
+
+export const landLlms = llms(landSource, {
   renderPage: async (page) => `# ${page.data.title} (${page.url})
 
 ${await page.data.getText('processed')}`,

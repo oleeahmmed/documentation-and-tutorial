@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Blocks, Boxes, ChartColumn, Code, GitBranch, Sparkles, WandSparkles, Zap } from 'lucide-react';
+import { ArrowRight, Blocks, Boxes, ChartColumn, Code, GitBranch, LandPlot, Sparkles, WandSparkles, Zap } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -121,6 +121,22 @@ export default function HomePage() {
           </p>
           <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
             ইনস্টল শুরু করো
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </span>
+        </Link>
+
+        <Link
+          href="/land"
+          className="group rounded-xl border bg-fd-card p-6 transition-colors hover:bg-fd-accent"
+        >
+          <LandPlot className="size-6 text-fd-primary" />
+          <h2 className="mt-4 text-lg font-semibold">ভূমি ব্যবস্থাপনা</h2>
+          <p className="mt-2 text-sm text-fd-muted-foreground">
+            মৌজা, দাগ, খতিয়ান আর নামজারি — বেলাইল মৌজার গল্পে জমি-জমার হিসাব
+            এক টিউটোরিয়ালে।
+          </p>
+          <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-fd-primary">
+            হিসাব শিখো
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
         </Link>
