@@ -140,13 +140,25 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify HR Crew — Project 8](/docs/project-based/project-8)**।
 
-## আসন্ন প্রকল্প — Project 9 থেকে 19
+## নবম প্রকল্প — Blastify Order-Notify Crew
 
-Project 3/4/5/6/7/8-এর মতো একই কাঠামোর আরও এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
+**একই Blastify, এবার ই-কমার্স অর্ডার** — ১৪ ধাপে ৩ এজেন্ট: নওশিন অর্ডার/পেমেন্ট/কুরিয়ার ইভেন্ট বা abandoned cart থেকে ধরন-কাস্টমার-অর্ডার নম্বর বের করে, রাহাত ব্র্যান্ড টোন ও ৪ ধরনের টেমপ্লেট মিলিয়ে ইমেইল লেখে, পিয়া `send_notification` দিয়ে পাঠিয়ে `sent_notifications.json`-এ লগ করে। extract → compose → send প্যাটার্ন।
+
+| ভাগ | ধাপ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি | ১–৫ | Python, ফোল্ডার, venv, ইনস্টল, YAML স্ট্রাকচার |
+| টিম | ৬–৭ | ৩ Agent, ৩ Task + context চেইন |
+| জ্ঞান ও ক্ষমতা | ৮–১০ | ইমেইল টেমপ্লেট ও ব্র্যান্ড টোন, `send_notification` টুল, `skills.md` |
+| রান | ১১–১৪ | `crew.py`, `main.py`, `.env`, `install` + `run` |
+
+সব ১৪ ধাপ: **[Blastify Order-Notify Crew — Project 9](/docs/project-based/project-9)**।
+
+## আসন্ন প্রকল্প — Project 10 থেকে 19
+
+Project 3/4/5/6/7/8/9-এর মতো একই কাঠামোর আরও এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
 
 | প্রজেক্ট | কী করে | কাদের জন্য |
 | --- | --- | --- |
-| [Project 9 — E-commerce Order & Tracking](/docs/project-based/project-9) | অর্ডার কনফার্মেশন, রসিদ, কুরিয়ার ট্র্যাকিং, Abandoned Cart রিমাইন্ডার | অনলাইন শপ, ড্রপশিপিং |
 | [Project 10 — Email to Task & Project](/docs/project-based/project-10) | মেইলের কাজের নির্দেশনা পড়ে Trello/Asana/Notion/ClickUp-এ টাস্ক/টিকিট তৈরি | এজেন্সি, ফ্রিল্যান্স টিম, সাপোর্ট |
 | [Project 11 — Supplier Quotation & Price Comparison](/docs/project-based/project-11) | সাপ্লায়ারের কোটেশন বিশ্লেষণ করে সেরা দাম বের করে Excel শিটে সাজানো | গার্মেন্টস, রিটেইল, প্রোকিউরমেন্ট |
 | [Project 12 — Newsletter & Market Research Summary](/docs/project-based/project-12) | ইন্ডাস্ট্রি নিউজলেটার পড়ে ট্রেন্ড আলাদা করে সংক্ষিপ্ত রিসার্চ রিপোর্ট | মার্কেটিং টিম, প্রোডাক্ট, ফাউন্ডার |
