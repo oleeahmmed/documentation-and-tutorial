@@ -62,4 +62,17 @@ icon: Briefcase
 
 সব ১২ ফেজ: **[ShopBondhu AI — Project 2](/docs/project-based/project-2)**।
 
+## তৃতীয় প্রকল্প — Blastify Support Crew
+
+**SaaS কোম্পানির কাস্টমার সাপোর্ট টিম** — ১৪ ধাপে ৩ এজেন্টের CrewAI প্রজেক্ট: রাফি ইমেইল ক্লাসিফাই করে, নাদিয়া কোম্পানির নিয়মের খাতা থেকে উত্তর খোঁজে, সাকিব রিপ্লাই লেখে — উত্তর না পেলে মানুষকে escalate করে। শেখার জন্য সবচেয়ে ছোট আর সম্পূর্ণ প্রজেক্ট: `crewai create --classic` থেকে `crewai run` পর্যন্ত।
+
+| ভাগ | ধাপ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি | ১–৫ | Python, ফোল্ডার, venv, CrewAI ইনস্টল, YAML স্ট্রাকচার |
+| টিম সাজানো | ৬–৭ | ৩ Agent (`agents.yaml`), ৩ Task + context চেইন |
+| জ্ঞান ও ক্ষমতা | ৮–১০ | FAQ নলেজ, `escalate_to_human` টুল, `skills.md` |
+| জোড়া ও রান | ১১–১৪ | `crew.py`, `main.py`, `.env`, `crewai install` + `run` |
+
+সব ১৪ ধাপ: **[Blastify Support Crew — Project 3](/docs/project-based/project-3)**।
+
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
