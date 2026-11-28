@@ -101,7 +101,7 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Invoice Crew — Project 5](/docs/project-based/project-5)**।
 
-## আসন্ন প্রকল্প — Project 6 থেকে 11
+## আসন্ন প্রকল্প — Project 6 থেকে 12
 
 Project 3/4/5-এর মতো একই কাঠামোর আরও চারটা এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
 
@@ -113,5 +113,6 @@ Project 3/4/5-এর মতো একই কাঠামোর আরও চা�
 | [Project 9 — E-commerce Order & Tracking](/docs/project-based/project-9) | অর্ডার কনফার্মেশন, রসিদ, কুরিয়ার ট্র্যাকিং, Abandoned Cart রিমাইন্ডার | অনলাইন শপ, ড্রপশিপিং |
 | [Project 10 — Email to Task & Project](/docs/project-based/project-10) | মেইলের কাজের নির্দেশনা পড়ে Trello/Asana/Notion/ClickUp-এ টাস্ক/টিকিট তৈরি | এজেন্সি, ফ্রিল্যান্স টিম, সাপোর্ট |
 | [Project 11 — Supplier Quotation & Price Comparison](/docs/project-based/project-11) | সাপ্লায়ারের কোটেশন বিশ্লেষণ করে সেরা দাম বের করে Excel শিটে সাজানো | গার্মেন্টস, রিটেইল, প্রোকিউরমেন্ট |
+| [Project 12 — Newsletter & Market Research Summary](/docs/project-based/project-12) | ইন্ডাস্ট্রি নিউজলেটার পড়ে ট্রেন্ড আলাদা করে সংক্ষিপ্ত রিসার্চ রিপোর্ট | মার্কেটিং টিম, প্রোডাক্ট, ফাউন্ডার |
 
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
