@@ -127,13 +127,25 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Inbox Crew — Project 7](/docs/project-based/project-7)**।
 
-## আসন্ন প্রকল্প — Project 8 থেকে 19
+## অষ্টম প্রকল্প — Blastify HR Crew
 
-Project 3/4/5/6/7-এর মতো একই কাঠামোর আরও এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
+**একই Blastify, এবার রিক্রুটমেন্ট** — ১৪ ধাপে ৩ এজেন্ট: জেরিন সিভি থেকে নাম-অভিজ্ঞতা-স্কিল-শিক্ষা বের করে, মাহিন জব ডেসক্রিপশনের must-have শর্ত মিলিয়ে ০-১০০ স্কোর ও শর্টলিস্ট সিদ্ধান্ত দেয়, তানিয়া `process_candidate` দিয়ে শর্টলিস্ট হলে `interview_invites.json`-এ আর না হলে `candidate_database.json`-এ লগ করে। parse → score → process প্যাটার্ন।
+
+| ভাগ | ধাপ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি | ১–৫ | Python, ফোল্ডার, venv, ইনস্টল, YAML স্ট্রাকচার |
+| টিম | ৬–৭ | ৩ Agent, ৩ Task + context চেইন |
+| জ্ঞান ও ক্ষমতা | ৮–১০ | জব ডেসক্রিপশন ও স্কোরিং নিয়ম, `process_candidate` টুল, `skills.md` |
+| রান | ১১–১৪ | `crew.py`, `main.py`, `.env`, `install` + `run` |
+
+সব ১৪ ধাপ: **[Blastify HR Crew — Project 8](/docs/project-based/project-8)**।
+
+## আসন্ন প্রকল্প — Project 9 থেকে 19
+
+Project 3/4/5/6/7/8-এর মতো একই কাঠামোর আরও এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
 
 | প্রজেক্ট | কী করে | কাদের জন্য |
 | --- | --- | --- |
-| [Project 8 — Recruitment & CV Screening](/docs/project-based/project-8) | সিভি পড়ে জব ডেসক্রিপশনের সাথে মেলা, ইন্টারভিউ ইনভাইট, ডাটাবেজ সংরক্ষণ | HR, রিক্রুটিং এজেন্সি |
 | [Project 9 — E-commerce Order & Tracking](/docs/project-based/project-9) | অর্ডার কনফার্মেশন, রসিদ, কুরিয়ার ট্র্যাকিং, Abandoned Cart রিমাইন্ডার | অনলাইন শপ, ড্রপশিপিং |
 | [Project 10 — Email to Task & Project](/docs/project-based/project-10) | মেইলের কাজের নির্দেশনা পড়ে Trello/Asana/Notion/ClickUp-এ টাস্ক/টিকিট তৈরি | এজেন্সি, ফ্রিল্যান্স টিম, সাপোর্ট |
 | [Project 11 — Supplier Quotation & Price Comparison](/docs/project-based/project-11) | সাপ্লায়ারের কোটেশন বিশ্লেষণ করে সেরা দাম বের করে Excel শিটে সাজানো | গার্মেন্টস, রিটেইল, প্রোকিউরমেন্ট |
