@@ -114,13 +114,25 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Scheduling Crew — Project 6](/docs/project-based/project-6)**।
 
-## আসন্ন প্রকল্প — Project 7 থেকে 19
+## সপ্তম প্রকল্প — Blastify Inbox Crew
 
-Project 3/4/5/6-এর মতো একই কাঠামোর আরও এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
+**একই Blastify, এবার CEO-র ইনবক্স** — ১৪ ধাপে ৩ এজেন্ট: সাব্বির প্রতিটা ইমেইলকে urgent/spam/newsletter/billing-এ ভাগ করে, লুবনা শুধু urgent-গুলোর ২ লাইনের সারাংশ লেখে আর VIP লিস্ট মিলিয়ে দেখে, নাঈম সব মিলিয়ে সকালের ডাইজেস্ট `send_digest` দিয়ে পাঠায় (এবং `sent_digests.json`-এ লগ করে)। triage → summarize → deliver প্যাটার্ন।
+
+| ভাগ | ধাপ | কী থাকছে |
+| --- | --- | --- |
+| ভিত্তি | ১–৫ | Python, ফোল্ডার, venv, ইনস্টল, YAML স্ট্রাকচার |
+| টিম | ৬–৭ | ৩ Agent, ৩ Task + context চেইন |
+| জ্ঞান ও ক্ষমতা | ৮–১০ | VIP লিস্ট ও ক্যাটাগরি-নিয়ম, `send_digest` টুল, `skills.md` |
+| রান | ১১–১৪ | `crew.py`, `main.py`, `.env`, `install` + `run` |
+
+সব ১৪ ধাপ: **[Blastify Inbox Crew — Project 7](/docs/project-based/project-7)**।
+
+## আসন্ন প্রকল্প — Project 8 থেকে 19
+
+Project 3/4/5/6/7-এর মতো একই কাঠামোর আরও এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
 
 | প্রজেক্ট | কী করে | কাদের জন্য |
 | --- | --- | --- |
-| [Project 7 — Email Triage & Summarizer](/docs/project-based/project-7) | মেইল ক্যাটাগরি, গুরুত্বপূর্ণগুলোর সারসংক্ষেপ, WhatsApp/Slack/Telegram ডাইজেস্ট | ব্যস্ত টিম, ফাউন্ডার, ফ্রিল্যান্সার |
 | [Project 8 — Recruitment & CV Screening](/docs/project-based/project-8) | সিভি পড়ে জব ডেসক্রিপশনের সাথে মেলা, ইন্টারভিউ ইনভাইট, ডাটাবেজ সংরক্ষণ | HR, রিক্রুটিং এজেন্সি |
 | [Project 9 — E-commerce Order & Tracking](/docs/project-based/project-9) | অর্ডার কনফার্মেশন, রসিদ, কুরিয়ার ট্র্যাকিং, Abandoned Cart রিমাইন্ডার | অনলাইন শপ, ড্রপশিপিং |
 | [Project 10 — Email to Task & Project](/docs/project-based/project-10) | মেইলের কাজের নির্দেশনা পড়ে Trello/Asana/Notion/ClickUp-এ টাস্ক/টিকিট তৈরি | এজেন্সি, ফ্রিল্যান্স টিম, সাপোর্ট |
