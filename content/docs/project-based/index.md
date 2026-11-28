@@ -101,4 +101,15 @@ icon: Briefcase
 
 সব ১৪ ধাপ: **[Blastify Invoice Crew — Project 5](/docs/project-based/project-5)**।
 
+## আসন্ন প্রকল্প — Project 6 থেকে 9
+
+Project 3/4/5-এর মতো একই কাঠামোর আরও চারটা এজেন্ট আইডিয়া, সেকশন প্রস্তুত — টিউটোরিয়াল এলে এখানেই যোগ হবে।
+
+| প্রজেক্ট | কী করে | কাদের জন্য |
+| --- | --- | --- |
+| [Project 6 — Appointment & Calendar Manager](/docs/project-based/project-6) | মেইল থেকে মিটিং আগ্রহ বুঝে Google Calendar-এ ফাঁকা সময়, কনফার্মেশন, ইনভাইট | কনসালটেন্ট, ডাক্তার, কোচ, এক্সিকিউটিভ |
+| [Project 7 — Email Triage & Summarizer](/docs/project-based/project-7) | মেইল ক্যাটাগরি, গুরুত্বপূর্ণগুলোর সারসংক্ষেপ, WhatsApp/Slack/Telegram ডাইজেস্ট | ব্যস্ত টিম, ফাউন্ডার, ফ্রিল্যান্সার |
+| [Project 8 — Recruitment & CV Screening](/docs/project-based/project-8) | সিভি পড়ে জব ডেসক্রিপশনের সাথে মেলা, ইন্টারভিউ ইনভাইট, ডাটাবেজ সংরক্ষণ | HR, রিক্রুটিং এজেন্সি |
+| [Project 9 — E-commerce Order & Tracking](/docs/project-based/project-9) | অর্ডার কনফার্মেশন, রসিদ, কুরিয়ার ট্র্যাকিং, Abandoned Cart রিমাইন্ডার | অনলাইন শপ, ড্রপশিপিং |
+
 ➡️ শুরু: [২০টা ক্লায়েন্ট জব পোস্ট](/docs/project-based/job-posts) — কোনটা আপনার পরের প্রজেক্ট হবে?
